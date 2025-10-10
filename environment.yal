@@ -1,0 +1,39 @@
+name: me5418
+channels:
+  - conda-forge
+dependencies:
+  # === Core packages ===
+  - python=3.10
+  - pip
+  - numpy
+  - scipy
+  - matplotlib
+  - tensorboard
+  - ffmpeg                # for writing mp4/gif videos
+  - glfw                  # required for MuJoCo rendering
+  - tqdm
+
+  # === PyTorch (CPU version by default) ===
+  - pytorch
+  - torchvision
+  - torchaudio
+  - cpuonly
+
+  # === MuJoCo / Gym ===
+  - mujoco                # official MuJoCo Python bindings (>=3.x)
+  - gymnasium
+
+  # === Optional: Rendering/display dependencies (useful for headless Linux setups) ===
+  # - glew
+  # - xorg-libx11
+  # - libgl
+  # - libegl
+
+  # === Pip-installed packages (either newer or not available via conda) ===
+  - pip:
+      - stable-baselines3[extra]     # RL algorithms + evaluation tools
+      - gymnasium-robotics           # optional robotics environments
+      - imageio                      # for saving images/gifs
+      - imageio-ffmpeg               # mp4 video encoding via ffmpeg
+      - opencv-python                # optional, for visualization or frame preview
+      # - wandb                      # optional: for cloud-based visualization (Weights & Biases)

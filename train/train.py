@@ -254,8 +254,8 @@ def record_policy_rollout(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train the Panda obstacle avoidance policy with SB3.")
     parser.add_argument("--algo", choices=ALGORITHMS.keys(), default="ppo", help="RL algorithm to use")
-    parser.add_argument("--total-timesteps", type=int, default=200_000, help="Number of training steps")
-    parser.add_argument("--num-envs", type=int, default=1, help="Number of parallel vectorized environments")
+    parser.add_argument("--total-timesteps", type=int, default=1000_000, help="Number of training steps")
+    parser.add_argument("--num-envs", type=int, default=16, help="Number of parallel vectorized environments")
     parser.add_argument("--log-dir", type=Path, default=Path("logs"), help="Directory for SB3 logs")
     parser.add_argument("--model-dir", type=Path, default=Path("models"), help="Directory to save models")
     parser.add_argument("--tensorboard", type=Path, default=Path("tb_logs"), help="TensorBoard log directory")
@@ -340,13 +340,36 @@ def main() -> None:
     model.save(str(model_path))
 
     rollout_env_factory = make_env(args.seed + 20_000)
-    video_path = visualization_dir / "policy_rollout.gif"
+
+    best_model = model
+    best_video_path = visualization_dir / "best_policy_rollout.gif"
+    best_model_source = "final trained model"
+
+    if eval_callback is not None:
+        best_model_path = Path(eval_callback.best_model_path)
+        if best_model_path.suffix == "":
+            best_model_path = best_model_path.with_suffix(".zip")
+        if best_model_path.exists():
+            best_model = algo_cls.load(str(best_model_path))
+            best_model_source = f"best checkpoint ({best_model_path.name})"
+
+    print(f"Recording rollout video using {best_model_source}.")
     record_policy_rollout(
-        model,
+        best_model,
         rollout_env_factory,
-        video_path,
+        best_video_path,
         episodes=max(1, args.rollout_episodes),
     )
+
+    if best_model is not model:
+        final_video_path = visualization_dir / "final_policy_rollout.gif"
+        print("Recording rollout video for the final trained model.")
+        record_policy_rollout(
+            model,
+            rollout_env_factory,
+            final_video_path,
+            episodes=max(1, args.rollout_episodes),
+        )
 
     vec_env.close()
     eval_env.close()
