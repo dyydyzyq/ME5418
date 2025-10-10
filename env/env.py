@@ -8,9 +8,8 @@ import mujoco
 import numpy as np
 
 
-DEFAULT_MODEL_PATH = (
-    Path(__file__).resolve().parent.parent / "franka_emika_panda" / "scene_withobstacles.xml"
-)
+BASE_DIR = Path(__file__).resolve().parent
+DEFAULT_MODEL_PATH = BASE_DIR.parent / "franka_emika_panda" / "scene_withobstacles.xml"
 
 
 class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):

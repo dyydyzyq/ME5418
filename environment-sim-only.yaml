@@ -1,0 +1,21 @@
+## 🧩 environment-sim-only.yaml（仿真轻量版）
+
+> 只需要跑 `simulation.py` 的同学用这个；没有安装 SB3、wandb 等
+
+```yaml
+name: me5418
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - scipy
+  - matplotlib
+  - tqdm
+  - pip:
+      - mujoco==3.1.5
+      - gymnasium[all]
+      - imageio
+      - imageio-ffmpeg
+      - opencv-python

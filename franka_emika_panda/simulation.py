@@ -7,12 +7,13 @@ import imageio.v2 as imageio
 import mujoco
 import mujoco.viewer
 
-MODEL_PATH = "/home/nuo/ME5418/franka_emika_panda/scene_withobstacles.xml"
-DEFAULT_OUTPUT = Path("recordings/obstacle_motion.mp4")
+BASE_DIR = Path(__file__).resolve().parent
+MODEL_PATH = BASE_DIR / "scene_withobstacles.xml"
+DEFAULT_OUTPUT = BASE_DIR.parent / "recordings" / "obstacle_motion.mp4"
 DEFAULT_DURATION = 1.0
 DEFAULT_FPS = 60
 
-model = mujoco.MjModel.from_xml_path(MODEL_PATH)
+model = mujoco.MjModel.from_xml_path(str(MODEL_PATH))
 box_actuator_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, "move_box_x")
 sphere_actuator_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, "move_sphere_y")
 
