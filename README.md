@@ -23,9 +23,17 @@ conda install numpy scipy matplotlib tqdm
 # Install MuJoCo and Gymnasium
 pip install mujoco==3.3.6 gymnasium
 
-# Check installation
+# Check installation  
 python simulation.py
 ```
+
+```bash
+pip install imageio imageio-ffmpeg opencv-python
+```
+
+Videos are saved in the `recordings/` folder.
+
+---
 
 > If a MuJoCo viewer opens and the robot moves, your setup works ✅
 
@@ -60,15 +68,7 @@ Then open your browser and visit:
 http://localhost:6006
 ```
 
-### 4.2 Video Recording
 
-```bash
-pip install imageio imageio-ffmpeg opencv-python
-```
-
-Videos are saved in the `recordings/` folder.
-
----
 
 ## 🗂️ 5. Project Structure
 
@@ -102,7 +102,7 @@ dependencies:
   - numpy
   - scipy
   - matplotlib
-  - tqdm
+  - tqdms
   - pip:
       - mujoco==3.3.6
       - gymnasium[all]
