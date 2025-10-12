@@ -7,7 +7,7 @@ from typing import Callable, Dict, List
 
 from stable_baselines3 import PPO, SAC
 from stable_baselines3.common.callbacks import BaseCallback, CheckpointCallback, EvalCallback
-from stable_baselines3.common.vec_env import DummyVecEnv, VecMonitor
+from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv, VecMonitor
 
 # Ensure the repo root is importable so we can load the custom environment.
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -254,7 +254,8 @@ def record_policy_rollout(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train the Panda obstacle avoidance policy with SB3.")
     parser.add_argument("--algo", choices=ALGORITHMS.keys(), default="ppo", help="RL algorithm to use")
-    parser.add_argument("--total-timesteps", type=int, default=1000_000, help="Number of training steps")
+    parser.add_argument("--device", type=str, default="cpu", help="Device to use for training (e.g., 'cpu', 'cuda', or 'auto')")
+    parser.add_argument("--total-timesteps", type=int, default=200_000, help="Number of training steps")
     parser.add_argument("--num-envs", type=int, default=16, help="Number of parallel vectorized environments")
     parser.add_argument("--log-dir", type=Path, default=Path("logs"), help="Directory for SB3 logs")
     parser.add_argument("--model-dir", type=Path, default=Path("models"), help="Directory to save models")
@@ -266,7 +267,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--policy", type=str, default="MlpPolicy", help="Policy class name for the algorithm")
     parser.add_argument(
         "--rollout-episodes",
-        type=int,
+        type=int,   
         default=1,
         help="Number of episodes to record for the post-training policy rollout video",
     )
@@ -292,7 +293,8 @@ def main() -> None:
     args.model_dir.mkdir(parents=True, exist_ok=True)
     args.tensorboard.mkdir(parents=True, exist_ok=True)
 
-    vec_env = DummyVecEnv([make_env(args.seed + i) for i in range(args.num_envs)])
+    env_fns = [make_env(args.seed + i) for i in range(args.num_envs)]
+    vec_env = SubprocVecEnv(env_fns) if args.num_envs > 1 else DummyVecEnv(env_fns)
     vec_env = VecMonitor(vec_env, filename=str(args.log_dir / "monitor.csv"))
 
     eval_env = DummyVecEnv([make_env(args.seed + 10_000)])

@@ -17,18 +17,18 @@ conda install numpy scipy matplotlib tqdm
 
 ---
 
-## 🤖 2. Simulation Environment Setup
+## 🤖 2. Simulation Environment Setup 
 
 ```bash
 # Install MuJoCo and Gymnasium
 pip install mujoco==3.3.6 gymnasium
-
-# Check installation  
-python simulation.py
+# visualization packages
+pip install imageio imageio-ffmpeg opencv-python
 ```
 
 ```bash
-pip install imageio imageio-ffmpeg opencv-python
+# Check installation  
+python simulation.py
 ```
 
 Videos are saved in the `recordings/` folder.
@@ -93,7 +93,7 @@ ME5418/
 ### Simulation-only YAML
 
 ```yaml
-name: me5418
+name: me5418-sim-only
 channels:
   - conda-forge
 dependencies:
@@ -105,7 +105,7 @@ dependencies:
   - tqdms
   - pip:
       - mujoco==3.3.6
-      - gymnasium[all]
+      - gymnasium
       - imageio
       - imageio-ffmpeg
       - opencv-python
@@ -114,7 +114,7 @@ dependencies:
 ### Full RL YAML
 
 ```yaml
-name: me5418
+name: me5418-full
 channels:
   - conda-forge
 dependencies:
@@ -128,7 +128,7 @@ dependencies:
   - protobuf=3.20.*
   - pip:
       - mujoco==3.3.6
-      - gymnasium[all]
+      - gymnasium
       - gymnasium-robotics
       - stable-baselines3[extra]
       - imageio

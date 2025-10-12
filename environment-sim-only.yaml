@@ -1,4 +1,4 @@
-name: me5418
+name: me5418-sim-only
 channels:
   - conda-forge
 dependencies:
@@ -10,7 +10,7 @@ dependencies:
   - tqdm
   - pip:
       - mujoco==3.3.6
-      - gymnasium[all]
+      - gymnasium
       - imageio
       - imageio-ffmpeg
       - opencv-python

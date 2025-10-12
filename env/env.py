@@ -19,93 +19,45 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self,
         model_path: Optional[Path] = None,
         frame_skip: int = 5,
-        max_episode_steps: int = 200,
+        max_episode_steps: int = 2000,
         seed: Optional[int] = None,
-        render_width: int = 640,
+        render_width: int = 640,    
         render_height: int = 480,
         goal_bounds: Optional[Tuple[np.ndarray, np.ndarray]] = None,
         goal_reach_threshold: float = 0.03,
     ) -> None:
+        
         super().__init__()
 
         self.model_path = Path(model_path) if model_path else DEFAULT_MODEL_PATH
+        self.model = mujoco.MjModel.from_xml_path(str(self.model_path))
+        self.data = mujoco.MjData(self.model)       
         self.frame_skip = frame_skip
         self.max_episode_steps = max_episode_steps
         self.render_width = render_width
         self.render_height = render_height
         self.goal_reach_threshold = goal_reach_threshold
-
-        self.model = mujoco.MjModel.from_xml_path(str(self.model_path))
-        self.data = mujoco.MjData(self.model)
-
         self.dt = self.model.opt.timestep * self.frame_skip
 
-        low = np.array([0.2, -0.4, 0.1], dtype=np.float64)
-        high = np.array([0.8, 0.4, 0.6], dtype=np.float64)
         if goal_bounds is None:
+            low  = np.array([0.2, -0.4, 0.1], dtype=np.float64)
+            high = np.array([0.8,  0.4, 0.6], dtype=np.float64)
             self.goal_bounds = (low, high)
         else:
             self.goal_bounds = goal_bounds
 
         self.goal_pos = np.zeros(3, dtype=np.float64)
+        # self.goal_marker()
 
-        self.manip_joint_names = [f"joint{i}" for i in range(1, 8)]
-        self.manip_joint_ids = np.array(
-            [
-                mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, name)
-                for name in self.manip_joint_names
-            ],
-            dtype=np.int32,
-        )
-        self.manip_qvel_idx = np.arange(len(self.manip_joint_ids))
-        self.manip_body_ids = set(self.model.jnt_bodyid[self.manip_joint_ids].tolist())
-        self.hand_body_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "hand")
-        self.manip_body_ids.update(
-            [
-                self.hand_body_id,
-                mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "left_finger"),
-                mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "right_finger"),
-            ]
-        )
-        self.manip_body_ids = np.array(sorted(self.manip_body_ids), dtype=np.int32)
-
-        self.obstacle_body_ids = np.array(
-            [
-                mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "moving_box"),
-                mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "moving_sphere"),
-            ],
-            dtype=np.int32,
-        )
-
-        self.manip_actuator_ids = np.array(range(len(self.manip_joint_ids)), dtype=np.int32)
-        self.box_actuator_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, "move_box_x"
-        )
-        self.sphere_actuator_id = mujoco.mj_name2id(
-            self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, "move_sphere_y"
-        )
+        self._init_manipulator_ids()
+        self._init_obstacle_ids()
+        self._init_actuator_ids()
+        self._init_spaces() 
 
         self.box_amplitude = 0.12
         self.sphere_amplitude = 0.12
         self.obstacle_frequency = 0.25
-
-        self.action_dim = len(self.manip_actuator_ids)
-        self.action_limit = np.ones(self.action_dim, dtype=np.float32) * 2.0
-        self.action_space = gym.spaces.Box(
-            low=-self.action_limit,
-            high=self.action_limit,
-            dtype=np.float32,
-        )
-
-        obs_dim = (
-            self.action_dim
-            + 3 * len(self.manip_joint_ids)
-            + 3
-            + 3 * len(self.obstacle_body_ids)
-        )
-        obs_high = np.full(obs_dim, np.inf, dtype=np.float32)
-        self.observation_space = gym.spaces.Box(-obs_high, obs_high, dtype=np.float32)
-
+        
         self.collision_penalty = -100.0
         self.goal_reward = 100.0
         self.action_cost = 1e-2
@@ -123,30 +75,114 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self._update_obstacles(self.data.time)
         self.goal_pos = self._sample_goal()
 
-    def seed(self, seed: Optional[int] = None) -> None:
+    def _init_manipulator_ids(self) -> None:
+        self.manip_joint_names = [f"joint{i}" for i in range(1, 8)]
+        self.manip_joint_ids = np.array(
+            [
+                mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, name)
+                for name in self.manip_joint_names
+            ],
+            dtype=np.int32,
+        )
+
+        # qvel index for the manipulator joints
+        self.manip_qvel_idx = np.array(
+        [self.model.jnt_dofadr[jid] for jid in self.manip_joint_ids],
+        dtype=np.int32
+    )
+
+        # get the body ids of the manipulator
+        body_ids = set(self.model.jnt_bodyid[self.manip_joint_ids].tolist())
+        hand_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "hand")
+        left_finger_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "left_finger")
+        right_finger_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "right_finger")
+
+        self.hand_body_id = hand_id
+        body_ids.update([hand_id, left_finger_id, right_finger_id])
+        self.manip_body_ids = np.array(sorted(body_ids), dtype=np.int32)       
+
+
+
+
+    def _init_obstacle_ids(self) -> None:  #initialize the mujoco model and data
+        self.obstacle_body_ids = np.array(
+            [
+                mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "moving_box"),
+                mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "moving_sphere"),
+            ],
+            dtype=np.int32,
+        )   
+
+    def _init_actuator_ids(self) -> None:
+        names = [f"actuator{i}" for i in range(1, 8)]
+        self.manip_actuator_ids = np.array(
+            [self.model.actuator(n).id for n in names], dtype=np.int32
+        )
+
+        self.box_actuator_id = mujoco.mj_name2id(
+            self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, "move_box_x"
+        )
+        self.sphere_actuator_id = mujoco.mj_name2id(
+            self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, "move_sphere_y"
+        )
+
+
+    def _init_spaces(self) -> None:
+        # ---- action_space ----
+        self.action_dim = len(self.manip_actuator_ids)
+        self.v_max = np.array([1.5, 1.5, 1.5, 2.0, 2.0, 2.5, 2.5], dtype=np.float64)
+        self.v_min = -self.v_max
+        self.action_space = gym.spaces.Box(
+            low=-1.0,
+            high=1.0,
+            shape=(self.action_dim,),
+            dtype=np.float32,
+        )
+
+        # ---- obs_state ----
+        obs_dim = (
+            3 * len(self.manip_joint_ids)  #joint positions
+            + len(self.manip_joint_ids)  #joint velocities
+            + 3     #goal position
+            + 3 * len(self.obstacle_body_ids) #obstacle positions
+        )
+        obs_high = np.full(obs_dim, np.inf, dtype=np.float32)
+        self.observation_space = gym.spaces.Box(
+            low=-obs_high,
+            high=obs_high,
+            dtype=np.float32,
+        )
+
+    def seed(self, seed: Optional[int] = None) -> None: #set random seed 
         self._np_random, _ = gym.utils.seeding.np_random(seed)
 
-    def _sample_goal(self) -> np.ndarray:
+    def _sample_goal(self) -> np.ndarray: #sample a new goal position within the goal bounds
+        low = np.array([0.2, -0.4, 0.1], dtype=np.float64)
+        high = np.array([0.8, 0.4, 0.6], dtype=np.float64)
         low, high = self.goal_bounds
         return self._np_random.uniform(low, high)
+    
+    # def goal_marker(self) -> None:  #update the position of the goal marker in the mujoco model
+    #     goal_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "goal_marker")
+    #     self.model.site_pos[goal_site_id] = self.goal_pos
 
-    def _update_obstacles(self, time_value: float) -> None:
+    def _update_obstacles(self, time_value: float) -> None:  #update the obstacle positions based on the time value
         phase = 2.0 * np.pi * self.obstacle_frequency * time_value
         self.data.ctrl[self.box_actuator_id] = self.box_amplitude * np.sin(phase)
         self.data.ctrl[self.sphere_actuator_id] = self.sphere_amplitude * np.sin(
             phase + np.pi / 2.0
         )
 
-    def _get_joint_positions(self) -> np.ndarray:
+    def _get_joint_positions(self) -> np.ndarray:  # get the jonit positions in the world frame
         positions = []
         for body_id in self.model.jnt_bodyid[self.manip_joint_ids]:
             positions.append(self.data.xpos[body_id])
         return np.concatenate(positions)
 
-    def _get_obstacle_positions(self) -> np.ndarray:
+    def _get_obstacle_positions(self) -> np.ndarray: #get the obstacle positions in the world frame
         return self.data.xpos[self.obstacle_body_ids].ravel()
 
-    def _get_obs(self) -> np.ndarray:
+    def _get_obs(self) -> np.ndarray:   #get the observation of the environment
         joint_vel = self.data.qvel[self.manip_qvel_idx]
         joint_pos = self._get_joint_positions()
         obs = np.concatenate(
@@ -154,12 +190,17 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         )
         return obs.astype(np.float32)
 
-    def _compute_accel_and_jerk(self, action: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    def _compute_accel_and_jerk(self, action: np.ndarray) -> Tuple[np.ndarray, np.ndarray]: #calculate the acceleration and jerk based on the current action
         accel = (action - self._prev_action) / self.dt
         jerk = (accel - self._prev_accel) / self.dt
+
+        # update previous action and acceleration
+        self._prev_action = action
+        self._prev_accel = accel
+
         return accel, jerk
 
-    def _detect_collision(self) -> bool:
+    def _detect_collision(self) -> bool: #detect if there is a collision between the manipulator and the obstacles
         obstacle_bodies = set(self.obstacle_body_ids.tolist())
         manip_bodies = set(self.manip_body_ids.tolist())
         for i in range(self.data.ncon):
@@ -172,11 +213,11 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
                 return True
         return False
 
-    def _end_effector_distance(self) -> float:
+    def _end_effector_distance(self) -> float: #calculate the distance between the end effector and the goal position
         ee_pos = self.data.xpos[self.hand_body_id]
         return float(np.linalg.norm(ee_pos - self.goal_pos))
 
-    def _compute_reward(
+    def _compute_reward(     #compute the reward
         self,
         action: np.ndarray,
         accel: np.ndarray,
@@ -208,11 +249,6 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self._prev_action[:] = 0.0
         self._prev_accel[:] = 0.0
 
-        if options and "initial_state" in options:
-            qpos, qvel = options["initial_state"]
-            self.data.qpos[: len(qpos)] = qpos
-            self.data.qvel[: len(qvel)] = qvel
-
         self.goal_pos = self._sample_goal()
         self.data.ctrl[:] = 0.0
         self._update_obstacles(self.data.time)
@@ -223,28 +259,25 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
     def step(
         self, action: np.ndarray
     ) -> Tuple[np.ndarray, float, bool, bool, Dict[str, np.ndarray]]:
-        action = np.asarray(action, dtype=np.float64)
-        clipped = np.clip(action, -self.action_limit, self.action_limit)
+        a = np.clip(np.asarray(action, dtype=np.float64), -1.0, 1.0)
+        v_cmd = 0.5 * (a + 1.0) * (self.v_max - self.v_min) + self.v_min
 
-        accel, jerk = self._compute_accel_and_jerk(clipped)
+        accel, jerk = self._compute_accel_and_jerk(v_cmd)
 
         for _ in range(self.frame_skip):
             self._update_obstacles(self.data.time)
-            self.data.ctrl[self.manip_actuator_ids] = clipped
+            self.data.ctrl[self.manip_actuator_ids] = v_cmd
             mujoco.mj_step(self.model, self.data)
 
         self._step_count += 1
 
         collided = self._detect_collision()
         reached_goal = self._end_effector_distance() <= self.goal_reach_threshold
-        reward = self._compute_reward(clipped, accel, jerk, collided, reached_goal)
+        reward = self._compute_reward(v_cmd, accel, jerk, collided, reached_goal)
 
         obs = self._get_obs()
         terminated = collided or reached_goal
         truncated = self._step_count >= self.max_episode_steps
-
-        self._prev_action = clipped
-        self._prev_accel = accel
 
         info: Dict[str, np.ndarray] = {
             "goal": self.goal_pos.copy(),
@@ -253,13 +286,13 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         }
         return obs, reward, terminated, truncated, info
 
-    def render(self) -> np.ndarray:
+    def render(self) -> np.ndarray: #render the environment and return an RGB image
         if self._renderer is None:
             self._renderer = mujoco.Renderer(self.model, width=self.render_width, height=self.render_height)
         self._renderer.update_scene(self.data)
         return self._renderer.render()
 
-    def close(self) -> None:
+    def close(self) -> None: #close the renderer if it exists
         if self._renderer is not None:
             self._renderer.close()
             self._renderer = None
