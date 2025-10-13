@@ -103,9 +103,10 @@ def run_episode(
         action = env.action_space.sample()
         assert env.action_space.contains(action), "Sampled action is outside the action space."
         print(f"Episode {episode_idx}, step {step}: action {action}")
+        # grasp_center = info.get("grasp_center", None)
+        # print(f"Episode {episode_idx}, Step {step}: Grasp Center = {grasp_center}")
 
         obs, reward, terminated, truncated, info = env.step(action)
-
         stats.steps = step + 1
         stats.return_ += reward
         stats.terminated = terminated
@@ -121,6 +122,7 @@ def run_episode(
     status = "terminated" if stats.terminated else "truncated" if stats.truncated else "timeout"
 
     print(
+        f"grasp center: {info['grasp_center']}, goal: {info['goal']}"
         f"Episode {episode_idx} finished after {stats.steps} steps "
         f"({status}), return={stats.return_: .2f}"
     )
@@ -134,6 +136,7 @@ def main() -> None:
     enable_render = not args.no_render
     env = PandaObstacleEnv(render_width=640, render_height=480, seed=args.seed)
     renderer = LiveRenderer(env.render_width, env.render_height) if enable_render else None
+    
 
     returns = []
     for episode in range(1, args.episodes + 1):

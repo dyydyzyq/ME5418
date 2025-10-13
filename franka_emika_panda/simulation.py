@@ -46,43 +46,43 @@ def _write_video(frames, fps: int, output_path: Path) -> Path:
         return fallback
 
 
-def record_video(
-    duration: float = DEFAULT_DURATION,
-    fps: int = DEFAULT_FPS,
-    output_path: Optional[Path] = None,
-) -> Path:
-    """Simulate the moving obstacles passively and save a short clip."""
+# def record_video(
+#     duration: float = DEFAULT_DURATION,
+#     fps: int = DEFAULT_FPS,
+#     output_path: Optional[Path] = None,
+# ) -> Path:
+#     """Simulate the moving obstacles passively and save a short clip."""
 
-    if output_path is None:
-        output_path = DEFAULT_OUTPUT
+#     if output_path is None:
+#         output_path = DEFAULT_OUTPUT
 
-    frame_period = 1.0 / fps
-    target_frames = max(1, int(duration * fps))
-    frames = []
+#     frame_period = 1.0 / fps
+#     target_frames = max(1, int(duration * fps))
+#     frames = []
 
-    with mujoco.Renderer(model, width=640, height=480) as renderer:
-        sim_data = mujoco.MjData(model)
-        apply_obstacle_targets(sim_data)
-        mujoco.mj_forward(model, sim_data)
-        renderer.update_scene(sim_data)
-        frames.append(renderer.render().copy())
-        next_capture_time = frame_period
+#     with mujoco.Renderer(model, width=640, height=480) as renderer:
+#         sim_data = mujoco.MjData(model)
+#         apply_obstacle_targets(sim_data)
+#         mujoco.mj_forward(model, sim_data)
+#         renderer.update_scene(sim_data)
+#         frames.append(renderer.render().copy())
+#         next_capture_time = frame_period
 
-        while sim_data.time < duration or len(frames) < target_frames:
-            apply_obstacle_targets(sim_data)
-            mujoco.mj_step(model, sim_data)
+#         while sim_data.time < duration or len(frames) < target_frames:
+#             apply_obstacle_targets(sim_data)
+#             mujoco.mj_step(model, sim_data)
 
-            while next_capture_time <= sim_data.time and len(frames) < target_frames:
-                renderer.update_scene(sim_data)
-                frames.append(renderer.render().copy())
-                next_capture_time += frame_period
+#             while next_capture_time <= sim_data.time and len(frames) < target_frames:
+#                 renderer.update_scene(sim_data)
+#                 frames.append(renderer.render().copy())
+#                 next_capture_time += frame_period
 
-    if not frames:
-        raise RuntimeError("No frames were captured while recording.")
+#     if not frames:
+#         raise RuntimeError("No frames were captured while recording.")
 
-    saved_path = _write_video(frames, fps, Path(output_path))
-    print(f"Saved {len(frames)} frames to {saved_path}")
-    return saved_path
+#     saved_path = _write_video(frames, fps, Path(output_path))
+#     print(f"Saved {len(frames)} frames to {saved_path}")
+#     return saved_path
 
 
 def run_viewer() -> None:
@@ -112,8 +112,8 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
 
-    if not args.no_record:
-        record_video(duration=args.duration, fps=args.fps, output_path=args.output)
+    # if not args.no_record:
+    #     record_video(duration=args.duration, fps=args.fps, output_path=args.output)
 
     if not args.no_viewer:
         run_viewer()

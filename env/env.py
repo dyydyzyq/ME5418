@@ -54,6 +54,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self._init_actuator_ids()
         self._init_spaces() 
 
+        
         self.box_amplitude = 0.12
         self.sphere_amplitude = 0.12
         self.obstacle_frequency = 0.25
@@ -84,6 +85,8 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
             ],
             dtype=np.int32,
         )
+        self.left_tip_id  = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "left_tip")
+        self.right_tip_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "right_tip")
 
         # qvel index for the manipulator joints
         self.manip_qvel_idx = np.array(
@@ -101,7 +104,10 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         body_ids.update([hand_id, left_finger_id, right_finger_id])
         self.manip_body_ids = np.array(sorted(body_ids), dtype=np.int32)       
 
-
+    def get_grasp_center(self) -> np.ndarray:
+        L = self.data.site_xpos[self.left_tip_id]
+        R = self.data.site_xpos[self.right_tip_id]
+        return 0.5 * (L + R)
 
 
     def _init_obstacle_ids(self) -> None:  #initialize the mujoco model and data
@@ -162,10 +168,6 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         low, high = self.goal_bounds
         return self._np_random.uniform(low, high)
     
-    # def goal_marker(self) -> None:  #update the position of the goal marker in the mujoco model
-    #     goal_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "goal_marker")
-    #     self.model.site_pos[goal_site_id] = self.goal_pos
-
     def _update_obstacles(self, time_value: float) -> None:  #update the obstacle positions based on the time value
         phase = 2.0 * np.pi * self.obstacle_frequency * time_value
         self.data.ctrl[self.box_actuator_id] = self.box_amplitude * np.sin(phase)
@@ -213,8 +215,8 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
                 return True
         return False
 
-    def _end_effector_distance(self) -> float: #calculate the distance between the end effector and the goal position
-        ee_pos = self.data.xpos[self.hand_body_id]
+    def distance_to_goal(self) -> float: #calculate the distance between the end effector and the goal position
+        ee_pos = self.get_grasp_center()
         return float(np.linalg.norm(ee_pos - self.goal_pos))
 
     def _compute_reward(     #compute the reward
@@ -272,7 +274,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self._step_count += 1
 
         collided = self._detect_collision()
-        reached_goal = self._end_effector_distance() <= self.goal_reach_threshold
+        reached_goal = self.distance_to_goal() <= self.goal_reach_threshold
         reward = self._compute_reward(v_cmd, accel, jerk, collided, reached_goal)
 
         obs = self._get_obs()
@@ -281,7 +283,8 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
 
         info: Dict[str, np.ndarray] = {
             "goal": self.goal_pos.copy(),
-            "distance_to_goal": np.array([self._end_effector_distance()], dtype=np.float64),
+            "distance_to_goal": np.array([self.distance_to_goal()], dtype=np.float64),
+            "grasp_center": self.get_grasp_center(),
             "collided": np.array([collided], dtype=bool),
         }
         return obs, reward, terminated, truncated, info
