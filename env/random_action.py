@@ -1,10 +1,33 @@
+"""Utility script to roll out random actions in the PandaObstacleEnv.
+
+This module provides a tiny command-line tool used during development to
+exercise the environment with random actions and (optionally) render the
+simulation frames live using matplotlib.
+
+Primary components:
+- EpisodeStats: simple dataclass holding per-episode summary statistics.
+- LiveRenderer: minimalist matplotlib-based live preview overlaying step/
+    reward/action information on top of frames returned by the env's render().
+- run_episode / main: run one or more random episodes and print simple
+    diagnostics. Useful for smoke-testing environment integration and
+    catching NaNs, invalid shapes, or immediate crashes.
+
+Notes / behavior:
+- The script samples actions via `env.action_space.sample()` so it exercises
+    exactly the same action bounds the training pipeline would use.
+- Because MuJoCo returns many arrays as float64, we sometimes cast to
+    float32 for rendering/printing — this is only cosmetic.
+- The script intentionally keeps dependencies minimal and does lazy imports
+    for optional visualization so it can run in headless CI if needed.
+"""
+
 import argparse
 from dataclasses import dataclass
 from typing import Optional
 
 import numpy as np
 
-from env import PandaObstacleEnv  # 确保路径正确
+from env import PandaObstacleEnv  # ensure package import path is correct
 
 
 @dataclass
@@ -18,13 +41,17 @@ class EpisodeStats:
 
 class LiveRenderer:
     def __init__(self, width: int, height: int) -> None:
-        import matplotlib.pyplot as plt  # Lazy import to avoid hard dependency when headless
+        # Lazy import --- plotting is optional and can be disabled for
+        # headless execution (e.g. CI or when using --no-render).
+        import matplotlib.pyplot as plt  # type: ignore
 
         plt.ion()
         self._plt = plt
+        # figsize arguments take inches; convert from pixels (assume 100 dpi)
         self._fig, self._ax = plt.subplots(figsize=(width / 100, height / 100))
         self._image = None
         self._overlay = None
+        # Hide axes for a cleaner frame-only display
         self._ax.axis("off")
 
     def update(
