@@ -8,15 +8,6 @@ that drives actuators on the manipulator and provides observations that
 include joint positions, joint velocities, the current goal position, and
 the positions of the moving obstacles.
 
-Design goals / notes:
-- Lightweight wrapper around MuJoCo for training RL agents (Stable-Baselines3
-    compatible). The environment handles model loading, stepping the simulator
-    (with optional frame-skip), simple obstacle motion, and reward calculation.
-- The implementation favors clarity and debuggability over performance. For
-    long-running training you may want to optimise array copies and sampling.
-- This file intentionally keeps simulation logic in Python; actuators are
-    commanded via `self.data.ctrl` and MuJoCo integrates the dynamics.
-
 Assumptions:
 - The MuJoCo XML model contains named joints `joint1..joint7`, sites
     `left_tip`/`right_tip` (used for grasp center), and body names
@@ -24,9 +15,6 @@ Assumptions:
 - The model maps actuators controlling the manipulator into predictable
     actuator indices; the code queries names at init time and will raise
     (via MuJoCo) if names are missing.
-
-If you change the model naming or structure, update the name lists used in
-_init_manipulator_ids/_init_actuator_ids accordingly.
 """
 
 
