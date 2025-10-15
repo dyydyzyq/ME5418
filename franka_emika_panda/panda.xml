@@ -113,6 +113,9 @@
     <mesh file="hand_4.obj"/>
     <mesh file="finger_0.obj"/>
     <mesh file="finger_1.obj"/>
+
+    <!--Model file of the workspace of panda arm-->
+    <!-- mesh name="workspace_mesh" file="workspace.obj"/ -->
   </asset>
 
   <worldbody>
@@ -250,6 +253,9 @@
         </body>
       </body>
     </body>
+
+    <!-- <geom name="workspace" type="mesh" mesh="workspace_mesh"
+          rgba="0 0 1 0.15" contype="0" conaffinity="0"/> -->
   </worldbody>
 
   <tendon>
@@ -279,7 +285,4 @@
       gainprm="0.01568627451 0 0" biasprm="0 -100 -10"/>
   </actuator>
 
-  <keyframe>
-    <key name="home" qpos="0    -0.5    0   -1.5   0    1.5   0.7    0.01  0.01" ctrl="0 0 0 -1.57079 0 1.57079 -0.7853 255"/>
-  </keyframe>
 </mujoco>

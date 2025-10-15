@@ -337,7 +337,8 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         if seed is not None:
             self.seed(seed)
 
-        mujoco.mj_resetData(self.model, self.data)
+        key_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_KEY, "home")
+        mujoco.mj_resetDataKeyframe(self.model, self.data, key_id)
         self._step_count = 0
         self._prev_action[:] = 0.0
         self._prev_accel[:] = 0.0

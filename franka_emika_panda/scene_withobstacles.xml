@@ -22,6 +22,18 @@
     <site name="grasp_center_vis" type="sphere" size="0.004" rgba="1 0 1 1"/>
     </body> -->
     <site name="target" type="sphere" size="0.01" rgba="0 1 0 0.6" pos="0.5 0 0.5"/>
+
+    <!--To visualize the goal bound in the environment-->
+    <!-- <site name="g1" type="sphere" size="0.01" rgba="1 0 0 0.6" pos="0.3 -0.4 0.3"/>
+    <site name="g2" type="sphere" size="0.01" rgba="1 0 0 0.6" pos="0.3 -0.4 0.7"/>
+    <site name="g3" type="sphere" size="0.01" rgba="1 0 0 0.6" pos="0.5 -0.4 0.3"/>
+    <site name="g4" type="sphere" size="0.01" rgba="1 0 0 0.6" pos="0.5 -0.4 0.7"/>
+    <site name="g5" type="sphere" size="0.01" rgba="1 0 0 0.6" pos="0.3 0.4 0.3"/>
+    <site name="g6" type="sphere" size="0.01" rgba="1 0 0 0.6" pos="0.3 0.4 0.7"/>
+    <site name="g7" type="sphere" size="0.01" rgba="1 0 0 0.6" pos="0.5 0.4 0.3"/>
+    <site name="g8" type="sphere" size="0.01" rgba="1 0 0 0.6" pos="0.5 0.4 0.7"/> -->
+
+
     <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
     <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
     <!-- moving box -->
@@ -32,7 +44,7 @@
     <!-- moving ball -->
     <body name="moving_sphere" pos="0.3 -0.3 0.5">
         <joint name="slide_sphere_y" type="slide" axis="0 1 0" range="-0.2 0.2" damping="1"/>
-        <geom type="sphere" size="0.05" mass="0.3" rgba="0.2 0.2 0.8 1"/>
+        <geom type="sphere" size="0.05" mass="0.5" rgba="0.2 0.2 0.8 1"/>
     </body>
 
     <body mocap="true" name="mocap" pos="0.2 0.3 0.2">
@@ -51,4 +63,9 @@
         <position name="move_box_x" joint="slide_box_x" kp="100" ctrlrange="-0.15 0.15"/>
         <position name="move_sphere_y" joint="slide_sphere_y" kp="100" ctrlrange="-0.15 0.15"/>
   </actuator>
+
+  <keyframe>
+    <key name="home" qpos="0    -0.5    0   -1.2   0    1.2   0.7    0.01  0.01" ctrl="0 0 0 -1.57079 0 1.57079 -0.7853 255"/>
+  </keyframe>
+  
 </mujoco>
