@@ -6,7 +6,7 @@ This repository provides a **MuJoCo-based simulation** of a Franka Emika Panda m
 
 ## 1. Environment Setup
 
-### Prerequisites
+### 1) Prerequisites
 - Install Conda (Anaconda or Miniconda). Recommended: use Miniconda for a
   minimal install or Anaconda if you want a large preinstalled scientific
   stack.
@@ -16,16 +16,17 @@ This repository provides a **MuJoCo-based simulation** of a Franka Emika Panda m
   - Anaconda (full distribution): https://www.anaconda.com/products/distribution#download-section
 
 
-### 1) Create the Conda environment from YAML
+### 2) Create the Conda environment from YAML
 
 ```powershell
 # create a new Conda environment for this project
 conda env create -f environment-sim.yaml --name me5418
 ```
 
-### 2) Activate and verify the environment
+### 3) Activate and verify the environment
 
 ```powershell
+# Activate Enviornment
 conda activate me5418
 
 # Quick checks

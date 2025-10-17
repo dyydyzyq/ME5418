@@ -262,16 +262,40 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         return accel, jerk
 
     def _detect_collision(self) -> bool:  # detect if there is a collision between the manipulator and the obstacles
+        """
+        Check whether any current MuJoCo contact is between the manipulator
+        and one of the scripted obstacles.
+
+        MuJoCo stores contacts in `self.data.contact[0:self.data.ncon]`. Each
+        contact contains indices of the two geoms involved (geom1, geom2).
+        We convert the model's `geom_bodyid` mapping into body IDs and then
+        test whether the two bodies in the contact pair belong to the
+        manipulator and to the obstacle set (in either order).
+
+        Returns:
+            True if any contact pairs a manipulator body with an obstacle
+            body, False otherwise.
+        """
+
+        # Convert ID arrays to Python sets for fast membership checks.
         obstacle_bodies = set(self.obstacle_body_ids.tolist())
         manip_bodies = set(self.manip_body_ids.tolist())
+
+        # Iterate only over active contacts (0..ncon-1).
         for i in range(self.data.ncon):
             contact = self.data.contact[i]
+
+            # Each contact references two geoms; map these to body ids.
             body1 = self.model.geom_bodyid[contact.geom1]
             body2 = self.model.geom_bodyid[contact.geom2]
+
+            # Check both orders: manipulator vs obstacle.
             if (body1 in manip_bodies and body2 in obstacle_bodies) or (
                 body2 in manip_bodies and body1 in obstacle_bodies
             ):
                 return True
+
+        # No manipulator-obstacle contacts found.
         return False
 
     def distance_to_goal(self) -> float:  # calculate the distance between the end effector and the goal position
@@ -286,6 +310,20 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         collided: bool,
         reached_goal: bool,
     ) -> float:  # compute the reward
+        """
+            Compute the scalar reward for the current timestep.
+
+            Args:
+                action: commanded actuator values after mapping from normalized
+                        action space into physical command units (same shape as action_dim).
+                        accel: estimated acceleration of the commanded signal (sameshape as action_dim).
+                        jerk: estimated jerk (time-derivative of accel).
+                        collided: whether a contact with an obstacle occurred this step.
+                        reached_goal: whether the goal was reached this step.
+            Returns:
+                A single float reward for the timestep.
+        """
+        
         reward = -self.step_penalty
         reward -= self.action_cost * float(np.linalg.norm(action))
         reward -= self.accel_penalty * float(np.linalg.norm(accel))
@@ -302,24 +340,65 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         seed: Optional[int] = None,
         options: Optional[Dict[str, np.ndarray]] = None,
     ) -> Tuple[np.ndarray, Dict[str, np.ndarray]]:
+        """
+        Reset the environment to the start of a new episode.
+
+        Steps performed:
+        1. Optionally reseed the environment RNG if `seed` is provided.
+        2. Reset MuJoCo `MjData` to the model's default state using
+           `mujoco.mj_resetData` (clears qpos, qvel, contacts, etc.).
+        3. Zero internal episode bookkeeping (step counter, previous
+           action/accel) so cost/jerk calculations start from zero.
+        4. Sample a new goal position within `self.goal_bounds`.
+        5. Zero actuator commands and update scripted obstacle positions
+           so the initial simulation state is consistent.
+        6. Call `mujoco.mj_forward` to populate derived quantities before
+           returning observations.
+
+        Returns:
+            observation: the initial observation (numpy array, dtype float32)
+            info: dict containing the sampled `goal` (3-vector float64)
+        """
+
+        # 1) Optionally reseed the environment RNG.
         if seed is not None:
             self.seed(seed)
 
+        # 2) Reset MuJoCo data/state to model defaults.
         mujoco.mj_resetData(self.model, self.data)
+
+        # 3) Reset episode bookkeeping used by step() and cost calculations.
         self._step_count = 0
         self._prev_action[:] = 0.0
         self._prev_accel[:] = 0.0
 
+        # 4) Sample a fresh goal and ensure controls/obstacles are initialized.
         self.goal_pos = self._sample_goal()
         self.data.ctrl[:] = 0.0
         self._update_obstacles(self.data.time)
+
+        # 5) Forward-simulate kinematics to populate derived fields (xpos, xquat, etc.).
         mujoco.mj_forward(self.model, self.data)
 
+        # Return the initial observation and a small info dict containing the goal.
         return self._get_obs(), {"goal": self.goal_pos.copy()}
 
     def step(
         self, action: np.ndarray
     ) -> Tuple[np.ndarray, float, bool, bool, Dict[str, np.ndarray]]:
+        
+        """Execute one timestep within the environment.
+
+        Args:
+            action: The action to take a 1-D continuous vector in range [-1, 1] for each actuator via v_min/ v_max driving the
+            manipulator
+
+        Returns:
+            tuple: (obs, reward, terminated, truncated, info)
+        """
+
+        ## Update agent position, ensuring it stays within bounds
+        # np.clip prevents the agent from escaping the edge
         a = np.clip(np.asarray(action, dtype=np.float64), -1.0, 1.0)
         v_cmd = 0.5 * (a + 1.0) * (self.v_max - self.v_min) + self.v_min
 
