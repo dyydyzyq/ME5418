@@ -8,13 +8,6 @@ that drives actuators on the manipulator and provides observations that
 include joint positions, joint velocities, the current goal position, and
 the positions of the moving obstacles.
 
-Assumptions:
-- The MuJoCo XML model contains named joints `joint1..joint7`, sites
-    `left_tip`/`right_tip` (used for grasp center), and body names
-    `moving_box`/`moving_sphere` that represent moving obstacles.
-- The model maps actuators controlling the manipulator into predictable
-    actuator indices; the code queries names at init time and will raise
-    (via MuJoCo) if names are missing.
 """
 
 
@@ -52,11 +45,6 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
 
     Rendering:
     - `render()` returns an RGB image array using MuJoCo's Renderer.
-
-    Notes:
-    - The class uses MuJoCo's low-level API (MjModel, MjData) directly; if
-      you want to run in headless CI you may need to configure the MuJoCo
-      OpenGL backend (e.g. MUJOCO_GL=egl/osmesa) before creating the env.
     """
 
     # Metadata exposed to Gym renderers / utilities.
@@ -75,23 +63,18 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
     ) -> None:
         super().__init__()
 
-        # Resolve and load MuJoCo model. If model_path is None the bundled
-        # default model path inside the repo is used. Passing an explicit
-        # Path allows users to point to a modified XML file.
+        # Resolve and load MuJoCo model.
         self.model_path = Path(model_path) if model_path else DEFAULT_MODEL_PATH
         self.model = mujoco.MjModel.from_xml_path(str(self.model_path))
         # MjData holds the mutable simulation state (qpos, qvel, contacts, etc.)
         self.data = mujoco.MjData(self.model)
 
-        # Frame-skip: we will call mujoco.mj_step() frame_skip times per env
-        # step. This effectively multiplies the simulator timestep by frame_skip
-        # for the purposes of agent actions and observations.
+        # Frame-skip: we call mujoco.mj_step() frame_skip times per env step. 
         self.frame_skip = frame_skip
         self.max_episode_steps = max_episode_steps
         self.render_width = render_width
         self.render_height = render_height
         self.goal_reach_threshold = goal_reach_threshold
-        # Effective control timestep used by accel/jerk calculations
         self.dt = self.model.opt.timestep * self.frame_skip
 
         # Goal sampling bounds (3D). If not provided, sensible defaults are
@@ -108,8 +91,6 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         
 
         # Initialize indices and ID arrays for joints, bodies and actuators.
-        # These helper methods query the MuJoCo model by name so that the
-        # rest of the class can operate on integer IDs instead of strings.
         self._init_manipulator_ids()
         self._init_obstacle_ids()
         self._init_actuator_ids()
@@ -132,8 +113,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self.jerk_penalty = 1e-2
         self.step_penalty = 1e-2
 
-        # Renderer is lazily created on the first call to render(). The
-        # MuJoCo Renderer holds GPU/GL state so we keep it optional.
+        # Renderer is lazily created on the first call to render().
         self._renderer: Optional[mujoco.Renderer] = None
 
         # RNG for environment-level randomness (goal sampling, etc.)

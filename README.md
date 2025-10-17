@@ -1,137 +1,56 @@
-# 🦾 ME5418 – Franka Panda Obstacle Simulation & RL Training
+# ME5418 – Franka Panda Obstacle Simulation & RL Training
 
 This repository provides a **MuJoCo-based simulation** of a Franka Emika Panda manipulator with dynamic obstacles, and optionally supports **reinforcement learning (RL) training** using **Stable-Baselines3 (SB3)**.
 
 ---
 
-## 🔍 1. Environment Setup
+## 1. Environment Setup
 
-```bash
-# 1. Create & activate environment
-conda create -n me5418 python=3.10
+### Prerequisites
+- Install Conda (Anaconda or Miniconda). Recommended: use Miniconda for a
+  minimal install or Anaconda if you want a large preinstalled scientific
+  stack.
+
+  Quick links and recommended versions
+  -  Miniconda (recommended minimal installer): https://docs.conda.io/en/latest/miniconda.html
+  - Anaconda (full distribution): https://www.anaconda.com/products/distribution#download-section
+
+
+### 1) Create the Conda environment from YAML
+
+```powershell
+# create a new Conda environment for this project
+conda env create -f environment-sim.yaml --name me5418
+```
+
+### 2) Activate and verify the environment
+
+```powershell
 conda activate me5418
 
-# 2. Install basic packages
-conda install numpy scipy matplotlib tqdm
+# Quick checks
+python --version
+python -c "import numpy as np; print('numpy', np.__version__)"
+python -c "import gymnasium; print('gymnasium OK')"
+python -c "import mujoco; print('mujoco OK')"
 ```
 
----
+## 2. Run the Project
 
-## 🤖 2. Simulation Environment Setup 
-
-```bash
-# Install MuJoCo and Gymnasium
-pip install mujoco==3.3.6 gymnasium
-# visualization packages
-pip install imageio imageio-ffmpeg opencv-python
+```powershell
+python env\random_action.py
 ```
 
-```bash
-# Check installation  
-python simulation.py
-```
-
-Videos are saved in the `recordings/` folder.
-
----
-
-> If a MuJoCo viewer opens and the robot moves, your setup works ✅
-
----
-
-## 🧠 3. Reinforcement Learning (Optional)
-
-```bash
-# Install RL packages
-pip install stable-baselines3[extra] gymnasium-robotics
-
-# Start training
-python train/train.py
-```
-
-
-
----
-
-## 📈 4. Visualization
-
-### 4.1 TensorBoard
-
-```bash
-pip install tensorboard
-tensorboard --logdir tb_logs
-```
-
-Then open your browser and visit:
-
-```
-http://localhost:6006
-```
-
-
-
-## 🗂️ 5. Project Structure
+## 3. Project Structure
 
 ```
 ME5418/
 ├── env/                     # PandaObstacleEnv
 │   └── env.py
+|   └── random_action.py     # Visualize the random action
 ├── franka_emika_panda/      # MuJoCo XML models
-│   └── scene_withobstacles.xml
-├── train/                   # training scripts
-│   └── train.py
-├── models/                  # saved models
-├── recordings/              # videos
-├── tb_logs/                 # tensorboard logs
-├── environment-sim-only.yaml
-├── environment-full.yaml
+│   └── panda.xml
+|   └── scene_withobstacles.xml
+├── environment-sim.yaml
 └── README.md
-```
-
-## 🔧 6. Full Environment (Optional)
-
-### Simulation-only YAML
-
-```yaml
-name: me5418-sim-only
-channels:
-  - conda-forge
-dependencies:
-  - python=3.10
-  - pip
-  - numpy
-  - scipy
-  - matplotlib
-  - tqdms
-  - pip:
-      - mujoco==3.3.6
-      - gymnasium
-      - imageio
-      - imageio-ffmpeg
-      - opencv-python
-```
-
-### Full RL YAML
-
-```yaml
-name: me5418-full
-channels:
-  - conda-forge
-dependencies:
-  - python=3.10
-  - pip
-  - numpy
-  - scipy
-  - matplotlib
-  - tqdm
-  - tensorboard=2.14.*
-  - protobuf=3.20.*
-  - pip:
-      - mujoco==3.3.6
-      - gymnasium
-      - gymnasium-robotics
-      - stable-baselines3[extra]
-      - imageio
-      - imageio-ffmpeg
-      - opencv-python
 ```

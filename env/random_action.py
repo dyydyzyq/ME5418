@@ -11,14 +11,6 @@ Primary components:
 - run_episode / main: run one or more random episodes and print simple
     diagnostics. Useful for smoke-testing environment integration and
     catching NaNs, invalid shapes, or immediate crashes.
-
-Notes / behavior:
-- The script samples actions via `env.action_space.sample()` so it exercises
-    exactly the same action bounds the training pipeline would use.
-- Because MuJoCo returns many arrays as float64, we sometimes cast to
-    float32 for rendering/printing — this is only cosmetic.
-- The script intentionally keeps dependencies minimal and does lazy imports
-    for optional visualization so it can run in headless CI if needed.
 """
 
 import argparse
@@ -49,20 +41,16 @@ class EpisodeStats:
 
 class LiveRenderer:
     def __init__(self, width: int, height: int) -> None:
-        # Lazy import --- plotting is optional and can be disabled for
-        # headless execution (e.g. CI or when using --no-render). Importing
-        # matplotlib only when needed reduces startup cost and avoids hard
-        # dependency requirements for non-visual runs.
-        import matplotlib.pyplot as plt  # type: ignore
+     
+        import matplotlib.pyplot as plt  
 
         # Turn on interactive mode so the plot updates without blocking the
-        # script. Store the module reference so we can call plt.pause/close.
+        # script.
         plt.ion()
         self._plt = plt
 
         # Create a figure sized in inches. We assume 100 dpi and convert the
         # supplied pixel-based width/height to inches for the figure size.
-        # This determines the resolution of images displayed in the preview.
         self._fig, self._ax = plt.subplots(figsize=(width / 100, height / 100))
 
         # _image will hold the AxesImage returned by imshow; _overlay is a
@@ -82,9 +70,6 @@ class LiveRenderer:
         distance: float,
         action: np.ndarray,
     ) -> None:
-        # On the first call create the image and overlay text artist. We
-        # reuse the same artists on subsequent frames which is much cheaper
-        # than recreating them every update.
         if self._image is None:
             # imshow returns an AxesImage object we keep a reference to so
             # we can call set_data(frame) to update pixel data in-place.
@@ -185,7 +170,6 @@ def run_episode(
         # script exercises the same action bounds the training code will.
         action = env.action_space.sample()
         # Sanity-check: action_space.contains is a defensive check
-        # (it should always be True for a sample from the space).
         assert env.action_space.contains(action), "Sampled action is outside the action space."
         print(f"Episode {episode_idx}, step {step}: action {action}")
 
