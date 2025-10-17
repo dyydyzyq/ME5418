@@ -4,7 +4,7 @@ from typing import Optional
 
 import numpy as np
 
-from env import PandaObstacleEnv  # 确保路径正确
+from env import PandaObstacleEnv  
 
 
 @dataclass
@@ -18,8 +18,9 @@ class EpisodeStats:
 
 class LiveRenderer:
     def __init__(self, width: int, height: int) -> None:
-        import matplotlib.pyplot as plt  # Lazy import to avoid hard dependency when headless
-
+        import matplotlib.pyplot as plt  
+         # Set up an interactive matplotlib window for live frames.
+        ...
         plt.ion()
         self._plt = plt
         self._fig, self._ax = plt.subplots(figsize=(width / 100, height / 100))
@@ -27,7 +28,7 @@ class LiveRenderer:
         self._overlay = None
         self._ax.axis("off")
 
-    def update(
+    def update( # Refresh the rendered frame and overlay current rollout stats.
         self,
         frame,
         step: int,
@@ -59,12 +60,12 @@ class LiveRenderer:
         self._fig.canvas.draw_idle()
         self._plt.pause(1 / 60)
 
-    def close(self) -> None:
+    def close(self) -> None: # Cleanly close the matplotlib window.
         self._plt.ioff()
         self._plt.close(self._fig)
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args() -> argparse.Namespace:   # Parse command-line knobs for running random rollouts.
     parser = argparse.ArgumentParser(description="Roll out random actions in PandaObstacleEnv.")
     parser.add_argument("--episodes", type=int, default=3, help="Number of random episodes to run.")
     parser.add_argument(
@@ -79,7 +80,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def log_observation(obs: np.ndarray) -> None:
+def log_observation(obs: np.ndarray) -> None:  # Report basic stats about the observation vector for debugging.
     if not np.all(np.isfinite(obs)):
         finite_ratio = np.isfinite(obs).sum() / obs.size
         print(f"Warning: Observation contains non-finite values ({finite_ratio:.2%} finite).")
@@ -87,7 +88,7 @@ def log_observation(obs: np.ndarray) -> None:
     print("Observation sample (first 5 values):", obs[:5])
 
 
-def run_episode(
+def run_episode(  # Execute a single random-policy episode and gather summary stats.
     env: PandaObstacleEnv,
     episode_idx: int,
     max_steps: int,
@@ -100,12 +101,9 @@ def run_episode(
     print(f"Episode {episode_idx}: goal position {info['goal']}")
 
     for step in range(max_steps):
-        action = env.action_space.sample()
+        action = env.action_space.sample()      #Sample a random action from the environment's action space.
         assert env.action_space.contains(action), "Sampled action is outside the action space."
         print(f"Episode {episode_idx}, step {step}: action {action}")
-        # grasp_center = info.get("grasp_center", None)
-        # print(f"Episode {episode_idx}, Step {step}: Grasp Center = {grasp_center}")
-
         obs, reward, terminated, truncated, info = env.step(action)
         stats.steps = step + 1
         stats.return_ += reward
@@ -130,7 +128,7 @@ def run_episode(
     return stats
 
 
-def main() -> None:
+def main() -> None:  
 
     args = parse_args()
     enable_render = not args.no_render

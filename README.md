@@ -7,31 +7,16 @@ This repository provides a **MuJoCo-based simulation** of a Franka Emika Panda m
 ## 🔍 1. Environment Setup
 
 ```bash
-# 1. Create & activate environment
-conda create -n me5418 python=3.10
-conda activate me5418
+# 1. Create & activate environment 
 
-# 2. Install basic packages
-conda install numpy scipy matplotlib tqdm
-```
-
----
-
-## 🤖 2. Simulation Environment Setup 
+```bash 
+conda env create -f environment-sim-only.yaml  #show the random_action
+conda env create -f environment-full.yaml  #include the train
 
 ```bash
-# Install MuJoCo and Gymnasium
-pip install mujoco==3.3.6 gymnasium
-# visualization packages
-pip install imageio imageio-ffmpeg opencv-python
+python random_action.py
 ```
 
-```bash
-# Check installation  
-python simulation.py
-```
-
-Videos are saved in the `recordings/` folder.
 
 ---
 
@@ -42,9 +27,6 @@ Videos are saved in the `recordings/` folder.
 ## 🧠 3. Reinforcement Learning (Optional)
 
 ```bash
-# Install RL packages
-pip install stable-baselines3[extra] gymnasium-robotics
-
 # Start training
 python train/train.py
 ```
@@ -75,14 +57,12 @@ http://localhost:6006
 ```
 ME5418/
 ├── env/                     # PandaObstacleEnv
-│   └── env.py
+│   └── env.py              #environment
+|   └── random_action.py    #random_action
 ├── franka_emika_panda/      # MuJoCo XML models
 │   └── scene_withobstacles.xml
 ├── train/                   # training scripts
 │   └── train.py
-├── models/                  # saved models
-├── recordings/              # videos
-├── tb_logs/                 # tensorboard logs
 ├── environment-sim-only.yaml
 ├── environment-full.yaml
 └── README.md

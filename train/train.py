@@ -5,16 +5,17 @@ import sys
 from pathlib import Path
 from typing import Callable, Dict, List
 
-from stable_baselines3 import PPO, SAC
+from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import BaseCallback, CheckpointCallback, EvalCallback
-from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv, VecMonitor
+from stable_baselines3.common.logger import configure
+from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv, VecMonitor, VecNormalize
 
 # Ensure the repo root is importable so we can load the custom environment.
 REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from env.env import PandaObstacleEnv  # noqa: E402
+from env.env import PandaObstacleEnv 
 
 import numpy as np
 
@@ -28,7 +29,62 @@ try:
 except ImportError:  # pragma: no cover - optional dependency
     imageio = None
 
-ALGORITHMS: Dict[str, Callable] = {"ppo": PPO, "sac": SAC}
+ALGO_NAME = "ppo"
+
+
+def parse_args() -> argparse.Namespace:   # set the parameters for training
+    parser = argparse.ArgumentParser(description="Train the Panda obstacle avoidance policy with SB3 (PPO only).")
+    parser.add_argument("--device", type=str, default="cpu", help="Device to use for training (e.g., 'cpu', 'cuda', or 'auto')")
+    parser.add_argument("--n-steps", type=int, default=2048, help="Number of steps to run per environment per update (PPO only)")
+    parser.add_argument("--total-timesteps", type=int, default=20000_00, help="Number of training steps")
+    parser.add_argument("--num-envs", type=int, default=16, help="Number of parallel vectorized environments")
+    parser.add_argument("--log-dir", type=Path, default=Path("logs"), help="Directory for SB3 logs")
+    parser.add_argument("--model-dir", type=Path, default=Path("models"), help="Directory to save models")
+    parser.add_argument("--tensorboard", type=Path, default=Path("tb_logs"), help="TensorBoard log directory")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
+    parser.add_argument("--checkpoint-freq", type=int, default=50_000, help="Environment steps between checkpoints")
+    parser.add_argument("--eval-freq", type=int, default=10_000, help="Environment steps between policy evaluations")
+    parser.add_argument("--eval-episodes", type=int, default=5, help="Episodes per evaluation run")
+    parser.add_argument("--policy", type=str, default="MlpPolicy", help="Policy class name for the algorithm")
+    parser.add_argument(
+        "--rollout-episodes",
+        type=int,   
+        default=1,
+        help="Number of episodes to record for the post-training policy rollout video",
+    )
+    parser.add_argument(
+        "--rollout-video",
+        type=Path,
+        default=None,
+        help="Optional path for the policy rollout video (default: logs/visuals/final_policy_rollout.mp4)",
+    )
+    parser.add_argument(
+        "--resume",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Resume training from the latest saved model and VecNormalize statistics if available.",
+    )
+    return parser.parse_args()
+
+
+class VecNormalizeSyncCallback(BaseCallback):
+    """Keep evaluation VecNormalize statistics aligned with the training environment."""
+
+    def __init__(self, eval_env: VecNormalize | None) -> None:
+        super().__init__(verbose=0)
+        self.eval_env = eval_env
+
+    def _on_step(self) -> bool:
+        if not isinstance(self.training_env, VecNormalize):
+            return True
+        if self.eval_env is None or not isinstance(self.eval_env, VecNormalize):
+            return True
+
+        if self.training_env.obs_rms is not None:
+            self.eval_env.obs_rms = np.copy(self.training_env.obs_rms)
+        if self.training_env.ret_rms is not None:
+            self.eval_env.ret_rms = np.copy(self.training_env.ret_rms)
+        return True
 
 
 class TrainingVisualizationCallback(BaseCallback):
@@ -204,74 +260,86 @@ class TrainingVisualizationCallback(BaseCallback):
         plt.close(fig)
 
 
-def record_policy_rollout(
+def record_policy_rollout(           #record the video of the robot performing the task
     model,
     env_factory: Callable[[], PandaObstacleEnv],
     video_path: Path,
     *,
     episodes: int = 1,
     deterministic: bool = True,
+    normalization_path: Path | None = None,
 ) -> None:
     if imageio is None:
         print("imageio not available, skipping policy rollout video generation.")
         return
 
-    env = env_factory()
-    fps = env.metadata.get("render_fps", 30) if hasattr(env, "metadata") else 30
+    if normalization_path is not None:
+        # Recreate the VecNormalize wrapper for deterministic evaluation
+        rollout_vec_env = DummyVecEnv([env_factory])
+        rollout_vec_env = VecMonitor(rollout_vec_env)
+        vec_env = VecNormalize.load(str(normalization_path), rollout_vec_env)
+        vec_env.training = False
+        vec_env.norm_reward = False
+        base_env = vec_env.envs[0]
+    else:
+        vec_env = None
+        base_env = env_factory()
+
+    fps = base_env.metadata.get("render_fps", 30) if hasattr(base_env, "metadata") else 30
     frames: List[np.ndarray] = []
 
     try:
         for _ in range(episodes):
-            obs, _ = env.reset()
             terminated = False
             truncated = False
             step_count = 0
-            max_steps = getattr(env, "max_episode_steps", 1000)
+            max_steps = getattr(base_env, "max_episode_steps", 1000)
+
+            if vec_env is not None:
+                obs = vec_env.reset()
+            else:
+                obs, _ = base_env.reset()
 
             while not (terminated or truncated) and step_count < max_steps:
-                frame = env.render()
+                frame = base_env.render()
                 frames.append(frame)
                 action, _ = model.predict(obs, deterministic=deterministic)
-                obs, _, terminated, truncated, _ = env.step(action)
+                if vec_env is not None:
+                    obs, _, dones, infos = vec_env.step(action)
+                    done_flag = bool(dones[0])
+                    info = infos[0] if infos else {}
+                    truncated = bool(info.get("TimeLimit.truncated", False))
+                    terminated = done_flag and not truncated
+                else:
+                    obs, _, terminated, truncated, _ = base_env.step(action)
                 step_count += 1
 
             if terminated or truncated:
-                frame = env.render()
+                frame = base_env.render()
                 frames.append(frame)
 
     finally:
-        env.close()
+        if vec_env is not None:
+            vec_env.close()
+        else:
+            base_env.close()
 
     if not frames:
         print("No frames captured for policy rollout video.")
         return
 
     video_path.parent.mkdir(parents=True, exist_ok=True)
-    imageio.mimsave(video_path, frames, fps=fps)
+    suffix = video_path.suffix.lower()
+    if suffix == ".gif":
+        imageio.mimsave(video_path, frames, fps=fps)
+    else:
+        with imageio.get_writer(video_path, fps=fps) as writer:
+            for frame in frames:
+                writer.append_data(frame)
     print(f"Saved policy rollout video to {video_path}")
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Train the Panda obstacle avoidance policy with SB3.")
-    parser.add_argument("--algo", choices=ALGORITHMS.keys(), default="ppo", help="RL algorithm to use")
-    parser.add_argument("--device", type=str, default="cpu", help="Device to use for training (e.g., 'cpu', 'cuda', or 'auto')")
-    parser.add_argument("--total-timesteps", type=int, default=200_000, help="Number of training steps")
-    parser.add_argument("--num-envs", type=int, default=16, help="Number of parallel vectorized environments")
-    parser.add_argument("--log-dir", type=Path, default=Path("logs"), help="Directory for SB3 logs")
-    parser.add_argument("--model-dir", type=Path, default=Path("models"), help="Directory to save models")
-    parser.add_argument("--tensorboard", type=Path, default=Path("tb_logs"), help="TensorBoard log directory")
-    parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
-    parser.add_argument("--checkpoint-freq", type=int, default=50_000, help="Environment steps between checkpoints")
-    parser.add_argument("--eval-freq", type=int, default=10_000, help="Environment steps between policy evaluations")
-    parser.add_argument("--eval-episodes", type=int, default=5, help="Episodes per evaluation run")
-    parser.add_argument("--policy", type=str, default="MlpPolicy", help="Policy class name for the algorithm")
-    parser.add_argument(
-        "--rollout-episodes",
-        type=int,   
-        default=1,
-        help="Number of episodes to record for the post-training policy rollout video",
-    )
-    return parser.parse_args()
+
 
 
 def make_env(seed: int) -> Callable[[], PandaObstacleEnv]:
@@ -286,22 +354,52 @@ def make_env(seed: int) -> Callable[[], PandaObstacleEnv]:
 def main() -> None:
     args = parse_args()
 
-    algo_key = args.algo.lower()
-    algo_cls = ALGORITHMS[algo_key]
+    algo_cls = PPO
 
-    args.log_dir.mkdir(parents=True, exist_ok=True)
+    args.log_dir.mkdir(parents=True, exist_ok=True)  #create the directories 
     args.model_dir.mkdir(parents=True, exist_ok=True)
     args.tensorboard.mkdir(parents=True, exist_ok=True)
 
-    env_fns = [make_env(args.seed + i) for i in range(args.num_envs)]
-    vec_env = SubprocVecEnv(env_fns) if args.num_envs > 1 else DummyVecEnv(env_fns)
-    vec_env = VecMonitor(vec_env, filename=str(args.log_dir / "monitor.csv"))
+    tensorboard_run_dir = args.tensorboard / f"{ALGO_NAME}_panda"
+    tensorboard_run_dir.mkdir(parents=True, exist_ok=True)
 
-    eval_env = DummyVecEnv([make_env(args.seed + 10_000)])
-    eval_env = VecMonitor(eval_env)
+    normalization_path = args.model_dir / f"{ALGO_NAME}_panda_vecnormalize.pkl"
+
+    env_fns = [make_env(args.seed + i) for i in range(args.num_envs)]
+    train_env = SubprocVecEnv(env_fns) if args.num_envs > 1 else DummyVecEnv(env_fns)
+    train_env = VecMonitor(train_env, filename=str(args.log_dir / "monitor.csv"))
+
+    if args.resume and normalization_path.exists():
+        vec_env = VecNormalize.load(str(normalization_path), train_env)
+        vec_env.training = True
+        vec_env.norm_reward = True
+    else:
+        vec_env = VecNormalize(train_env, norm_obs=True, norm_reward=True, clip_obs=10.0)
+
+    eval_env_base = DummyVecEnv([make_env(args.seed + 10_000)])
+    eval_env_base = VecMonitor(eval_env_base)
+    if args.resume and normalization_path.exists():
+        eval_env = VecNormalize.load(str(normalization_path), eval_env_base)
+    else:
+        eval_env = VecNormalize(
+            eval_env_base,
+            training=False,
+            norm_obs=True,
+            norm_reward=False,
+            clip_obs=10.0,
+        )
+    eval_env.training = False
+    eval_env.norm_reward = False
+
+    if isinstance(vec_env, VecNormalize) and isinstance(eval_env, VecNormalize):
+        if vec_env.obs_rms is not None:
+            eval_env.obs_rms = np.copy(vec_env.obs_rms)
+        if vec_env.ret_rms is not None:
+            eval_env.ret_rms = np.copy(vec_env.ret_rms)
 
     visualization_dir = args.log_dir / "visuals"
     visualization_callback = TrainingVisualizationCallback(visualization_dir)
+    sync_callback = VecNormalizeSyncCallback(eval_env)
 
     checkpoint_callback = None
     if args.checkpoint_freq > 0:
@@ -310,8 +408,11 @@ def main() -> None:
         checkpoint_callback = CheckpointCallback(
             save_freq=max(1, args.checkpoint_freq // args.num_envs),
             save_path=str(checkpoint_dir),
-            name_prefix=f"{algo_key}_panda",
+            name_prefix=f"{ALGO_NAME}_panda",
+            save_vecnormalize=True,
         )
+    else:
+        checkpoint_dir = args.model_dir / "checkpoints"
 
     eval_callback = None
     if args.eval_freq > 0:
@@ -326,52 +427,68 @@ def main() -> None:
             deterministic=True,
         )
 
-    callbacks = [cb for cb in (checkpoint_callback, eval_callback, visualization_callback) if cb is not None]
+    callbacks = [
+        cb
+        for cb in (checkpoint_callback, eval_callback, visualization_callback, sync_callback)
+        if cb is not None
+    ]
 
-    model = algo_cls(
-        args.policy,
-        vec_env,
-        verbose=1,
-        tensorboard_log=str(args.tensorboard),
-        seed=args.seed,
-    )
+    def _latest_checkpoint(directory: Path) -> Path | None:
+        if not directory.exists():
+            return None
+        candidates = sorted(directory.glob("*.zip"), key=lambda path: path.stat().st_mtime, reverse=True)
+        return candidates[0] if candidates else None
 
-    model.learn(total_timesteps=args.total_timesteps, callback=callbacks if callbacks else None)
+    final_model_path = args.model_dir / f"{ALGO_NAME}_panda_final.zip"
+    resume_path: Path | None = None
+    if args.resume:
+        if final_model_path.exists():
+            resume_path = final_model_path
+        else:
+            resume_path = _latest_checkpoint(checkpoint_dir)
 
-    model_path = args.model_dir / f"{algo_key}_panda_final"
-    model.save(str(model_path))
-
-    rollout_env_factory = make_env(args.seed + 20_000)
-
-    best_model = model
-    best_video_path = visualization_dir / "best_policy_rollout.gif"
-    best_model_source = "final trained model"
-
-    if eval_callback is not None:
-        best_model_path = Path(eval_callback.best_model_path)
-        if best_model_path.suffix == "":
-            best_model_path = best_model_path.with_suffix(".zip")
-        if best_model_path.exists():
-            best_model = algo_cls.load(str(best_model_path))
-            best_model_source = f"best checkpoint ({best_model_path.name})"
-
-    print(f"Recording rollout video using {best_model_source}.")
-    record_policy_rollout(
-        best_model,
-        rollout_env_factory,
-        best_video_path,
-        episodes=max(1, args.rollout_episodes),
-    )
-
-    if best_model is not model:
-        final_video_path = visualization_dir / "final_policy_rollout.gif"
-        print("Recording rollout video for the final trained model.")
-        record_policy_rollout(
-            model,
-            rollout_env_factory,
-            final_video_path,
-            episodes=max(1, args.rollout_episodes),
+    if resume_path is not None:
+        model = algo_cls.load(str(resume_path), env=vec_env, device=args.device)
+        model.tensorboard_log = str(tensorboard_run_dir)
+        if hasattr(model, "n_steps"):
+            model.n_steps = args.n_steps
+        new_logger = configure(str(tensorboard_run_dir), ["stdout", "tensorboard"])
+        model.set_logger(new_logger)
+        reset_num_timesteps = False
+    else:
+        model = algo_cls(
+            args.policy,
+            vec_env,
+            verbose=1,
+            tensorboard_log=str(tensorboard_run_dir),
+            seed=args.seed,
+            device=args.device,
+            n_steps=args.n_steps,
         )
+        reset_num_timesteps = True
+
+    model.learn(
+        total_timesteps=args.total_timesteps,
+        callback=callbacks if callbacks else None,
+        tb_log_name=f"{ALGO_NAME}_panda",
+        reset_num_timesteps=reset_num_timesteps,
+    )
+
+    model.save(str(final_model_path))
+    vec_env.training = False
+    vec_env.norm_reward = False
+    vec_env.save(str(normalization_path))
+
+    rollout_env_factory = make_env(args.seed + 20000)
+    default_video_path = visualization_dir / "final_policy_rollout.mp4"
+    video_path = args.rollout_video if args.rollout_video is not None else default_video_path
+    record_policy_rollout(
+        model,
+        rollout_env_factory,
+        video_path,
+        episodes=args.rollout_episodes,
+        normalization_path=normalization_path,
+    )
 
     vec_env.close()
     eval_env.close()
