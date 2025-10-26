@@ -177,11 +177,8 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
             phase + np.pi / 2.0
         )
 
-    def _get_joint_positions(self) -> np.ndarray:  # get the jonit positions in the world frame
-        positions = []
-        for body_id in self.model.jnt_bodyid[self.manip_joint_ids]:
-            positions.append(self.data.xpos[body_id])
-        return np.concatenate(positions)
+    def _get_joint_positions(self) -> np.ndarray:  # get the jonit positions of the manipulator
+        return self.data.qpos[self.manip_joint_ids].copy()
 
     def _get_obstacle_positions(self) -> np.ndarray: #get the obstacle positions in the world frame
         return self.data.xpos[self.obstacle_body_ids].ravel()
@@ -189,8 +186,11 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
     def _get_obs(self) -> np.ndarray:   #get the observation of the environment
         joint_vel = self.get_joint_velocities()
         joint_pos = self._get_joint_positions()
+        ee_pos = self.get_grasp_center()
+        goal_pos_rel = self.goal_pos - ee_pos
+        obstacle_pos_rel = self._get_obstacle_positions() - ee_pos.repeat(2)
         obs = np.concatenate(
-            [joint_vel, joint_pos, self.goal_pos, self._get_obstacle_positions()]
+            [joint_vel, joint_pos, goal_pos_rel, obstacle_pos_rel]
         )
         return obs.astype(np.float32)
     
