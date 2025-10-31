@@ -1,5 +1,3 @@
-"""Forward/backward demo for the actor-critic network in the Panda obstacle env."""
-
 from __future__ import annotations
 
 import sys
@@ -13,7 +11,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from env.env import PandaObstacleEnv
-from net.net import MLPConfig, build_actor_critic_for_env
+from net_ppo import MLPConfig, build_actor_critic_for_env
 
 
 def _format_tensor(tensor: torch.Tensor) -> str:
@@ -67,6 +65,8 @@ def main() -> None:
         print(f"  Policy weight grad  : {_format_tensor(model.policy_head.weight.grad)}")
         print(f"  Value weight grad   : {_format_tensor(model.value_head.weight.grad)}")
         print(f"  Log-std grad        : {_format_tensor(model.log_std.grad)}")
+        print("✅ Forward & backward test completed successfully!")
+        print("-------------------\n ")
 
     finally:
         env.close()

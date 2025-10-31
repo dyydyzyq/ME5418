@@ -22,7 +22,7 @@ DEFAULT_ACTIVATIONS: dict[str, ActivationFactory] = {
 class MLPConfig:
     # Configuration for the shared trunk of the policy/value networks.
 
-    hidden_sizes: Sequence[int] = field(default_factory=lambda: (64, 64))
+    hidden_sizes: Sequence[int] = field(default_factory=lambda: (128, 128))
     activation: str = "tanh"
     ortho_init: bool = True
     log_std_init: float = -0.5

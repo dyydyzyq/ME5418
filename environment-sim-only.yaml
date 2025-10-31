@@ -4,11 +4,12 @@ channels:
 dependencies:
   - python=3.10
   - pip
-  - numpy
-  - scipy
-  - matplotlib
-  - tqdm
+
   - pip:
+      - numpy
+      - scipy
+      - matplotlib
+      - tqdm
       - mujoco==3.3.6
       - gymnasium
       - imageio

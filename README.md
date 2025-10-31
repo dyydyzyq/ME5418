@@ -10,13 +10,18 @@ This repository provides a **MuJoCo-based simulation** of a Franka Emika Panda m
 # 1. Create & activate environment 
 
 ```bash 
-conda env create -f environment-sim-only.yaml  #show the random_action
-conda env create -f environment-full.yaml  #include the train
+mamba env create -f environment-sim-only.yaml  #show the random_action
+mamba env create -f environment-full.yaml  #include the train
 
 ```bash
-python random_action.py
+chmod +x net/.sh
+./net/.sh  #show the output and input of the nueral network 
 ```
 
+
+```bash
+python env/random_action.py  #show the random action 
+```
 
 ---
 
@@ -30,7 +35,6 @@ python random_action.py
 # Start training
 python train/train.py
 ```
-
 
 
 ---
@@ -51,24 +55,7 @@ http://localhost:6006
 ```
 
 
-
-## 🗂️ 5. Project Structure
-
-```
-ME5418/
-├── env/                     # PandaObstacleEnv
-│   └── env.py              #environment
-|   └── random_action.py    #random_action
-├── franka_emika_panda/      # MuJoCo XML models
-│   └── scene_withobstacles.xml
-├── train/                   # training scripts
-│   └── train.py
-├── environment-sim-only.yaml
-├── environment-full.yaml
-└── README.md
-```
-
-## 🔧 6. Full Environment (Optional)
+## 🔧 5. Full Environment (Optional)
 
 ### Simulation-only YAML
 
