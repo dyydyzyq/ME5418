@@ -1,7 +1,3 @@
-"""
-Minimal SAC Network Forward/Backward Test
-"""
-
 import torch
 import sys, os
 
@@ -52,8 +48,9 @@ def main():
     print(f"Actor grad norm sum: {actor_grad:.6f}")
     print(f"Critic1 grad norm sum: {critic_grad:.6f}")
 
-    print("✅ Forward & backward test completed successfully!")
+    print("✅ SAC Nueral Network: Forward & backward test completed successfully!")
     print("-------------------\n ")
 
 if __name__ == "__main__":
     main()
+

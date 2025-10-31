@@ -65,7 +65,7 @@ def main() -> None:
         print(f"  Policy weight grad  : {_format_tensor(model.policy_head.weight.grad)}")
         print(f"  Value weight grad   : {_format_tensor(model.value_head.weight.grad)}")
         print(f"  Log-std grad        : {_format_tensor(model.log_std.grad)}")
-        print("✅ Forward & backward test completed successfully!")
+        print("✅  PPO Nueral Network:Forward & backward test completed successfully!")
         print("-------------------\n ")
 
     finally:

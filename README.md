@@ -10,7 +10,6 @@ This repository provides a **MuJoCo-based simulation** of a Franka Emika Panda m
 # 1. Create & activate environment 
 
 ```bash 
-mamba env create -f environment-sim-only.yaml  #show the random_action
 mamba env create -f environment-full.yaml  #include the train
 
 ```bash
@@ -29,7 +28,7 @@ python env/random_action.py  #show the random action
 
 ---
 
-## 🧠 3. Reinforcement Learning (Optional)
+## 🧠 2. Reinforcement Learning (Optional)
 
 ```bash
 # Start training
@@ -39,9 +38,9 @@ python train/train.py
 
 ---
 
-## 📈 4. Visualization
+## 📈 3. Visualization
 
-### 4.1 TensorBoard
+### 3.1 TensorBoard
 
 ```bash
 pip install tensorboard
@@ -55,7 +54,7 @@ http://localhost:6006
 ```
 
 
-## 🔧 5. Full Environment (Optional)
+## 🔧 4. Full Environment (Optional)
 
 ### Simulation-only YAML
 
