@@ -1,17 +1,15 @@
 from __future__ import annotations
-
 from dataclasses import dataclass, field
 from typing import Callable, Sequence
-
 import gymnasium as gym
 import torch
 import torch.nn as nn
-
 
 ActivationFactory = Callable[[], nn.Module]
 
 
 def _tanh_factory() -> nn.Module:
+    """Return a Tanh activation module."""
     return nn.Tanh()
 
 
@@ -22,7 +20,7 @@ DEFAULT_ACTIVATIONS: dict[str, ActivationFactory] = {
 
 @dataclass(slots=True)
 class MLPConfig:
-    """Configuration for the shared trunk of the policy/value networks."""
+    # Configuration for the shared trunk of the policy/value networks.
 
     hidden_sizes: Sequence[int] = field(default_factory=lambda: (64, 64))
     activation: str = "tanh"
@@ -30,6 +28,7 @@ class MLPConfig:
     log_std_init: float = -0.5
 
     def activation_factory(self) -> ActivationFactory:
+        """Resolve the configured activation name into a callable factory."""
         if self.activation.lower() not in DEFAULT_ACTIVATIONS:
             raise ValueError(
                 f"Unsupported activation '{self.activation}'. "
@@ -39,6 +38,7 @@ class MLPConfig:
 
 
 def _init_layer(layer: nn.Linear, *, gain: float = 1.0, ortho_init: bool = True) -> None:
+    """Initialize linear layer weights/biases using orthogonal or Xavier strategy."""
     if ortho_init:
         nn.init.orthogonal_(layer.weight, gain=gain)
     else:
@@ -47,6 +47,7 @@ def _init_layer(layer: nn.Linear, *, gain: float = 1.0, ortho_init: bool = True)
 
 
 def _flatten_obs_space(space: gym.Space) -> int:
+    """Return the flattened observation dimension for a supported Gym space."""
     if isinstance(space, gym.spaces.Box):
         if space.dtype.kind not in {"f", "i"}:
             raise ValueError("Unsupported Box dtype for observations; expected float or int.")
@@ -55,6 +56,7 @@ def _flatten_obs_space(space: gym.Space) -> int:
 
 
 def _infer_action_dim(space: gym.Space) -> int:
+    """Return the flattened action dimension for a supported Gym space."""
     if isinstance(space, gym.spaces.Box):
         if space.shape is None:
             raise ValueError("Box action space shape is undefined.")
@@ -63,7 +65,7 @@ def _infer_action_dim(space: gym.Space) -> int:
 
 
 class ActorCriticMLP(nn.Module):
-    """Actor-Critic network with a shared trunk and separate policy/value heads."""
+    # Actor-Critic network with a shared trunk and separate policy/value heads.
 
     def __init__(self, obs_dim: int, action_dim: int, config: MLPConfig | None = None) -> None:
         super().__init__()
@@ -74,12 +76,14 @@ class ActorCriticMLP(nn.Module):
         activation_factory = self.config.activation_factory()
         hidden_gain = nn.init.calculate_gain(self.config.activation)
         for hidden_size in self.config.hidden_sizes:
+            # Build each hidden block as Linear + activation using the configured initializer.
             layer = nn.Linear(last_dim, hidden_size)
             _init_layer(layer, gain=hidden_gain, ortho_init=self.config.ortho_init)
             layers.append(layer)
             layers.append(activation_factory())
             last_dim = hidden_size
 
+        # Shared trunk for both policy and value heads (identity when no hidden layers).
         self.feature_extractor = nn.Sequential(*layers) if layers else nn.Identity()
 
         self.policy_head = nn.Linear(last_dim, action_dim)
@@ -88,9 +92,11 @@ class ActorCriticMLP(nn.Module):
         self.value_head = nn.Linear(last_dim, 1)
         _init_layer(self.value_head, gain=1.0, ortho_init=self.config.ortho_init)
 
+        # Learnable log standard deviation shared across batch dimension.
         self.log_std = nn.Parameter(torch.full((action_dim,), self.config.log_std_init))
 
     def forward(self, obs: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        # Compute mean actions, log standard deviations, and value estimates.
         if obs.dim() > 2:
             obs = obs.view(obs.size(0), -1)
 
@@ -101,6 +107,7 @@ class ActorCriticMLP(nn.Module):
         return mean_actions, log_std, values
 
     def get_action_distribution(self, obs: torch.Tensor) -> tuple[torch.distributions.Normal, torch.Tensor]:
+        # Construct the Gaussian policy distribution along with value predictions.
         mean, log_std, values = self(obs)
         std = log_std.exp().clamp(min=1e-6)
         distribution = torch.distributions.Normal(mean, std)
@@ -112,6 +119,7 @@ def build_actor_critic_for_env(
     action_space: gym.Space,
     config: MLPConfig | None = None,
 ) -> ActorCriticMLP:
+    # Instantiate an ActorCriticMLP sized to the supplied observation/action spaces.
     obs_dim = _flatten_obs_space(observation_space)
     action_dim = _infer_action_dim(action_space)
     return ActorCriticMLP(obs_dim, action_dim, config=config)
