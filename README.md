@@ -104,8 +104,7 @@ dependencies:
   - scipy
   - matplotlib
   - tqdm
-  - tensorboard=2.14.*
-  - protobuf=3.20.*
+  - tensorboard=2.14
   - pip:
       - mujoco==3.3.6
       - gymnasium
