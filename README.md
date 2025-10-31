@@ -1,38 +1,65 @@
-# 🦾 ME5418 – Franka Panda Obstacle Simulation & RL Training
+# 🦾 ME5418 – Franka Panda Obstacle Simulation & SAC Network
 
 This repository provides a **MuJoCo-based simulation** of a Franka Emika Panda manipulator with dynamic obstacles, and optionally supports **reinforcement learning (RL) training** using **Stable-Baselines3 (SB3)**.
 
 ---
 
-## 🔍 1. Environment Setup
+## 🔍 1. Installation
 
 ```bash
-# 1. Create & activate environment 
-
-```bash 
-conda env create -f environment-sim-only.yaml  #show the random_action
-conda env create -f environment-full.yaml  #include the train
-
-```bash
-python random_action.py
+# Install dependencies and project in editable mode
+pip install -e .
 ```
-
-
 ---
-
-> If a MuJoCo viewer opens and the robot moves, your setup works ✅
-
+> **This installs all required dependencies (PyTorch, MuJoCo, Gymnasium, NumPy).**
 ---
+## 🗂️ 2. Project Structure
 
-## 🧠 3. Reinforcement Learning (Optional)
-
+```
+ME5418/
+├── env/                     # PandaObstacleEnv
+│   └── env.py              #environment
+|   └── random_action.py    #random_action
+├── franka_emika_panda/      # MuJoCo XML models
+│   └── scene_withobstacles.xml
+├── net/                     # SAC neural network (Actor–Critic)
+│   └── net.py               # Network architecture (FeatureExtractor, Actor, Critic)
+|   └── demo.py              # Forward-pass test of SAC network (check input/output shapes)
+├── train/                   # training scripts
+│   └── train.py
+├── environment-sim-only.yaml
+├── environment-full.yaml
+└── README.md
+└── setup.py
+```
+---
+## 🚀 3. Quick Start
+### 3.1 Simulation Test
+Run a simple MuJoCo test to verify setup:
+```bash
+```bash
+python env/random_action.py
+```
+---
+> **A MuJoCo viewer should open and the robot should move randomly.**
+> **If so, your environment works correctly ✅**
+---
+### 3.2 Network Forward Pass Test
+You can test the SAC network forward pass (untrained) via:
+```bash
+```bash
+python net/demo.py
+```
+---
+> **This script checks the network architecture and verifies**
+> **input/output tensor shapes for FeatureExtractor → Actor → Critic.**
+---
+### 3.3 Start Reinforcement Learning Training (Optional)
+```bash
 ```bash
 # Start training
 python train/train.py
 ```
-
-
-
 ---
 
 ## 📈 4. Visualization
@@ -49,69 +76,36 @@ Then open your browser and visit:
 ```
 http://localhost:6006
 ```
+---
+## 🧩 5. About the Network
+The **net/ folder** contains the neural network implementation used for Soft Actor-Critic (SAC) training.
+
+🔧 Components
+| File | Description |
+|------|--------------|
+| `net.py` | Defines the SAC networks: **FeatureExtractor**, **Actor**, and **Critic**. |
+| `demo.py` | A simple script for **network structure testing** – runs a forward pass of the untrained network to ensure input/output dimensions are correct. |                                                                                                                                                                                                                               |
 
 
+🧠 Logic Flow
 
-## 🗂️ 5. Project Structure
+**1**.Environment provides observation (state)
+      → sent into FeatureExtractor
+      → outputs encoded feature vector.
 
+**2**.Actor head computes policy distribution parameters (μ, σ).
+
+**3**.Critic heads evaluate Q-values.
+
+---
+## 🔧 6. Testing tips
+After installation, test with:
+```bash
+python env/random_action.py
 ```
-ME5418/
-├── env/                     # PandaObstacleEnv
-│   └── env.py              #environment
-|   └── random_action.py    #random_action
-├── franka_emika_panda/      # MuJoCo XML models
-│   └── scene_withobstacles.xml
-├── train/                   # training scripts
-│   └── train.py
-├── environment-sim-only.yaml
-├── environment-full.yaml
-└── README.md
+or run network test:
+```bash
+```bash
+python net/demo.py
 ```
-
-## 🔧 6. Full Environment (Optional)
-
-### Simulation-only YAML
-
-```yaml
-name: me5418-sim-only
-channels:
-  - conda-forge
-dependencies:
-  - python=3.10
-  - pip
-  - numpy
-  - scipy
-  - matplotlib
-  - tqdms
-  - pip:
-      - mujoco==3.3.6
-      - gymnasium
-      - imageio
-      - imageio-ffmpeg
-      - opencv-python
-```
-
-### Full RL YAML
-
-```yaml
-name: me5418-full
-channels:
-  - conda-forge
-dependencies:
-  - python=3.10
-  - pip
-  - numpy
-  - scipy
-  - matplotlib
-  - tqdm
-  - tensorboard=2.14.*
-  - protobuf=3.20.*
-  - pip:
-      - mujoco==3.3.6
-      - gymnasium
-      - gymnasium-robotics
-      - stable-baselines3[extra]
-      - imageio
-      - imageio-ffmpeg
-      - opencv-python
-```
+---

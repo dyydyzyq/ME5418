@@ -97,7 +97,7 @@ def test_actor_forward_pass(sac_networks, device):
     print(f"\n🎯 Testing action generation...")
     time.sleep(DEMO_DELAY)
     with torch.no_grad():
-        action, log_prob, new_hidden = actor.get_action(states, deterministic=False)
+        action, log_prob, new_hidden = actor.get_action_and_logprob(states, deterministic=False)
     time.sleep(DEMO_DELAY)
     print(f"   - Action shape: {action.shape}")
     print(f"   -{action}")
@@ -313,7 +313,7 @@ def test_different_batch_sizes(sac_networks, device):
         with torch.no_grad():
             # Actor
             policy_mean, policy_log_std, _ = actor(states)
-            action, log_prob, _ = actor.get_action(states, deterministic=False)
+            action, log_prob, _ = actor.get_action_and_logprob(states, deterministic=False)
             
             # Critics
             q1_value, _ = critic1(states, action)

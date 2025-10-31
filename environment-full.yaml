@@ -1,6 +1,7 @@
 name: me5418-full
 channels:
   - conda-forge
+  - pytorch
 dependencies:
   - python=3.10
   - pip
@@ -10,6 +11,7 @@ dependencies:
   - tqdm
   - tensorboard=2.14.*
   - protobuf=3.20.*
+  - pytorch
   - pip:
       - mujoco==3.3.6
       - gymnasium

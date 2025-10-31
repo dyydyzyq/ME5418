@@ -149,10 +149,10 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
 
         # ---- obs_state ----
         obs_dim = (
-            3 * len(self.manip_joint_ids)  #joint positions
+            len(self.manip_joint_ids)  #joint positions
             + len(self.manip_joint_ids)  #joint velocities
-            + 3     #goal position
-            + 3 * len(self.obstacle_body_ids) #obstacle positions
+            + 3     #goal relative position
+            + 3 * len(self.obstacle_body_ids) #obstacle relative positions
         )
         obs_high = np.full(obs_dim, np.inf, dtype=np.float32)
         self.observation_space = gym.spaces.Box(

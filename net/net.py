@@ -8,7 +8,7 @@ import copy
 class FeatureExtractor(nn.Module):
     """
     Shared feature extractor for SAC networks.
-    Extracts features from state sequences using FC1 + FC2 + LSTM.
+    Extracts features(obstacle moving pattern, task awareness) from state sequences using FC1 + FC2 + LSTM.
     """
     
     def __init__(
@@ -36,8 +36,7 @@ class FeatureExtractor(nn.Module):
             hidden_size=lstm_hidden_dim,
             batch_first=True
         )
-        
-        # Initialize weights
+
         self._init_weights()
         
     def _init_weights(self):
@@ -66,7 +65,7 @@ class FeatureExtractor(nn.Module):
             hidden_state: Optional LSTM hidden state tuple (h, c)
             
         Returns:
-            features: Extracted features [batch_size, lstm_hidden_dim]
+            features: Extracted features [batch_size, lstm_hidden_dim] of the last timestep
             new_hidden_state: Updated LSTM hidden state tuple
         """
         # Feature extraction
@@ -166,7 +165,7 @@ class Actor(nn.Module):
         
         return policy_mean, policy_log_std, new_hidden_state
     
-    def get_action(
+    def get_action_and_logprob(
         self, 
         states: torch.Tensor, 
         hidden_state: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
@@ -199,7 +198,7 @@ class Actor(nn.Module):
         else:
             # Sample from Gaussian distribution
             normal = torch.distributions.Normal(policy_mean, policy_std)
-            raw_action = normal.sample()
+            raw_action = normal.rsample()  # Reparameterization trick
             
             # Apply tanh squashing for bounded actions
             action = torch.tanh(raw_action)
@@ -212,11 +211,10 @@ class Actor(nn.Module):
         
         return action, log_prob, new_hidden_state
 
-
 class Critic(nn.Module):
     """
     SAC Critic network (Q-network).
-    Takes state and action as input, outputs Q-value.
+    Takes (state,action) pair as input, outputs Q-value.
     """
     
     def __init__(
@@ -287,7 +285,7 @@ class Critic(nn.Module):
 class SACNetworks:
     """
     Complete SAC network collection.
-    Contains Actor, Twin Critics (Q1, Q2), and their Target networks.
+    Includes Actor, twin Critic networks (Q1, Q2) to mitigate Q-value overestimation, and their target networks for stable training.
     """
     
     def __init__(
@@ -410,7 +408,6 @@ def create_feature_extractor(
         device=device
     )
 
-
 def create_actor(
     state_dim: int = 23,
     action_dim: int = 7,
@@ -426,7 +423,6 @@ def create_actor(
         lstm_hidden_dim=lstm_hidden_dim,
         device=device
     )
-
 
 def create_critic(
     state_dim: int = 23,
@@ -444,7 +440,6 @@ def create_critic(
         device=device
     )
 
-
 def create_sac_networks(
     state_dim: int = 23,
     action_dim: int = 7,
@@ -460,7 +455,6 @@ def create_sac_networks(
         lstm_hidden_dim=lstm_hidden_dim,
         device=device
     )
-
 
 # Legacy compatibility functions
 def create_network(
