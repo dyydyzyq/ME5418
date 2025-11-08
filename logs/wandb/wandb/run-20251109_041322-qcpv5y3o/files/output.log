@@ -1,0 +1,168 @@
+Using policy network architecture [128, 128] with activation tanh.
+PPO hyperparameters: n_steps=2048, batch_size=128, n_epochs=8, gamma=0.99, gae_lambda=0.95, lr=0.0003, clip_range=0.2, ent_coef=0.005, vf_coef=0.5, max_grad_norm=0.5, target_kl=0.05
+Using cpu device
+Logging to logs/sb3
+Eval num_timesteps=10000, episode_reward=153.98 +/- 14.52
+Episode length: 3000.00 +/- 0.00
+Success rate: 0.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 3e+03    |
+|    mean_reward          | 154      |
+|    success_rate         | 0        |
+| rollout/                |          |
+|    episode_avg_distance | 0.281    |
+|    episode_reward       | -9.7     |
+|    episode_success      | 0        |
+|    success_rate_window  | 0        |
+| time/                   |          |
+|    total_timesteps      | 10000    |
+--------------------------------------
+New best mean reward!
+Eval num_timesteps=20000, episode_reward=122.69 +/- 25.36
+Episode length: 3000.00 +/- 0.00
+Success rate: 0.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 3e+03    |
+|    mean_reward          | 123      |
+|    success_rate         | 0        |
+| rollout/                |          |
+|    episode_avg_distance | 0.455    |
+|    episode_reward       | -10.1    |
+|    episode_success      | 0        |
+|    success_rate_window  | 0        |
+| time/                   |          |
+|    total_timesteps      | 20000    |
+--------------------------------------
+Eval num_timesteps=30000, episode_reward=142.65 +/- 28.20
+Episode length: 3000.00 +/- 0.00
+Success rate: 0.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 3e+03    |
+|    mean_reward          | 143      |
+|    success_rate         | 0        |
+| rollout/                |          |
+|    episode_avg_distance | 0.278    |
+|    episode_reward       | -9.49    |
+|    episode_success      | 0        |
+|    success_rate_window  | 0        |
+| time/                   |          |
+|    total_timesteps      | 30000    |
+--------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 185      |
+|    ep_rew_mean          | -240     |
+|    episode_avg_distance | 0.375    |
+|    episode_reward       | -11.6    |
+|    episode_success      | 0        |
+|    success_rate         | 0.01     |
+|    success_rate_window  | 0.02     |
+| time/                   |          |
+|    fps                  | 1434     |
+|    iterations           | 1        |
+|    time_elapsed         | 22       |
+|    total_timesteps      | 32768    |
+--------------------------------------
+Eval num_timesteps=40000, episode_reward=171.47 +/- 23.98
+Episode length: 3000.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 3e+03       |
+|    mean_reward          | 171         |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.669       |
+|    episode_reward       | -7.76       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.02        |
+| time/                   |             |
+|    total_timesteps      | 40000       |
+| train/                  |             |
+|    approx_kl            | 0.008973639 |
+|    clip_fraction        | 0.107       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.94       |
+|    explained_variance   | -0.0152     |
+|    learning_rate        | 0.0003      |
+|    loss                 | 0.498       |
+|    n_updates            | 8           |
+|    policy_gradient_loss | -0.00508    |
+|    std                  | 1           |
+|    value_loss           | 2.13        |
+-----------------------------------------
+New best mean reward!
+Traceback (most recent call last):
+  File "/home/nuo/ME5418/train/train.py", line 633, in main
+    model.learn(
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/ppo/ppo.py", line 311, in learn
+    return super().learn(
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 324, in learn
+    continue_training = self.collect_rollouts(self.env, callback, self.rollout_buffer, n_rollout_steps=self.n_steps)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 224, in collect_rollouts
+    if not callback.on_step():
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/callbacks.py", line 114, in on_step
+    return self._on_step()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/callbacks.py", line 223, in _on_step
+    continue_training = callback.on_step() and continue_training
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/callbacks.py", line 114, in on_step
+    return self._on_step()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/callbacks.py", line 464, in _on_step
+    episode_rewards, episode_lengths = evaluate_policy(
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/evaluation.py", line 97, in evaluate_policy
+    new_observations, rewards, dones, infos = env.step(actions)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/base_vec_env.py", line 222, in step
+    return self.step_wait()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/vec_normalize.py", line 181, in step_wait
+    obs, rewards, dones, infos = self.venv.step_wait()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/vec_monitor.py", line 76, in step_wait
+    obs, rewards, dones, infos = self.venv.step_wait()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/dummy_vec_env.py", line 59, in step_wait
+    obs, self.buf_rews[env_idx], terminated, truncated, self.buf_infos[env_idx] = self.envs[env_idx].step(  # type: ignore[assignment]
+  File "/home/nuo/ME5418/env/env.py", line 385, in step
+    mujoco.mj_step(self.model, self.data)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/nuo/ME5418/train/train.py", line 662, in <module>
+    main()
+  File "/home/nuo/ME5418/train/train.py", line 658, in main
+    wandb.finish()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 4068, in finish
+    wandb.run.finish(exit_code=exit_code, quiet=quiet)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 397, in wrapper
+    return func(self, *args, **kwargs)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 442, in wrapper
+    return func(self, *args, **kwargs)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 2260, in finish
+    return self._finish(exit_code)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 397, in wrapper
+    return func(self, *args, **kwargs)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 2272, in _finish
+    logger.info(f"finishing run {self._get_path()}")
+  File "/home/nuo/miniconda3/lib/python3.10/logging/__init__.py", line 1477, in info
+    self._log(INFO, msg, args, **kwargs)
+  File "/home/nuo/miniconda3/lib/python3.10/logging/__init__.py", line 1624, in _log
+    self.handle(record)
+  File "/home/nuo/miniconda3/lib/python3.10/logging/__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "/home/nuo/miniconda3/lib/python3.10/logging/__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "/home/nuo/miniconda3/lib/python3.10/logging/__init__.py", line 968, in handle
+    self.emit(record)
+  File "/home/nuo/miniconda3/lib/python3.10/logging/__init__.py", line 1218, in emit
+    StreamHandler.emit(self, record)
+  File "/home/nuo/miniconda3/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/home/nuo/miniconda3/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/home/nuo/miniconda3/lib/python3.10/logging/__init__.py", line 680, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+  File "/home/nuo/miniconda3/lib/python3.10/logging/__init__.py", line 619, in formatTime
+    s = time.strftime(self.default_time_format, ct)
+KeyboardInterrupt

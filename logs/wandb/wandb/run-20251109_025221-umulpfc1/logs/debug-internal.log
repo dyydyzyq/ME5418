@@ -1,0 +1,7 @@
+{"time":"2025-11-09T02:52:21.338067139+08:00","level":"INFO","msg":"stream: starting","core version":"0.22.3"}
+{"time":"2025-11-09T02:52:23.357820076+08:00","level":"INFO","msg":"stream: created new stream","id":"umulpfc1"}
+{"time":"2025-11-09T02:52:23.357978151+08:00","level":"INFO","msg":"handler: started","stream_id":"umulpfc1"}
+{"time":"2025-11-09T02:52:23.358268463+08:00","level":"INFO","msg":"stream: started","id":"umulpfc1"}
+{"time":"2025-11-09T02:52:23.358319598+08:00","level":"INFO","msg":"writer: started","stream_id":"umulpfc1"}
+{"time":"2025-11-09T02:52:23.358361106+08:00","level":"INFO","msg":"sender: started","stream_id":"umulpfc1"}
+{"time":"2025-11-09T02:58:31.132389129+08:00","level":"INFO","msg":"stream: closing","id":"umulpfc1"}

@@ -1,0 +1,23 @@
+2025-11-09 01:02:39,134 INFO    MainThread:6698 [wandb_setup.py:_flush():81] Current SDK version is 0.22.3
+2025-11-09 01:02:39,134 INFO    MainThread:6698 [wandb_setup.py:_flush():81] Configure stats pid to 6698
+2025-11-09 01:02:39,134 INFO    MainThread:6698 [wandb_setup.py:_flush():81] Loading settings from /home/nuo/.config/wandb/settings
+2025-11-09 01:02:39,134 INFO    MainThread:6698 [wandb_setup.py:_flush():81] Loading settings from /home/nuo/ME5418/wandb/settings
+2025-11-09 01:02:39,134 INFO    MainThread:6698 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2025-11-09 01:02:39,134 INFO    MainThread:6698 [wandb_init.py:setup_run_log_directory():706] Logging user logs to logs/wandb/wandb/run-20251109_010239-bzpzgu0x/logs/debug.log
+2025-11-09 01:02:39,135 INFO    MainThread:6698 [wandb_init.py:setup_run_log_directory():707] Logging internal logs to logs/wandb/wandb/run-20251109_010239-bzpzgu0x/logs/debug-internal.log
+2025-11-09 01:02:39,135 INFO    MainThread:6698 [wandb_init.py:init():833] calling init triggers
+2025-11-09 01:02:39,135 INFO    MainThread:6698 [wandb_init.py:init():838] wandb.init called with sweep_config: {}
+config: {'algorithm': 'ppo', 'device': 'cpu', 'n_steps': 2048, 'total_timesteps': 2000000, 'num_envs': 16, 'log_dir': 'logs', 'model_dir': 'models', 'seed': 42, 'checkpoint_freq': 50000, 'eval_freq': 10000, 'eval_episodes': 5, 'policy': 'MlpPolicy', 'rollout_episodes': 1, 'rollout_video': None, 'resume': True, 'wandb_project': 'panda-obstacle-ppo', 'wandb_entity': None, 'wandb_run_name': None, 'wandb_mode': 'online', '_wandb': {}}
+2025-11-09 01:02:39,135 INFO    MainThread:6698 [wandb_init.py:init():881] starting backend
+2025-11-09 01:02:39,342 INFO    MainThread:6698 [wandb_init.py:init():884] sending inform_init request
+2025-11-09 01:02:39,351 INFO    MainThread:6698 [wandb_init.py:init():892] backend started and connected
+2025-11-09 01:02:39,352 INFO    MainThread:6698 [wandb_init.py:init():962] updated telemetry
+2025-11-09 01:02:39,356 INFO    MainThread:6698 [wandb_init.py:init():986] communicating run to backend with 90.0 second timeout
+2025-11-09 01:02:42,348 INFO    MainThread:6698 [wandb_init.py:init():1033] starting run threads in backend
+2025-11-09 01:02:42,421 INFO    MainThread:6698 [wandb_run.py:_console_start():2506] atexit reg
+2025-11-09 01:02:42,421 INFO    MainThread:6698 [wandb_run.py:_redirect():2354] redirect: wrap_raw
+2025-11-09 01:02:42,421 INFO    MainThread:6698 [wandb_run.py:_redirect():2423] Wrapping output streams.
+2025-11-09 01:02:42,421 INFO    MainThread:6698 [wandb_run.py:_redirect():2446] Redirects installed.
+2025-11-09 01:02:42,424 INFO    MainThread:6698 [wandb_init.py:init():1073] run started, returning control to user process
+2025-11-09 01:02:58,844 INFO    wandb-AsyncioManager-main:6698 [service_client.py:_forward_responses():80] Reached EOF.
+2025-11-09 01:02:58,844 INFO    wandb-AsyncioManager-main:6698 [mailbox.py:close():137] Closing mailbox, abandoning 1 handles.

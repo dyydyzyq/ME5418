@@ -1,0 +1,87 @@
+_wandb:
+    value:
+        cli_version: 0.22.3
+        e:
+            gvilufhbz3mmptqjq4rq98wpdf9otleu:
+                codePath: train/train.py
+                codePathLocal: train/train.py
+                cpu_count: 8
+                cpu_count_logical: 16
+                cudaVersion: "12.2"
+                disk:
+                    /:
+                        total: "633862127616"
+                        used: "180905664512"
+                email: 461091818@qq.com
+                executable: /home/nuo/miniconda3/bin/python
+                git:
+                    commit: 4bd1d014ae241f7f864115063cf2b5a321360fe8
+                    remote: git@github.com:dyydyzyq/ME5418.git
+                gpu: NVIDIA GeForce RTX 4050 Laptop GPU
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ada
+                      cudaCores: 2560
+                      memoryTotal: "6439305216"
+                      name: NVIDIA GeForce RTX 4050 Laptop GPU
+                      uuid: GPU-02b80c1f-4151-b5a8-9854-40b594006ef3
+                host: nuo
+                memory:
+                    total: "16004370432"
+                os: Linux-5.15.0-139-generic-x86_64-with-glibc2.31
+                program: /home/nuo/ME5418/train/train.py
+                python: CPython 3.10.18
+                root: logs/wandb
+                startedAt: "2025-11-08T17:03:34.398381Z"
+                writerId: gvilufhbz3mmptqjq4rq98wpdf9otleu
+        m: []
+        python_version: 3.10.18
+        t:
+            "1":
+                - 1
+            "2":
+                - 1
+            "3":
+                - 16
+            "4": 3.10.18
+            "5": 0.22.3
+            "12": 0.22.3
+            "13": linux-x86_64
+algorithm:
+    value: ppo
+checkpoint_freq:
+    value: 50000
+device:
+    value: cpu
+eval_episodes:
+    value: 5
+eval_freq:
+    value: 10000
+log_dir:
+    value: logs
+model_dir:
+    value: models
+n_steps:
+    value: 2048
+num_envs:
+    value: 16
+policy:
+    value: MlpPolicy
+resume:
+    value: true
+rollout_episodes:
+    value: 1
+rollout_video:
+    value: null
+seed:
+    value: 42
+total_timesteps:
+    value: 2000000
+wandb_entity:
+    value: null
+wandb_mode:
+    value: online
+wandb_project:
+    value: panda-obstacle-ppo
+wandb_run_name:
+    value: null

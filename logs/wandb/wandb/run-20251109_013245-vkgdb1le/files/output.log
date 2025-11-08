@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/nuo/ME5418/train/train.py", line 616, in <module>
+    main()
+  File "/home/nuo/ME5418/train/train.py", line 517, in main
+    wandb_callback = WandbCallback(
+NameError: name 'WandbCallback' is not defined

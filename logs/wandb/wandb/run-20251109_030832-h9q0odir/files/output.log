@@ -1,0 +1,20 @@
+Using policy network architecture [128, 128] with activation tanh.
+PPO hyperparameters: n_steps=2048, batch_size=64, n_epochs=10, gamma=0.99, gae_lambda=0.95, lr=0.0003, clip_range=0.2, ent_coef=0.01, vf_coef=0.5, max_grad_norm=0.5, target_kl=0.02
+Using cpu device
+Logging to logs/sb3
+Eval num_timesteps=10000, episode_reward=-3961.75 +/- 723.43
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -3.96e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.468     |
+|    episode_reward       | -9.63     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    total_timesteps      | 10000     |
+---------------------------------------

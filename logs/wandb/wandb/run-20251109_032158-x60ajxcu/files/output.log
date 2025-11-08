@@ -1,0 +1,17 @@
+Logging to logs/sb3
+Eval num_timesteps=2041616, episode_reward=-292.38 +/- 9.31
+Episode length: 27.00 +/- 3.10
+Success rate: 0.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 27       |
+|    mean_reward          | -292     |
+|    success_rate         | 0        |
+| rollout/                |          |
+|    episode_avg_distance | 0.391    |
+|    episode_reward       | -12.7    |
+|    episode_success      | 0        |
+|    success_rate_window  | 0.02     |
+| time/                   |          |
+|    total_timesteps      | 2041616  |
+--------------------------------------

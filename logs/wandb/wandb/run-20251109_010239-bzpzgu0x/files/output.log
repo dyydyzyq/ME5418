@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/nuo/ME5418/train/train.py", line 580, in <module>
+    main()
+  File "/home/nuo/ME5418/train/train.py", line 536, in main
+    model.set_logger(_build_sb3_logger())
+  File "/home/nuo/ME5418/train/train.py", line 522, in _build_sb3_logger
+    return configure(str(sb3_log_dir), output_formats)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/logger.py", line 661, in configure
+    output_formats = [make_output_format(f, folder, log_suffix) for f in format_strings]
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/logger.py", line 661, in <listcomp>
+    output_formats = [make_output_format(f, folder, log_suffix) for f in format_strings]
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/logger.py", line 469, in make_output_format
+    raise ValueError(f"Unknown format specified: {_format}")
+ValueError: Unknown format specified: <function main.<locals>._build_sb3_logger.<locals>.<lambda> at 0x7fc3c57d2c20>

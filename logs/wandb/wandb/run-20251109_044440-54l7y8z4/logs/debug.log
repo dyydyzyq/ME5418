@@ -1,0 +1,27 @@
+2025-11-09 04:44:40,860 INFO    MainThread:29262 [wandb_setup.py:_flush():81] Current SDK version is 0.22.3
+2025-11-09 04:44:40,861 INFO    MainThread:29262 [wandb_setup.py:_flush():81] Configure stats pid to 29262
+2025-11-09 04:44:40,861 INFO    MainThread:29262 [wandb_setup.py:_flush():81] Loading settings from /home/nuo/.config/wandb/settings
+2025-11-09 04:44:40,861 INFO    MainThread:29262 [wandb_setup.py:_flush():81] Loading settings from /home/nuo/ME5418/wandb/settings
+2025-11-09 04:44:40,861 INFO    MainThread:29262 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2025-11-09 04:44:40,861 INFO    MainThread:29262 [wandb_init.py:setup_run_log_directory():706] Logging user logs to logs/wandb/wandb/run-20251109_044440-54l7y8z4/logs/debug.log
+2025-11-09 04:44:40,861 INFO    MainThread:29262 [wandb_init.py:setup_run_log_directory():707] Logging internal logs to logs/wandb/wandb/run-20251109_044440-54l7y8z4/logs/debug-internal.log
+2025-11-09 04:44:40,861 INFO    MainThread:29262 [wandb_init.py:init():833] calling init triggers
+2025-11-09 04:44:40,861 INFO    MainThread:29262 [wandb_init.py:init():838] wandb.init called with sweep_config: {}
+config: {'algorithm': 'ppo', 'device': 'cpu', 'n_steps': 2048, 'batch_size': 128, 'n_epochs': 8, 'gamma': 0.99, 'gae_lambda': 0.95, 'learning_rate': 0.0003, 'clip_range': 0.2, 'ent_coef': 0.005, 'vf_coef': 0.5, 'max_grad_norm': 0.5, 'target_kl': 0.05, 'total_timesteps': 10000000, 'num_envs': 16, 'log_dir': 'logs', 'model_dir': 'models', 'seed': 42, 'checkpoint_freq': 50000, 'eval_freq': 10000, 'eval_episodes': 5, 'policy': 'MlpPolicy', 'policy_hidden_sizes': (128, 128), 'policy_vf_hidden_sizes': None, 'policy_activation': 'tanh', 'rollout_episodes': 1, 'rollout_video': None, 'resume': False, 'wandb_project': 'panda-obstacle-ppo', 'wandb_entity': None, 'wandb_run_name': None, 'wandb_mode': 'online', '_wandb': {}}
+2025-11-09 04:44:40,861 INFO    MainThread:29262 [wandb_init.py:init():881] starting backend
+2025-11-09 04:44:41,068 INFO    MainThread:29262 [wandb_init.py:init():884] sending inform_init request
+2025-11-09 04:44:41,076 INFO    MainThread:29262 [wandb_init.py:init():892] backend started and connected
+2025-11-09 04:44:41,077 INFO    MainThread:29262 [wandb_init.py:init():962] updated telemetry
+2025-11-09 04:44:41,082 INFO    MainThread:29262 [wandb_init.py:init():986] communicating run to backend with 90.0 second timeout
+2025-11-09 04:44:43,601 INFO    MainThread:29262 [wandb_init.py:init():1033] starting run threads in backend
+2025-11-09 04:44:43,679 INFO    MainThread:29262 [wandb_run.py:_console_start():2506] atexit reg
+2025-11-09 04:44:43,679 INFO    MainThread:29262 [wandb_run.py:_redirect():2354] redirect: wrap_raw
+2025-11-09 04:44:43,679 INFO    MainThread:29262 [wandb_run.py:_redirect():2423] Wrapping output streams.
+2025-11-09 04:44:43,679 INFO    MainThread:29262 [wandb_run.py:_redirect():2446] Redirects installed.
+2025-11-09 04:44:43,681 INFO    MainThread:29262 [wandb_init.py:init():1073] run started, returning control to user process
+2025-11-09 04:53:05,926 INFO    MainThread:29262 [wandb_run.py:_finish():2272] finishing run 461091818-national-university-of-singapore/panda-obstacle-ppo/54l7y8z4
+2025-11-09 04:53:05,929 INFO    MainThread:29262 [wandb_run.py:_atexit_cleanup():2471] got exitcode: 0
+2025-11-09 04:53:05,930 INFO    MainThread:29262 [wandb_run.py:_restore():2453] restore
+2025-11-09 04:53:05,930 INFO    MainThread:29262 [wandb_run.py:_restore():2459] restore done
+2025-11-09 04:53:05,960 INFO    wandb-AsyncioManager-main:29262 [service_client.py:_forward_responses():80] Reached EOF.
+2025-11-09 04:53:05,960 INFO    wandb-AsyncioManager-main:29262 [mailbox.py:close():137] Closing mailbox, abandoning 2 handles.

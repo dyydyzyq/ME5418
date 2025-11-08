@@ -3,11 +3,11 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
-from typing import Callable, Dict, List
+from typing import Any, Callable, Dict, List
 
 from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import BaseCallback, CheckpointCallback, EvalCallback
-from stable_baselines3.common.logger import configure
+from stable_baselines3.common.logger import KVWriter, configure
 from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv, VecMonitor, VecNormalize
 
 # Ensure the repo root is importable so we can load the custom environment.
@@ -18,6 +18,8 @@ if str(REPO_ROOT) not in sys.path:
 from env.env import PandaObstacleEnv 
 
 import numpy as np
+import wandb
+import torch.nn as nn
 
 try:
     import matplotlib.pyplot as plt
@@ -32,20 +34,100 @@ except ImportError:  # pragma: no cover - optional dependency
 ALGO_NAME = "ppo"
 
 
+class WandbOutputFormat(KVWriter):
+    """SB3 logger output that forwards scalars straight to Weights & Biases."""
+
+    def __init__(self, run: Any | None, step_key: str = "time/total_timesteps") -> None:
+        self.run = run
+        self.step_key = step_key
+
+    def write(
+        self,
+        kvs: Dict[str, Any],
+        _key_excluded: Dict[str, str] | None = None,
+        step: int | None = None,
+    ) -> None:
+        if self.run is None or not kvs:
+            return
+
+        log_data: Dict[str, float] = {}
+        step_value: int | None = step
+
+        for key, value in kvs.items():
+            if isinstance(value, tuple):
+                value = value[0]
+            if isinstance(value, np.generic):
+                value = value.item()
+            elif isinstance(value, np.ndarray):
+                if value.size == 1:
+                    value = float(value)
+                else:
+                    continue
+
+            if isinstance(value, (int, float)):
+                log_data[key] = float(value)
+
+        if not log_data:
+            return
+
+        if step_value is None and self.step_key in log_data:
+            step_value = int(log_data[self.step_key])
+        elif step_value is None and "time/step" in log_data:
+            step_value = int(log_data["time/step"])
+
+        if step_value is not None:
+            self.run.log(log_data, step=step_value)
+        else:
+            self.run.log(log_data)
+
+    def close(self) -> None:  # pragma: no cover - nothing to clean up
+        return
+
+
 def parse_args() -> argparse.Namespace:   # set the parameters for training
     parser = argparse.ArgumentParser(description="Train the Panda obstacle avoidance policy with SB3 (PPO only).")
     parser.add_argument("--device", type=str, default="cpu", help="Device to use for training (e.g., 'cpu', 'cuda', or 'auto')")
     parser.add_argument("--n-steps", type=int, default=2048, help="Number of steps to run per environment per update (PPO only)")
-    parser.add_argument("--total-timesteps", type=int, default=20000_00, help="Number of training steps")
+    parser.add_argument("--batch-size", type=int, default=128, help="Minibatch size used for each PPO update")
+    parser.add_argument("--n-epochs", type=int, default=8, help="Number of epochs per PPO update")
+    parser.add_argument("--gamma", type=float, default=0.99, help="Discount factor for rewards")
+    parser.add_argument("--gae-lambda", type=float, default=0.95, help="GAE lambda for bias-variance trade-off")
+    parser.add_argument("--learning-rate", type=float, default=3e-4, help="Learning rate for the optimizer")
+    parser.add_argument("--clip-range", type=float, default=0.2, help="Clipping parameter for the PPO objective")
+    parser.add_argument("--ent-coef", type=float, default=0.005, help="Entropy bonus coefficient")
+    parser.add_argument("--vf-coef", type=float, default=0.5, help="Value function loss coefficient")
+    parser.add_argument("--max-grad-norm", type=float, default=0.5, help="Gradient clipping norm")
+    parser.add_argument("--target-kl", type=float, default=0.05, help="Target KL divergence for early stopping (set <= 0 to disable)")
+    parser.add_argument("--total-timesteps", type=int, default=40000_00, help="Number of training steps")
     parser.add_argument("--num-envs", type=int, default=16, help="Number of parallel vectorized environments")
     parser.add_argument("--log-dir", type=Path, default=Path("logs"), help="Directory for SB3 logs")
     parser.add_argument("--model-dir", type=Path, default=Path("models"), help="Directory to save models")
-    parser.add_argument("--tensorboard", type=Path, default=Path("tb_logs"), help="TensorBoard log directory")
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
     parser.add_argument("--checkpoint-freq", type=int, default=50_000, help="Environment steps between checkpoints")
     parser.add_argument("--eval-freq", type=int, default=10_000, help="Environment steps between policy evaluations")
     parser.add_argument("--eval-episodes", type=int, default=5, help="Episodes per evaluation run")
     parser.add_argument("--policy", type=str, default="MlpPolicy", help="Policy class name for the algorithm")
+    parser.add_argument(
+        "--policy-hidden-sizes",
+        type=int,
+        nargs="+",
+        default=(128, 128),
+        help="Hidden layer sizes for the shared feature extractor (e.g., --policy-hidden-sizes 256 128).",
+    )
+    parser.add_argument(
+        "--policy-vf-hidden-sizes",
+        type=int,
+        nargs="+",
+        default=None,
+        help="Optional critic-specific hidden sizes; provide to build independent actor/critic MLPs.",
+    )
+    parser.add_argument(
+        "--policy-activation",
+        type=str,
+        choices=("tanh", "relu", "elu", "gelu", "leaky_relu"),
+        default="tanh",
+        help="Activation function used inside the policy network.",
+    )
     parser.add_argument(
         "--rollout-episodes",
         type=int,   
@@ -64,7 +146,35 @@ def parse_args() -> argparse.Namespace:   # set the parameters for training
         default=True,
         help="Resume training from the latest saved model and VecNormalize statistics if available.",
     )
+    parser.add_argument(
+        "--video-interval",
+        type=int,
+        default=2_000_000,
+        help="Environment steps between intermediate rollout recordings (set <=0 to disable).",
+    )
+    parser.add_argument("--wandb-project", type=str, default="panda-obstacle-ppo", help="Weights & Biases project name")
+    parser.add_argument("--wandb-entity", type=str, default=None, help="Optional entity/team for Weights & Biases logging")
+    parser.add_argument("--wandb-run-name", type=str, default=None, help="Optional name to give the Weights & Biases run")
+    parser.add_argument(
+        "--wandb-mode",
+        type=str,
+        choices=("online", "offline", "disabled"),
+        default="online",
+        help="Weights & Biases mode to run in (online, offline, or disabled).",
+    )
     return parser.parse_args()
+
+
+def build_wandb_config(args: argparse.Namespace) -> Dict[str, Any]:
+    """Convert CLI arguments into a serialisable config for Weights & Biases."""
+
+    config: Dict[str, Any] = {"algorithm": ALGO_NAME}
+    for key, value in vars(args).items():
+        if isinstance(value, Path):
+            config[key] = str(value)
+        else:
+            config[key] = value
+    return config
 
 
 class VecNormalizeSyncCallback(BaseCallback):
@@ -260,6 +370,75 @@ class TrainingVisualizationCallback(BaseCallback):
         plt.close(fig)
 
 
+class PeriodicVideoCallback(BaseCallback):
+    """Record policy rollouts periodically during training."""
+
+    def __init__(
+        self,
+        video_interval: int,
+        env_factory: Callable[[], PandaObstacleEnv],
+        video_dir: Path,
+        *,
+        wandb_run: wandb.sdk.wandb_run.Run | None = None,
+        normalization_path: Path | None = None,
+        episodes: int = 1,
+    ) -> None:
+        super().__init__(verbose=0)
+        self.video_interval = max(1, video_interval)
+        self.env_factory = env_factory
+        self.video_dir = video_dir
+        self.wandb_run = wandb_run
+        self.normalization_path = normalization_path
+        self.episodes = episodes
+
+    def _on_step(self) -> bool:
+        num_timesteps = self.num_timesteps
+        last_record_step = getattr(self, "_last_record_step", -self.video_interval)
+        if num_timesteps - last_record_step < self.video_interval:
+            return True
+
+        self._last_record_step = num_timesteps
+        suffix = f"{num_timesteps:010d}"
+        video_path = self.video_dir / f"policy_rollout_{suffix}.mp4"
+        video_path.parent.mkdir(parents=True, exist_ok=True)
+
+        record_policy_rollout(
+            self.model,
+            self.env_factory,
+            video_path,
+            episodes=self.episodes,
+            normalization_path=self.normalization_path,
+            wandb_run=self.wandb_run,
+            wandb_key=f"policy_rollout/step_{num_timesteps}",
+        )
+        return True
+
+
+def build_policy_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
+    """Construct policy kwargs so users can easily customise the MLP architecture."""
+
+    activation_map = {
+        "tanh": nn.Tanh,
+        "relu": nn.ReLU,
+        "elu": nn.ELU,
+        "gelu": nn.GELU,
+        "leaky_relu": nn.LeakyReLU,
+    }
+    activation_fn = activation_map[args.policy_activation]
+
+    net_arch: List[int] | Dict[str, List[int]]
+    shared_layers = list(args.policy_hidden_sizes)
+    if args.policy_vf_hidden_sizes is not None:
+        net_arch = {
+            "pi": shared_layers,
+            "vf": list(args.policy_vf_hidden_sizes),
+        }
+    else:
+        net_arch = shared_layers
+
+    return {"net_arch": net_arch, "activation_fn": activation_fn}
+
+
 def record_policy_rollout(           #record the video of the robot performing the task
     model,
     env_factory: Callable[[], PandaObstacleEnv],
@@ -268,6 +447,8 @@ def record_policy_rollout(           #record the video of the robot performing t
     episodes: int = 1,
     deterministic: bool = True,
     normalization_path: Path | None = None,
+    wandb_run: wandb.sdk.wandb_run.Run | None = None,
+    wandb_key: str = "final_policy",
 ) -> None:
     if imageio is None:
         print("imageio not available, skipping policy rollout video generation.")
@@ -338,6 +519,13 @@ def record_policy_rollout(           #record the video of the robot performing t
                 writer.append_data(frame)
     print(f"Saved policy rollout video to {video_path}")
 
+    if wandb_run is not None:
+        try:
+            wandb_run.log({wandb_key: wandb.Video(str(video_path), fps=fps, format="mp4")})
+            print(f"Uploaded policy rollout video to W&B under key '{wandb_key}'.")
+        except Exception as exc:  # pragma: no cover - best-effort logging
+            print(f"Failed to upload video to Weights & Biases: {exc}")
+
 
 
 
@@ -358,10 +546,18 @@ def main() -> None:
 
     args.log_dir.mkdir(parents=True, exist_ok=True)  #create the directories 
     args.model_dir.mkdir(parents=True, exist_ok=True)
-    args.tensorboard.mkdir(parents=True, exist_ok=True)
-
-    tensorboard_run_dir = args.tensorboard / f"{ALGO_NAME}_panda"
-    tensorboard_run_dir.mkdir(parents=True, exist_ok=True)
+    sb3_log_dir = args.log_dir / "sb3"
+    sb3_log_dir.mkdir(parents=True, exist_ok=True)
+    wandb_dir = args.log_dir / "wandb"
+    wandb_dir.mkdir(parents=True, exist_ok=True)
+    wandb_run = wandb.init(
+        project=args.wandb_project,
+        entity=args.wandb_entity,
+        mode=args.wandb_mode,
+        name=args.wandb_run_name,
+        dir=str(wandb_dir),
+        config=build_wandb_config(args),
+    )
 
     normalization_path = args.model_dir / f"{ALGO_NAME}_panda_vecnormalize.pkl"
 
@@ -427,9 +623,20 @@ def main() -> None:
             deterministic=True,
         )
 
+    video_callback = None
+    if args.video_interval > 0:
+        video_callback = PeriodicVideoCallback(
+            video_interval=args.video_interval,
+            env_factory=make_env(args.seed + 30_000),
+            video_dir=visualization_dir / "intermediate_videos",
+            wandb_run=wandb_run,
+            normalization_path=normalization_path,
+            episodes=args.rollout_episodes,
+        )
+
     callbacks = [
         cb
-        for cb in (checkpoint_callback, eval_callback, visualization_callback, sync_callback)
+        for cb in (checkpoint_callback, eval_callback, visualization_callback, sync_callback, video_callback)
         if cb is not None
     ]
 
@@ -438,6 +645,12 @@ def main() -> None:
             return None
         candidates = sorted(directory.glob("*.zip"), key=lambda path: path.stat().st_mtime, reverse=True)
         return candidates[0] if candidates else None
+
+    def _build_sb3_logger():
+        logger = configure(str(sb3_log_dir), ["stdout", "csv"])
+        if wandb_run is not None:
+            logger.output_formats.append(WandbOutputFormat(wandb_run))
+        return logger
 
     final_model_path = args.model_dir / f"{ALGO_NAME}_panda_final.zip"
     resume_path: Path | None = None
@@ -449,49 +662,71 @@ def main() -> None:
 
     if resume_path is not None:
         model = algo_cls.load(str(resume_path), env=vec_env, device=args.device)
-        model.tensorboard_log = str(tensorboard_run_dir)
         if hasattr(model, "n_steps"):
             model.n_steps = args.n_steps
-        new_logger = configure(str(tensorboard_run_dir), ["stdout", "tensorboard"])
-        model.set_logger(new_logger)
+        model.set_logger(_build_sb3_logger())
         reset_num_timesteps = False
     else:
+        policy_kwargs = build_policy_kwargs(args)
+        target_kl = None if args.target_kl <= 0 else args.target_kl
+        print(f"Using policy network architecture {policy_kwargs['net_arch']} with activation {args.policy_activation}.")
+        print(
+            "PPO hyperparameters: "
+            f"n_steps={args.n_steps}, batch_size={args.batch_size}, n_epochs={args.n_epochs}, "
+            f"gamma={args.gamma}, gae_lambda={args.gae_lambda}, lr={args.learning_rate}, "
+            f"clip_range={args.clip_range}, ent_coef={args.ent_coef}, vf_coef={args.vf_coef}, "
+            f"max_grad_norm={args.max_grad_norm}, target_kl={target_kl}"
+        )
         model = algo_cls(
             args.policy,
             vec_env,
             verbose=1,
-            tensorboard_log=str(tensorboard_run_dir),
             seed=args.seed,
             device=args.device,
             n_steps=args.n_steps,
+            batch_size=args.batch_size,
+            n_epochs=args.n_epochs,
+            gamma=args.gamma,
+            gae_lambda=args.gae_lambda,
+            learning_rate=args.learning_rate,
+            clip_range=args.clip_range,
+            ent_coef=args.ent_coef,
+            vf_coef=args.vf_coef,
+            max_grad_norm=args.max_grad_norm,
+            target_kl=target_kl,
+            policy_kwargs=policy_kwargs,
         )
+        model.set_logger(_build_sb3_logger())
         reset_num_timesteps = True
 
-    model.learn(
-        total_timesteps=args.total_timesteps,
-        callback=callbacks if callbacks else None,
-        tb_log_name=f"{ALGO_NAME}_panda",
-        reset_num_timesteps=reset_num_timesteps,
-    )
+    try:
+        model.learn(
+            total_timesteps=args.total_timesteps,
+            callback=callbacks if callbacks else None,
+            reset_num_timesteps=reset_num_timesteps,
+        )
 
-    model.save(str(final_model_path))
-    vec_env.training = False
-    vec_env.norm_reward = False
-    vec_env.save(str(normalization_path))
+        model.save(str(final_model_path))
+        vec_env.training = False
+        vec_env.norm_reward = False
+        vec_env.save(str(normalization_path))
 
-    rollout_env_factory = make_env(args.seed + 20000)
-    default_video_path = visualization_dir / "final_policy_rollout.mp4"
-    video_path = args.rollout_video if args.rollout_video is not None else default_video_path
-    record_policy_rollout(
-        model,
-        rollout_env_factory,
-        video_path,
-        episodes=args.rollout_episodes,
-        normalization_path=normalization_path,
-    )
-
-    vec_env.close()
-    eval_env.close()
+        rollout_env_factory = make_env(args.seed + 20000)
+        default_video_path = visualization_dir / "final_policy_rollout.mp4"
+        video_path = args.rollout_video if args.rollout_video is not None else default_video_path
+        record_policy_rollout(
+            model,
+            rollout_env_factory,
+            video_path,
+            episodes=args.rollout_episodes,
+            normalization_path=normalization_path,
+            wandb_run=wandb_run,
+        )
+    finally:
+        vec_env.close()
+        eval_env.close()
+        if wandb_run is not None:
+            wandb.finish()
 
 
 if __name__ == "__main__":

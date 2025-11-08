@@ -1,0 +1,69 @@
+Using policy network architecture [128, 128] with activation tanh.
+PPO hyperparameters: n_steps=2048, batch_size=128, n_epochs=8, gamma=0.99, gae_lambda=0.95, lr=0.0003, clip_range=0.2, ent_coef=0.005, vf_coef=0.5, max_grad_norm=0.5, target_kl=0.05
+Using cpu device
+Logging to logs/sb3
+Eval num_timesteps=10000, episode_reward=-7623.72 +/- 1376.29
+Episode length: 3000.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 3e+03     |
+|    mean_reward          | -7.62e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.278     |
+|    episode_reward       | -25.2     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    total_timesteps      | 10000     |
+---------------------------------------
+New best mean reward!
+Eval num_timesteps=20000, episode_reward=-6883.93 +/- 1832.42
+Episode length: 3000.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 3e+03     |
+|    mean_reward          | -6.88e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.396     |
+|    episode_reward       | -4.99     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    total_timesteps      | 20000     |
+---------------------------------------
+New best mean reward!
+Eval num_timesteps=30000, episode_reward=-8177.71 +/- 936.86
+Episode length: 3000.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 3e+03     |
+|    mean_reward          | -8.18e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.553     |
+|    episode_reward       | -6.13     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    total_timesteps      | 30000     |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 185      |
+|    ep_rew_mean          | -672     |
+|    episode_avg_distance | 0.358    |
+|    episode_reward       | -3.93    |
+|    episode_success      | 0        |
+|    success_rate         | 0        |
+|    success_rate_window  | 0        |
+| time/                   |          |
+|    fps                  | 1508     |
+|    iterations           | 1        |
+|    time_elapsed         | 21       |
+|    total_timesteps      | 32768    |
+--------------------------------------

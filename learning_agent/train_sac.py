@@ -71,7 +71,7 @@ def parse_args():
     parser.add_argument(
         "--track",
         action=argparse.BooleanOptionalAction,
-        default=False,
+        default=True,
         help="Enable logging to Weights & Biases (pass --track to log, --no-track to skip)",
     )
 

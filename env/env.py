@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import gymnasium as gym
 import mujoco
@@ -24,7 +24,10 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         render_width: int = 1280,    
         render_height: int = 960,
         goal_bounds: Optional[Tuple[np.ndarray, np.ndarray]] = None,
-        goal_reach_threshold: float = 0.01,
+        goal_reach_threshold: float = 0.02,
+        safety_distance: float = 0.2,
+        avoidance_weights: Optional[np.ndarray] = None,
+        avoidance_gain: float = 2.0,
     ) -> None:
         
         super().__init__()
@@ -37,6 +40,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self.render_width = render_width
         self.render_height = render_height
         self.goal_reach_threshold = goal_reach_threshold
+        self.safety_distance = safety_distance
         self.dt = self.model.opt.timestep * self.frame_skip
 
         if goal_bounds is None:
@@ -52,27 +56,87 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self._init_obstacle_ids()
         self._init_actuator_ids()
         self._init_spaces() 
+        self._set_avoidance_weights(avoidance_weights)
+        self._configure_critical_links()
+        self.avoidance_gain = float(avoidance_gain)
 
+        self.w_plan = -10.0
+        self.box_amplitude = 0.1
+        self.sphere_amplitude = 0.1
+        self.obstacle_frequency = 0.125
         
-        self.box_amplitude = 0.12
-        self.sphere_amplitude = 0.12
-        self.obstacle_frequency = 0.25
-        
-        self.collision_penalty = -10.0
-        self.goal_reward = 100.0
+        self.collision_penalty = -250.0
+        self.goal_reward = 200.0
         self.accel_penalty = 0.00001
         self.jerk_penalty = 0.00001
-        self.step_penalty = 0.01
+        self.step_penalty = 0.02
 
         self._renderer: Optional[mujoco.Renderer] = None
         self._np_random, _ = gym.utils.seeding.np_random(seed)
         self._step_count = 0
         self._prev_qvel = np.zeros(self.action_dim, dtype=np.float64)
         self._prev_accel = np.zeros(self.action_dim, dtype=np.float64)
+        self._prev_obstacle_distances: Optional[np.ndarray] = None
 
         mujoco.mj_forward(self.model, self.data)
         self._update_obstacles(self.data.time)
         self.goal_pos = self._sample_goal()
+        self._refresh_obstacle_distance_buffer()
+
+    def _compute_reward(     #compute the reward
+        self,
+        accel: np.ndarray,
+        jerk: np.ndarray,
+        collided: bool,
+        reached_goal: bool,
+    ) -> Tuple[float, np.ndarray]:
+        obstacle_distances = self._compute_link_obstacle_distances()
+        avoidance_reward = self._compute_avoidance_reward(obstacle_distances)
+        reward = 0.0
+        # steps_elapsed = max(0, self._step_count - 1)
+        # reward -= self.step_penalty * steps_elapsed
+        # reward -= self.accel_penalty * float(np.linalg.norm(accel))
+        # reward -= self.jerk_penalty * float(np.linalg.norm(jerk))
+        min_link_obstacle_distance = float(np.min(obstacle_distances))
+        if min_link_obstacle_distance >= self.safety_distance:
+            reward += self.w_plan * self.distance_to_goal()
+        if collided:
+            reward += self.collision_penalty
+        if reached_goal:
+            reward += self.goal_reward
+        reward += avoidance_reward
+        return reward, obstacle_distances
+
+    def _compute_avoidance_reward(self, distances: np.ndarray) -> float:
+        """Reward encouraging increasing link-obstacle distances inside the safety zone."""
+        prev = self._prev_obstacle_distances
+        if prev is None:
+            self._prev_obstacle_distances = distances.copy()
+            return 0.0
+
+        if self._critical_link_indices.size == 0:
+            self._prev_obstacle_distances = distances.copy()
+            return 0.0
+
+        current = distances[self._critical_link_indices]
+        previous = prev[self._critical_link_indices]
+        if current.ndim == 1:
+            current = current[:, None]
+            previous = previous[:, None]
+
+        current_min = np.min(current, axis=1)
+        previous_min = np.min(previous, axis=1)
+        close_mask = current_min < self.safety_distance
+        if not np.any(close_mask):
+            self._prev_obstacle_distances = distances.copy()
+            return 0.0
+
+        delta = current_min - previous_min
+        self._prev_obstacle_distances = distances.copy()
+        delta_close = delta[close_mask]
+        weight_close = self._critical_link_weights[close_mask]
+        reward = np.sum(weight_close * delta_close)
+        return float(self.avoidance_gain * reward)
 
     def _init_manipulator_ids(self) -> None:  #initialize the manipulator joint and body ids
         self.manip_joint_names = [f"joint{i}" for i in range(1, 8)]
@@ -161,6 +225,52 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
             dtype=np.float32,
         )
 
+    def _set_avoidance_weights(self, weights: Optional[np.ndarray]) -> None:
+        num_links = len(self.manip_body_ids)
+        num_obstacles = len(self.obstacle_body_ids)
+        default_shape = (num_links, num_obstacles)
+        if weights is None:
+            self._avoidance_weights = np.ones(default_shape, dtype=np.float64)
+            return
+
+        arr = np.asarray(weights, dtype=np.float64)
+        if arr.shape != default_shape:
+            raise ValueError(
+                f"avoidance_weights must have shape {default_shape}, got {arr.shape}"
+            )
+        self._avoidance_weights = arr
+
+    def _configure_critical_links(self) -> None:
+        """Select key links near the end-effector and assign avoidance weights."""
+        link_index_lookup: Dict[str, int] = {}
+        for idx, body_id in enumerate(self.manip_body_ids):
+            name = mujoco.mj_id2name(self.model, mujoco.mjtObj.mjOBJ_BODY, int(body_id))
+            if name:
+                link_index_lookup[name] = idx
+
+        preferred_names = ("link5", "link6", "link7")
+        selected_indices: List[int] = [
+            link_index_lookup[name] for name in preferred_names if name in link_index_lookup
+        ]
+
+        if not selected_indices:
+            num_links = len(self.manip_body_ids)
+            selected_indices = list(range(max(0, num_links - 3), num_links))
+
+        if not selected_indices:
+            self._critical_link_indices = np.empty(0, dtype=np.int32)
+            self._critical_link_weights = np.empty(0, dtype=np.float64)
+            return
+
+        base_weights = np.array([50.0, 100.0, 150.0], dtype=np.float64)
+        weight_count = len(selected_indices)
+        weights = np.empty(weight_count, dtype=np.float64)
+        for idx in range(weight_count):
+            weights[idx] = base_weights[min(idx, base_weights.size - 1)]
+
+        self._critical_link_indices = np.array(selected_indices, dtype=np.int32)
+        self._critical_link_weights = weights
+
     def seed(self, seed: Optional[int] = None) -> None: #set random seed 
         self._np_random, _ = gym.utils.seeding.np_random(seed)
 
@@ -185,6 +295,20 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
 
     def _get_obstacle_positions(self) -> np.ndarray: #get the obstacle positions in the world frame
         return self.data.xpos[self.obstacle_body_ids].ravel()
+
+    def _get_link_positions(self) -> np.ndarray:
+        """Return the world-frame positions of all manipulator bodies."""
+        return self.data.xpos[self.manip_body_ids]
+
+    def _compute_link_obstacle_distances(self) -> np.ndarray:
+        """Compute pairwise distances between links and obstacle centers."""
+        link_pos = self._get_link_positions()  # (num_links, 3)
+        obstacle_pos = self.data.xpos[self.obstacle_body_ids]  # (num_obstacles, 3)
+        diff = link_pos[:, None, :] - obstacle_pos[None, :, :]
+        return np.linalg.norm(diff, axis=-1)
+
+    def _refresh_obstacle_distance_buffer(self) -> None:
+        self._prev_obstacle_distances = self._compute_link_obstacle_distances()
 
     def _get_obs(self) -> np.ndarray:   #get the observation of the environment
         joint_vel = self.get_joint_velocities()
@@ -221,22 +345,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         ee_pos = self.get_grasp_center()
         return float(np.linalg.norm(ee_pos - self.goal_pos))
 
-    def _compute_reward(     #compute the reward
-        self,
-        accel: np.ndarray,
-        jerk: np.ndarray,
-        collided: bool,
-        reached_goal: bool,
-    ) -> float:
-        reward = -0.01*self.step_penalty
-        reward -= self.accel_penalty * float(np.linalg.norm(accel))
-        reward -= self.jerk_penalty * float(np.linalg.norm(jerk))
-        reward -= self.distance_to_goal()
-        if collided:
-            reward += self.collision_penalty
-        if reached_goal:
-            reward += self.goal_reward
-        return reward
+
 
     def reset(         #Reset the simulation, sample a new goal, and return the initial observation.
         self,
@@ -255,6 +364,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self.data.ctrl[:] = 0.0
         self._update_obstacles(self.data.time)
         mujoco.mj_forward(self.model, self.data)
+        self._refresh_obstacle_distance_buffer()
 
         obs = self._get_obs()
         info = {"goal": self.goal_pos.copy()}   
@@ -277,8 +387,9 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self._step_count += 1
 
         collided = self._detect_collision()
-        reached_goal = self.distance_to_goal() <= self.goal_reach_threshold
-        reward = self._compute_reward(accel, jerk, collided, reached_goal)
+        curr_goal_dist = self.distance_to_goal()
+        reached_goal = curr_goal_dist <= self.goal_reach_threshold
+        reward, obstacle_distances = self._compute_reward(accel, jerk, collided, reached_goal)
 
         obs = self._get_obs()
         terminated = reached_goal or collided
@@ -291,6 +402,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
             "grasp_center": self.get_grasp_center(),
             "collided": np.array([collided], dtype=bool),
             "is_success": np.array([reached_goal], dtype=bool),
+            "min_link_obstacle_distance": np.array([np.min(obstacle_distances)], dtype=np.float64),
         }
         return obs, reward, terminated, truncated, info
 

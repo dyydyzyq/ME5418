@@ -46,7 +46,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--track",
         action=argparse.BooleanOptionalAction,
-        default=False,
+        default=True,
         help="Enable logging to Weights & Biases (pass --track to log, --no-track to skip).",
     )
     parser.add_argument("--log-interval", type=int, default=10, help="How many updates between console logs.")
