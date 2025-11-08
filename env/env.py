@@ -290,6 +290,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
             "distance_to_goal": np.array([self.distance_to_goal()], dtype=np.float64),
             "grasp_center": self.get_grasp_center(),
             "collided": np.array([collided], dtype=bool),
+            "is_success": np.array([reached_goal], dtype=bool),
         }
         return obs, reward, terminated, truncated, info
 

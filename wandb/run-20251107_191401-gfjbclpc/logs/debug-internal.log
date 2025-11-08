@@ -1,0 +1,7 @@
+{"time":"2025-11-07T19:14:01.357589833+08:00","level":"INFO","msg":"stream: starting","core version":"0.22.3"}
+{"time":"2025-11-07T19:14:01.764917247+08:00","level":"INFO","msg":"stream: created new stream","id":"gfjbclpc"}
+{"time":"2025-11-07T19:14:01.7650323+08:00","level":"INFO","msg":"handler: started","stream_id":"gfjbclpc"}
+{"time":"2025-11-07T19:14:01.765246817+08:00","level":"INFO","msg":"stream: started","id":"gfjbclpc"}
+{"time":"2025-11-07T19:14:01.765322978+08:00","level":"INFO","msg":"sender: started","stream_id":"gfjbclpc"}
+{"time":"2025-11-07T19:14:01.765323348+08:00","level":"INFO","msg":"writer: started","stream_id":"gfjbclpc"}
+{"time":"2025-11-07T19:14:16.777632442+08:00","level":"INFO","msg":"stream: closing","id":"gfjbclpc"}

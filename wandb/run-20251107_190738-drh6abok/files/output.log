@@ -1,0 +1,105 @@
+============================================================
+Initializing Environment
+============================================================
+State dim: 37
+Action dim: 7
+Action space: Box(-1.0, 1.0, (7,), float32)
+
+============================================================
+Initializing Replay Buffer
+============================================================
+Capacity: 1,000,000
+Min size before training: 10,000
+
+============================================================
+Initializing SAC Agent
+============================================================
+
+============================================================
+Warm-up: Collecting random experience
+============================================================
+Warm-up progress: 1,000 / 10,000
+Warm-up progress: 2,000 / 10,000
+Warm-up progress: 3,000 / 10,000
+Warm-up progress: 4,000 / 10,000
+Warm-up progress: 5,000 / 10,000
+Warm-up progress: 6,000 / 10,000
+Warm-up progress: 7,000 / 10,000
+Warm-up progress: 8,000 / 10,000
+Warm-up progress: 9,000 / 10,000
+Warm-up progress: 10,000 / 10,000
+Warm-up complete: 10,000 transitions collected in 10,000 steps
+
+============================================================
+Start Training
+============================================================
+Total steps: 1,000,000
+
+Step 12,000 - Losses:
+  critic1_loss: 16.720993
+  critic2_loss: 16.753838
+  actor_loss: -29.321245
+  alpha: 0.548669
+  actor_grad_norm: 0.186496
+  critic1_grad_norm: 6.172997
+  critic2_grad_norm: 6.861087
+  alpha_loss: -7.062782
+
+Episode 10 - Steps: 12,002
+  Reward: -235.23
+  Length: 367
+
+Step 14,000 - Losses:
+  critic1_loss: 0.382387
+  critic2_loss: 1.275407
+  actor_loss: -35.708969
+  alpha: 0.301149
+  actor_grad_norm: 0.129261
+  critic1_grad_norm: 9.149513
+  critic2_grad_norm: 12.266861
+  alpha_loss: -14.118654
+
+Episode 20 - Steps: 14,428
+  Reward: -73.52
+  Length: 101
+
+Step 16,000 - Losses:
+  critic1_loss: 0.533400
+  critic2_loss: 0.592073
+  actor_loss: -34.250145
+  alpha: 0.165326
+  actor_grad_norm: 0.056421
+  critic1_grad_norm: 17.341750
+  critic2_grad_norm: 12.186169
+  alpha_loss: -21.189165
+
+Episode 30 - Steps: 16,008
+  Reward: -71.43
+  Length: 78
+
+Step 18,000 - Losses:
+  critic1_loss: 1.269011
+  critic2_loss: 1.455780
+  actor_loss: -27.791243
+  alpha: 0.091588
+  actor_grad_norm: 0.054140
+  critic1_grad_norm: 24.161838
+  critic2_grad_norm: 29.958533
+  alpha_loss: -26.119532
+
+Step 20,000 - Losses:
+  critic1_loss: 1.205847
+  critic2_loss: 1.326756
+  actor_loss: -19.977383
+  alpha: 0.052942
+  actor_grad_norm: 0.037995
+  critic1_grad_norm: 24.677289
+  critic2_grad_norm: 30.317344
+  alpha_loss: -24.790413
+
+============================================================
+Evaluation at training step 20,000 (after 1 evaluations )
+============================================================
+Mean reward: -1669.25 ± 224.79
+Success rate: 0.00%
+Avg episode length: 1600.0

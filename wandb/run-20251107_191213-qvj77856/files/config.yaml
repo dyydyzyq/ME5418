@@ -1,0 +1,81 @@
+_wandb:
+    value:
+        cli_version: 0.22.3
+        code_path: code/learning_agent/train_ppo.py
+        e:
+            ntdrkqwkusdck3r782m0cnebx0qvczl9:
+                codePath: learning_agent/train_ppo.py
+                codePathLocal: learning_agent/train_ppo.py
+                cpu_count: 8
+                cpu_count_logical: 16
+                cudaVersion: "12.2"
+                disk:
+                    /:
+                        total: "633862127616"
+                        used: "179831570432"
+                email: 461091818@qq.com
+                executable: /home/nuo/miniconda3/bin/python
+                git:
+                    commit: 9f41fc2d812d2b95b2a82804737108975e8dd2f7
+                    remote: git@github.com:dyydyzyq/ME5418.git
+                gpu: NVIDIA GeForce RTX 4050 Laptop GPU
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ada
+                      cudaCores: 2560
+                      memoryTotal: "6439305216"
+                      name: NVIDIA GeForce RTX 4050 Laptop GPU
+                      uuid: GPU-02b80c1f-4151-b5a8-9854-40b594006ef3
+                host: nuo
+                memory:
+                    total: "16004362240"
+                os: Linux-5.15.0-139-generic-x86_64-with-glibc2.31
+                program: /home/nuo/ME5418/learning_agent/train_ppo.py
+                python: CPython 3.10.18
+                root: /home/nuo/ME5418
+                startedAt: "2025-11-07T11:12:13.994240Z"
+                writerId: ntdrkqwkusdck3r782m0cnebx0qvczl9
+        m: []
+        python_version: 3.10.18
+        t:
+            "1":
+                - 1
+            "2":
+                - 1
+            "3":
+                - 16
+                - 61
+            "4": 3.10.18
+            "5": 0.22.3
+            "12": 0.22.3
+            "13": linux-x86_64
+adam_eps:
+    value: 1e-05
+clip_range:
+    value: 0.2
+device:
+    value: cuda
+entropy_coef:
+    value: 0
+gae_lambda:
+    value: 0.95
+gamma:
+    value: 0.99
+learning_rate:
+    value: 0.0003
+max_grad_norm:
+    value: 0.5
+mini_batch_size:
+    value: 64
+normalize_advantage:
+    value: true
+seed:
+    value: 42
+total_batch_size:
+    value: 2048
+update_epochs:
+    value: 10
+value_clip_range:
+    value: null
+vf_coef:
+    value: 0.5

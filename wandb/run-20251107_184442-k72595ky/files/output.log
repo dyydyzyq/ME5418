@@ -1,0 +1,16 @@
+[Update 0010/97] Step=20480 PolicyLoss=-0.0073 ValueLoss=15.9160 Entropy=6.5173 KL=0.01974 SPS=1016.2
+[Update 0020/97] Step=40960 PolicyLoss=-0.0027 ValueLoss=9.3794 Entropy=6.5041 KL=0.01558 SPS=859.6
+[Update 0030/97] Step=61440 PolicyLoss=0.0050 ValueLoss=8.3804 Entropy=6.4613 KL=0.02185 SPS=864.8
+[Update 0040/97] Step=81920 PolicyLoss=0.0007 ValueLoss=6.7671 Entropy=6.3625 KL=0.01986 SPS=851.4
+Traceback (most recent call last):
+  File "/home/nuo/ME5418/learning_agent/train_ppo.py", line 213, in <module>
+    main()
+  File "/home/nuo/ME5418/learning_agent/train_ppo.py", line 209, in main
+    train(args)
+  File "/home/nuo/ME5418/learning_agent/train_ppo.py", line 128, in train
+    action, log_prob, value = agent.act(obs_tensor)
+  File "/home/nuo/ME5418/learning_agent/ppo.py", line 263, in act
+    log_probs = distribution.log_prob(actions).sum(dim=-1)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/torch/distributions/normal.py", line 100, in log_prob
+    - math.log(math.sqrt(2 * math.pi))
+KeyboardInterrupt

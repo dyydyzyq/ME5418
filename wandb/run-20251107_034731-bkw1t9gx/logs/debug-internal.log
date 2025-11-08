@@ -1,0 +1,11 @@
+{"time":"2025-11-07T03:47:32.171362688+08:00","level":"INFO","msg":"stream: starting","core version":"0.22.3"}
+{"time":"2025-11-07T03:47:32.596365922+08:00","level":"INFO","msg":"stream: created new stream","id":"bkw1t9gx"}
+{"time":"2025-11-07T03:47:32.596487058+08:00","level":"INFO","msg":"handler: started","stream_id":"bkw1t9gx"}
+{"time":"2025-11-07T03:47:32.596662924+08:00","level":"INFO","msg":"stream: started","id":"bkw1t9gx"}
+{"time":"2025-11-07T03:47:32.596732163+08:00","level":"INFO","msg":"writer: started","stream_id":"bkw1t9gx"}
+{"time":"2025-11-07T03:47:32.596767839+08:00","level":"INFO","msg":"sender: started","stream_id":"bkw1t9gx"}
+{"time":"2025-11-07T03:48:18.409028938+08:00","level":"INFO","msg":"flowcontrol: backed up, offloading to disk","recordNumber":2037}
+{"time":"2025-11-07T03:48:18.447833272+08:00","level":"INFO","msg":"flowcontrol: unblocked","totalOffloaded":6}
+{"time":"2025-11-07T03:48:48.345114061+08:00","level":"INFO","msg":"flowcontrol: backed up, offloading to disk","recordNumber":4679}
+{"time":"2025-11-07T03:48:48.557781223+08:00","level":"INFO","msg":"flowcontrol: unblocked","totalOffloaded":12}
+{"time":"2025-11-07T03:48:50.641864081+08:00","level":"INFO","msg":"stream: closing","id":"bkw1t9gx"}

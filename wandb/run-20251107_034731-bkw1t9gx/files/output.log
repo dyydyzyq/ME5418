@@ -1,0 +1,19 @@
+[Update 0010/97] Step=20480 PolicyLoss=-0.0007 ValueLoss=13.0127 Entropy=6.4331 KL=0.01742 SPS=916.9
+[Update 0020/97] Step=40960 PolicyLoss=-0.0055 ValueLoss=13.1398 Entropy=6.3854 KL=0.01687 SPS=889.7
+[Update 0030/97] Step=61440 PolicyLoss=-0.0030 ValueLoss=8.6368 Entropy=6.2843 KL=0.02617 SPS=864.4
+Traceback (most recent call last):
+  File "/home/nuo/ME5418/learing_agent/train_ppo.py", line 213, in <module>
+    main()
+  File "/home/nuo/ME5418/learing_agent/train_ppo.py", line 209, in main
+    train(args)
+  File "/home/nuo/ME5418/learing_agent/train_ppo.py", line 174, in train
+    metrics = agent.update()
+  File "/home/nuo/ME5418/learing_agent/ppo.py", line 321, in update
+    loss.backward()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/torch/_tensor.py", line 647, in backward
+    torch.autograd.backward(
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/torch/autograd/__init__.py", line 354, in backward
+    _engine_run_backward(
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/torch/autograd/graph.py", line 829, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+KeyboardInterrupt

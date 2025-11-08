@@ -1,0 +1,18 @@
+diff --git a/env/__pycache__/env.cpython-310.pyc b/env/__pycache__/env.cpython-310.pyc
+index 8c25633..89b13d4 100644
+Binary files a/env/__pycache__/env.cpython-310.pyc and b/env/__pycache__/env.cpython-310.pyc differ
+diff --git a/env/env.py b/env/env.py
+index 2b46768..a3113b8 100644
+--- a/env/env.py
++++ b/env/env.py
+@@ -290,6 +290,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
+             "distance_to_goal": np.array([self.distance_to_goal()], dtype=np.float64),
+             "grasp_center": self.get_grasp_center(),
+             "collided": np.array([collided], dtype=bool),
++            "is_success": np.array([reached_goal], dtype=bool),
+         }
+         return obs, reward, terminated, truncated, info
+ 
+diff --git a/net/__pycache__/__init__.cpython-310.pyc b/net/__pycache__/__init__.cpython-310.pyc
+index c96141e..9beec07 100644
+Binary files a/net/__pycache__/__init__.cpython-310.pyc and b/net/__pycache__/__init__.cpython-310.pyc differ

@@ -1,0 +1,76 @@
+2025-11-07 19:33:37,149 INFO    MainThread:13241 [wandb_setup.py:_flush():81] Current SDK version is 0.22.3
+2025-11-07 19:33:37,149 INFO    MainThread:13241 [wandb_setup.py:_flush():81] Configure stats pid to 13241
+2025-11-07 19:33:37,149 INFO    MainThread:13241 [wandb_setup.py:_flush():81] Loading settings from /home/nuo/.config/wandb/settings
+2025-11-07 19:33:37,149 INFO    MainThread:13241 [wandb_setup.py:_flush():81] Loading settings from /home/nuo/ME5418/wandb/settings
+2025-11-07 19:33:37,149 INFO    MainThread:13241 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2025-11-07 19:33:37,150 INFO    MainThread:13241 [wandb_init.py:setup_run_log_directory():706] Logging user logs to /home/nuo/ME5418/wandb/run-20251107_193337-ngi225ud/logs/debug.log
+2025-11-07 19:33:37,150 INFO    MainThread:13241 [wandb_init.py:setup_run_log_directory():707] Logging internal logs to /home/nuo/ME5418/wandb/run-20251107_193337-ngi225ud/logs/debug-internal.log
+2025-11-07 19:33:37,150 INFO    MainThread:13241 [wandb_init.py:init():833] calling init triggers
+2025-11-07 19:33:37,150 INFO    MainThread:13241 [wandb_init.py:init():838] wandb.init called with sweep_config: {}
+config: {'total_steps': 1000000, 'batch_size': 256, 'learning_rate': 0.0003, 'gamma': 0.99, 'tau': 0.005, 'alpha': 0.2, 'buffer_capacity': 1000000, 'min_buffer_size': 10000, 'hidden_dim': 64, 'lstm_hidden_dim': 64, 'seq_len': 5, 'update_frequency': 1, 'gradient_steps': 1, 'eval_frequency': 10000, 'eval_episodes': 5, 'save_frequency': 50000, 'log_frequency': 2000, 'project': 'panda-sac', 'entity': None, 'run_name': None, 'save_dir': 'agent/models', 'load_path': None, 'device': 'cpu', 'seed': 42, 'algorithm': 'SAC', '_wandb': {'code_path': 'code/learning_agent/train_sac.py'}}
+2025-11-07 19:33:37,150 INFO    MainThread:13241 [wandb_init.py:init():881] starting backend
+2025-11-07 19:33:37,359 INFO    MainThread:13241 [wandb_init.py:init():884] sending inform_init request
+2025-11-07 19:33:37,364 INFO    MainThread:13241 [wandb_init.py:init():892] backend started and connected
+2025-11-07 19:33:37,365 INFO    MainThread:13241 [wandb_init.py:init():962] updated telemetry
+2025-11-07 19:33:37,369 INFO    MainThread:13241 [wandb_init.py:init():986] communicating run to backend with 90.0 second timeout
+2025-11-07 19:33:39,820 INFO    MainThread:13241 [wandb_init.py:init():1033] starting run threads in backend
+2025-11-07 19:33:39,881 INFO    MainThread:13241 [wandb_run.py:_console_start():2506] atexit reg
+2025-11-07 19:33:39,881 INFO    MainThread:13241 [wandb_run.py:_redirect():2354] redirect: wrap_raw
+2025-11-07 19:33:39,881 INFO    MainThread:13241 [wandb_run.py:_redirect():2423] Wrapping output streams.
+2025-11-07 19:33:39,881 INFO    MainThread:13241 [wandb_run.py:_redirect():2446] Redirects installed.
+2025-11-07 19:33:39,883 INFO    MainThread:13241 [wandb_init.py:init():1073] run started, returning control to user process
+2025-11-07 19:33:40,370 INFO    MainThread:13241 [wandb_run.py:_config_callback():1390] config_cb None None {'state_dim': 37, 'action_dim': 7}
+2025-11-07 19:34:02,828 INFO    wandb-AsyncioManager-main:13241 [service_client.py:_forward_responses():80] Reached EOF.
+2025-11-07 19:34:02,828 INFO    wandb-AsyncioManager-main:13241 [mailbox.py:close():137] Closing mailbox, abandoning 1 handles.
+2025-11-07 19:34:03,242 ERROR   wandb-AsyncioManager-main:13241 [asyncio_manager.py:fn_wrap_exceptions():183] Uncaught exception in run_soon callback.
+Traceback (most recent call last):
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/asyncio_manager.py", line 181, in fn_wrap_exceptions
+    await fn()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/service/service_client.py", line 38, in publish
+    await self._send_server_request(request)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/service/service_client.py", line 64, in _send_server_request
+    await self._writer.drain()
+  File "/home/nuo/miniconda3/lib/python3.10/asyncio/streams.py", line 371, in drain
+    await self._protocol._drain_helper()
+  File "/home/nuo/miniconda3/lib/python3.10/asyncio/streams.py", line 167, in _drain_helper
+    raise ConnectionResetError('Connection lost')
+ConnectionResetError: Connection lost
+2025-11-07 19:34:03,245 ERROR   wandb-AsyncioManager-main:13241 [asyncio_manager.py:fn_wrap_exceptions():183] Uncaught exception in run_soon callback.
+Traceback (most recent call last):
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/asyncio_manager.py", line 181, in fn_wrap_exceptions
+    await fn()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/service/service_client.py", line 38, in publish
+    await self._send_server_request(request)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/service/service_client.py", line 64, in _send_server_request
+    await self._writer.drain()
+  File "/home/nuo/miniconda3/lib/python3.10/asyncio/streams.py", line 371, in drain
+    await self._protocol._drain_helper()
+  File "/home/nuo/miniconda3/lib/python3.10/asyncio/streams.py", line 167, in _drain_helper
+    raise ConnectionResetError('Connection lost')
+ConnectionResetError: Connection lost
+2025-11-07 19:34:03,246 ERROR   wandb-AsyncioManager-main:13241 [asyncio_manager.py:fn_wrap_exceptions():183] Uncaught exception in run_soon callback.
+Traceback (most recent call last):
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/asyncio_manager.py", line 181, in fn_wrap_exceptions
+    await fn()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/service/service_client.py", line 38, in publish
+    await self._send_server_request(request)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/service/service_client.py", line 64, in _send_server_request
+    await self._writer.drain()
+  File "/home/nuo/miniconda3/lib/python3.10/asyncio/streams.py", line 371, in drain
+    await self._protocol._drain_helper()
+  File "/home/nuo/miniconda3/lib/python3.10/asyncio/streams.py", line 167, in _drain_helper
+    raise ConnectionResetError('Connection lost')
+ConnectionResetError: Connection lost
+2025-11-07 19:34:03,252 ERROR   wandb-AsyncioManager-main:13241 [asyncio_manager.py:fn_wrap_exceptions():183] Uncaught exception in run_soon callback.
+Traceback (most recent call last):
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/asyncio_manager.py", line 181, in fn_wrap_exceptions
+    await fn()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/service/service_client.py", line 38, in publish
+    await self._send_server_request(request)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/service/service_client.py", line 64, in _send_server_request
+    await self._writer.drain()
+  File "/home/nuo/miniconda3/lib/python3.10/asyncio/streams.py", line 371, in drain
+    await self._protocol._drain_helper()
+  File "/home/nuo/miniconda3/lib/python3.10/asyncio/streams.py", line 167, in _drain_helper
+    raise ConnectionResetError('Connection lost')
+ConnectionResetError: Connection lost

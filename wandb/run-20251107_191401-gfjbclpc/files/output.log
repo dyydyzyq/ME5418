@@ -1,0 +1,51 @@
+[Episode 00001] return=-161.36 length=382 step=382
+[Episode 00002] return=-513.78 length=840 step=1222
+[Episode 00003] return=-680.27 length=1131 step=2353
+[Episode 00004] return=-180.79 length=326 step=2679
+[Episode 00005] return=-360.41 length=395 step=3074
+[Episode 00006] return=-476.59 length=740 step=3814
+[Episode 00007] return=-245.84 length=484 step=4298
+[Episode 00008] return=-333.06 length=538 step=4836
+[Episode 00009] return=-548.39 length=1190 step=6026
+[Episode 00010] return=-121.99 length=209 step=6235
+[Episode 00011] return=-552.91 length=1113 step=7348
+[Episode 00012] return=-41.50 length=52 step=7400
+[Episode 00013] return=-570.35 length=1147 step=8547
+[Episode 00014] return=-42.98 length=43 step=8590
+[Episode 00015] return=-222.12 length=351 step=8941
+[Episode 00016] return=-234.50 length=378 step=9319
+[Episode 00017] return=-260.50 length=418 step=9737
+[Episode 00018] return=-353.18 length=617 step=10354
+[Episode 00019] return=-35.47 length=60 step=10414
+[Episode 00020] return=-234.34 length=464 step=10878
+[Episode 00021] return=-345.45 length=725 step=11603
+[Episode 00022] return=-93.08 length=120 step=11723
+[Episode 00023] return=-62.87 length=83 step=11806
+[Episode 00024] return=-85.36 length=96 step=11902
+[Episode 00025] return=-93.35 length=161 step=12063
+[Episode 00026] return=-71.90 length=108 step=12171
+[Episode 00027] return=-381.93 length=797 step=12968
+[Episode 00028] return=-42.68 length=46 step=13014
+[Episode 00029] return=-83.06 length=102 step=13116
+[Episode 00030] return=-222.36 length=387 step=13503
+[Episode 00031] return=-206.92 length=357 step=13860
+[Episode 00032] return=-65.49 length=83 step=13943
+[Episode 00033] return=-210.84 length=379 step=14322
+[Episode 00034] return=-48.08 length=71 step=14393
+[Episode 00035] return=-217.38 length=366 step=14759
+[Episode 00036] return=-66.22 length=101 step=14860
+[Episode 00037] return=-253.42 length=430 step=15290
+[Episode 00038] return=-158.61 length=312 step=15602
+[Episode 00039] return=-105.95 length=165 step=15767
+[Episode 00040] return=-35.59 length=45 step=15812
+[Episode 00041] return=-33.23 length=52 step=15864
+Traceback (most recent call last):
+  File "/home/nuo/ME5418/learning_agent/train_ppo.py", line 222, in <module>
+    main()
+  File "/home/nuo/ME5418/learning_agent/train_ppo.py", line 218, in main
+    train(args)
+  File "/home/nuo/ME5418/learning_agent/train_ppo.py", line 182, in train
+    metrics = agent.update()
+  File "/home/nuo/ME5418/learning_agent/ppo.py", line 348, in update
+    clip_fraction_sum += clip_fraction.float().mean().item()
+KeyboardInterrupt

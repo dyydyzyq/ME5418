@@ -1,0 +1,48 @@
+============================================================
+Initializing Environment
+============================================================
+State dim: 37
+Action dim: 7
+Action space: Box(-1.0, 1.0, (7,), float32)
+
+============================================================
+Initializing Replay Buffer
+============================================================
+Capacity: 1,000,000
+Min size before training: 10,000
+
+============================================================
+Initializing SAC Agent
+============================================================
+
+============================================================
+Warm-up: Collecting random experience
+============================================================
+Warm-up progress: 1,000 / 10,000
+Warm-up progress: 2,000 / 10,000
+Warm-up progress: 3,000 / 10,000
+Warm-up progress: 4,000 / 10,000
+Warm-up progress: 5,000 / 10,000
+Warm-up progress: 6,000 / 10,000
+Warm-up progress: 7,000 / 10,000
+Warm-up progress: 8,000 / 10,000
+Warm-up progress: 9,000 / 10,000
+Warm-up progress: 10,000 / 10,000
+Warm-up complete: 10,000 transitions collected in 10,000 steps
+
+============================================================
+Start Training
+============================================================
+Total steps: 1,000,000
+Traceback (most recent call last):
+  File "/home/nuo/ME5418/learning_agent/train_sac.py", line 400, in <module>
+    main()
+  File "/home/nuo/ME5418/learning_agent/train_sac.py", line 312, in main
+    next_obs, reward, terminated, truncated, info = env.step(action)
+  File "/home/nuo/ME5418/env/env.py", line 283, in step
+    obs = self._get_obs()
+  File "/home/nuo/ME5418/env/env.py", line 193, in _get_obs
+    [joint_vel, joint_pos, self.goal_pos, self._get_obstacle_positions()]
+  File "/home/nuo/ME5418/env/env.py", line 187, in _get_obstacle_positions
+    return self.data.xpos[self.obstacle_body_ids].ravel()
+KeyboardInterrupt
