@@ -19,3 +19,8 @@ config: {'algorithm': 'ppo', 'device': 'cpu', 'n_steps': 2048, 'batch_size': 128
 2025-11-09 18:29:11,387 INFO    MainThread:14162 [wandb_run.py:_redirect():2423] Wrapping output streams.
 2025-11-09 18:29:11,387 INFO    MainThread:14162 [wandb_run.py:_redirect():2446] Redirects installed.
 2025-11-09 18:29:11,388 INFO    MainThread:14162 [wandb_init.py:init():1073] run started, returning control to user process
+2025-11-09 18:58:06,187 INFO    MainThread:14162 [wandb_run.py:_finish():2272] finishing run ME5418/panda-obstacle-ppo/osf2a4sy
+2025-11-09 18:58:06,188 INFO    MainThread:14162 [wandb_run.py:_atexit_cleanup():2471] got exitcode: 0
+2025-11-09 18:58:06,188 INFO    MainThread:14162 [wandb_run.py:_restore():2453] restore
+2025-11-09 18:58:06,189 INFO    MainThread:14162 [wandb_run.py:_restore():2459] restore done
+2025-11-09 18:58:08,798 INFO    MainThread:14162 [wandb_run.py:_footer_sync_info():3835] logging synced files

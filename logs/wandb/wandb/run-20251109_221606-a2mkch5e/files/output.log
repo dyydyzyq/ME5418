@@ -1,0 +1,74 @@
+/home/nuo/ME5418/env/env.py:245: RuntimeWarning: Increased MuJoCo offscreen framebuffer from 640x480 to 1280x640 for PandaObstacleEnv renders (1280x640). Consider setting <visual><global offwidth="..." offheight="..."/></visual> inside scene_withobstacles.xml for permanent support.
+  warnings.warn(
+Logging to logs/sb3
+Eval num_timesteps=12101392, episode_reward=9.16 +/- 216.81
+Episode length: 106.80 +/- 147.63
+Success rate: 80.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 107      |
+|    mean_reward          | 9.16     |
+|    success_rate         | 0.8      |
+| rollout/                |          |
+|    episode_avg_distance | 0.242    |
+|    episode_reward       | 3.12     |
+|    episode_success      | 1        |
+|    success_rate_window  | 0.9      |
+| time/                   |          |
+|    total_timesteps      | 12101392 |
+--------------------------------------
+New best mean reward!
+Eval num_timesteps=12111392, episode_reward=171.21 +/- 28.80
+Episode length: 33.40 +/- 5.20
+Success rate: 100.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 33.4     |
+|    mean_reward          | 171      |
+|    success_rate         | 1        |
+| rollout/                |          |
+|    episode_avg_distance | 0.239    |
+|    episode_reward       | 3.31     |
+|    episode_success      | 1        |
+|    success_rate_window  | 0.92     |
+| time/                   |          |
+|    total_timesteps      | 12111392 |
+--------------------------------------
+New best mean reward!
+Eval num_timesteps=12121392, episode_reward=184.06 +/- 10.93
+Episode length: 30.40 +/- 2.65
+Success rate: 100.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 30.4     |
+|    mean_reward          | 184      |
+|    success_rate         | 1        |
+| rollout/                |          |
+|    episode_avg_distance | 0.329    |
+|    episode_reward       | 2.31     |
+|    episode_success      | 1        |
+|    success_rate_window  | 0.94     |
+| time/                   |          |
+|    total_timesteps      | 12121392 |
+--------------------------------------
+New best mean reward!
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 57.8     |
+|    ep_rew_mean          | 127      |
+|    episode_avg_distance | 0.178    |
+|    episode_reward       | 3.75     |
+|    episode_success      | 1        |
+|    success_rate         | 0.96     |
+|    success_rate_window  | 0.98     |
+| time/                   |          |
+|    fps                  | 6686     |
+|    iterations           | 1        |
+|    time_elapsed         | 4        |
+|    total_timesteps      | 12124160 |
+--------------------------------------
+/home/nuo/ME5418/env/env.py:245: RuntimeWarning: Increased MuJoCo offscreen framebuffer from 640x480 to 1280x640 for PandaObstacleEnv renders (1280x640). Consider setting <visual><global offwidth="..." offheight="..."/></visual> inside scene_withobstacles.xml for permanent support.
+  warnings.warn(
+Saved policy rollout video to logs/visuals/final_policy_rollout.mp4
+[34m[1mwandb[0m: [33mWARNING[0m `fps` argument does not affect the frame rate of the video when providing a file path or raw bytes.
+Uploaded policy rollout video to W&B under key 'final_policy'.

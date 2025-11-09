@@ -141,7 +141,7 @@ def parse_args() -> argparse.Namespace:   # set the parameters for training
     parser.add_argument(
         "--rollout-episodes",
         type=int,   
-        default=1,
+        default=10,
         help="Number of episodes to record for the post-training policy rollout video",
     )
     parser.add_argument(

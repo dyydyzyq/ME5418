@@ -26,7 +26,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         render_height: int = 640,
         goal_bounds: Optional[Tuple[np.ndarray, np.ndarray]] = None,
         goal_reach_threshold: float = 0.02,
-        safety_distance: float = 0.2,
+        safety_distance: float = 0.1,
         avoidance_weights: Optional[np.ndarray] = None,
         avoidance_gain: float = 2.0,
     ) -> None:
@@ -57,6 +57,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self._init_manipulator_ids()
         self._init_obstacle_ids()
         self._init_actuator_ids()
+        self._init_target_site()
         self._init_spaces() 
         self._set_avoidance_weights(avoidance_weights)
         self._configure_critical_links()
@@ -68,7 +69,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self.obstacle_frequency = 0.125
         
         self.collision_penalty = -250.0
-        self.goal_reward = 200.0
+        self.goal_reward = 250.0
         self.accel_penalty = 0.00001
         self.jerk_penalty = 0.00001
         self.step_penalty = 0.02
@@ -80,9 +81,10 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self._prev_accel = np.zeros(self.action_dim, dtype=np.float64)
         self._prev_obstacle_distances: Optional[np.ndarray] = None
 
+        self.goal_pos = self._sample_goal()
+        self._sync_goal_marker()
         mujoco.mj_forward(self.model, self.data)
         self._update_obstacles(self.data.time)
-        self.goal_pos = self._sample_goal()
         self._refresh_obstacle_distance_buffer()
 
     def _compute_reward(     #compute the reward
@@ -95,8 +97,8 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         obstacle_distances = self._compute_link_obstacle_distances()
         avoidance_reward = self._compute_avoidance_reward(obstacle_distances)
         reward = 0.0
-        # steps_elapsed = max(0, self._step_count - 1)
-        # reward -= self.step_penalty * steps_elapsed
+        # Light step penalty discourages dawdling even when safe.
+        reward -= self.step_penalty
         # reward -= self.accel_penalty * float(np.linalg.norm(accel))
         # reward -= self.jerk_penalty * float(np.linalg.norm(jerk))
         min_link_obstacle_distance = float(np.min(obstacle_distances))
@@ -200,6 +202,23 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
             self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, "move_sphere_y"
         )
 
+    def _init_target_site(self) -> None:
+        """Locate the MuJoCo site used to visualise the goal position."""
+        try:
+            site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "target")
+        except Exception:
+            site_id = -1
+
+        if site_id < 0:
+            warnings.warn(
+                "Goal marker site 'target' not found; visual goal position will stay fixed.",
+                RuntimeWarning,
+            )
+            self.target_site_id: Optional[int] = None
+            return
+
+        self.target_site_id = site_id
+
     def _ensure_offscreen_buffer_capacity(self) -> None:
         """Resize MuJoCo's offscreen framebuffer if higher-resolution renders are requested."""
         vis_global = getattr(self.model.vis, "global_", None)
@@ -232,6 +251,12 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
                 "inside scene_withobstacles.xml for permanent support.",
                 RuntimeWarning,
             )
+
+    def _sync_goal_marker(self) -> None:
+        """Update the visual goal site so renders match the sampled target."""
+        if getattr(self, "target_site_id", None) is None:
+            return
+        self.model.site_pos[self.target_site_id] = np.asarray(self.goal_pos, dtype=np.float64)
 
 
     def _init_spaces(self) -> None:
@@ -396,6 +421,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self._prev_accel[:] = 0.0
 
         self.goal_pos = self._sample_goal()
+        self._sync_goal_marker()
         self.data.ctrl[:] = 0.0
         self._update_obstacles(self.data.time)
         mujoco.mj_forward(self.model, self.data)

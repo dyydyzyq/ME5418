@@ -1,0 +1,2769 @@
+/home/nuo/ME5418/env/env.py:226: RuntimeWarning: Increased MuJoCo offscreen framebuffer from 640x480 to 1280x640 for PandaObstacleEnv renders (1280x640). Consider setting <visual><global offwidth="..." offheight="..."/></visual> inside scene_withobstacles.xml for permanent support.
+  warnings.warn(
+Using policy network architecture [128, 128] with activation tanh.
+PPO hyperparameters: n_steps=2048, batch_size=128, n_epochs=8, gamma=0.99, gae_lambda=0.95, lr=0.0003, clip_range=0.2, ent_coef=0.005, vf_coef=0.5, max_grad_norm=0.5, target_kl=0.05
+Using cpu device
+Logging to logs/sb3
+Eval num_timesteps=10000, episode_reward=-6806.93 +/- 1488.08
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -6.81e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.271     |
+|    episode_reward       | -3.97     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.02      |
+| time/                   |           |
+|    total_timesteps      | 10000     |
+---------------------------------------
+New best mean reward!
+Eval num_timesteps=20000, episode_reward=-8230.01 +/- 558.55
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -8.23e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.286     |
+|    episode_reward       | -3.25     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    total_timesteps      | 20000     |
+---------------------------------------
+Eval num_timesteps=30000, episode_reward=-7815.61 +/- 2291.33
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -7.82e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.382     |
+|    episode_reward       | -3.98     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    total_timesteps      | 30000     |
+---------------------------------------
+---------------------------------------
+| rollout/                |           |
+|    ep_len_mean          | 194       |
+|    ep_rew_mean          | -1.13e+03 |
+|    episode_avg_distance | 0.714     |
+|    episode_reward       | -17.2     |
+|    episode_success      | 0         |
+|    success_rate         | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    fps                  | 2493      |
+|    iterations           | 1         |
+|    time_elapsed         | 13        |
+|    total_timesteps      | 32768     |
+---------------------------------------
+Eval num_timesteps=40000, episode_reward=-7651.75 +/- 1111.17
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -7.65e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.695       |
+|    episode_reward       | -27.1       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0           |
+| time/                   |             |
+|    total_timesteps      | 40000       |
+| train/                  |             |
+|    approx_kl            | 0.009757796 |
+|    clip_fraction        | 0.113       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.95       |
+|    explained_variance   | 0.00551     |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0396     |
+|    n_updates            | 8           |
+|    policy_gradient_loss | -0.00589    |
+|    std                  | 1           |
+|    value_loss           | 0.178       |
+-----------------------------------------
+Eval num_timesteps=50000, episode_reward=-7676.00 +/- 733.75
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -7.68e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.63      |
+|    episode_reward       | -18.5     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    total_timesteps      | 50000     |
+---------------------------------------
+Eval num_timesteps=60000, episode_reward=-8850.75 +/- 618.65
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -8.85e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.402     |
+|    episode_reward       | -6.61     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    total_timesteps      | 60000     |
+---------------------------------------
+---------------------------------------
+| rollout/                |           |
+|    ep_len_mean          | 225       |
+|    ep_rew_mean          | -1.27e+03 |
+|    episode_avg_distance | 0.439     |
+|    episode_reward       | -3.62     |
+|    episode_success      | 0         |
+|    success_rate         | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    fps                  | 2235      |
+|    iterations           | 2         |
+|    time_elapsed         | 29        |
+|    total_timesteps      | 65536     |
+---------------------------------------
+Eval num_timesteps=70000, episode_reward=-8352.47 +/- 607.98
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -8.35e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.255       |
+|    episode_reward       | -2.36       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0           |
+| time/                   |             |
+|    total_timesteps      | 70000       |
+| train/                  |             |
+|    approx_kl            | 0.009223564 |
+|    clip_fraction        | 0.116       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.92       |
+|    explained_variance   | 0.633       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0493     |
+|    n_updates            | 16          |
+|    policy_gradient_loss | -0.00704    |
+|    std                  | 0.999       |
+|    value_loss           | 0.0185      |
+-----------------------------------------
+Eval num_timesteps=80000, episode_reward=-9620.57 +/- 948.10
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -9.62e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.731     |
+|    episode_reward       | -27.8     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.02      |
+| time/                   |           |
+|    total_timesteps      | 80000     |
+---------------------------------------
+Eval num_timesteps=90000, episode_reward=-7241.89 +/- 578.16
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -7.24e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.399     |
+|    episode_reward       | -2.05     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    total_timesteps      | 90000     |
+---------------------------------------
+---------------------------------------
+| rollout/                |           |
+|    ep_len_mean          | 278       |
+|    ep_rew_mean          | -1.63e+03 |
+|    episode_avg_distance | 0.541     |
+|    episode_reward       | -9.85     |
+|    episode_success      | 0         |
+|    success_rate         | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    fps                  | 2170      |
+|    iterations           | 3         |
+|    time_elapsed         | 45        |
+|    total_timesteps      | 98304     |
+---------------------------------------
+Eval num_timesteps=100000, episode_reward=-8761.65 +/- 649.50
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -8.76e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.565       |
+|    episode_reward       | -10.4       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.02        |
+| time/                   |             |
+|    total_timesteps      | 100000      |
+| train/                  |             |
+|    approx_kl            | 0.010678713 |
+|    clip_fraction        | 0.131       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.91       |
+|    explained_variance   | 0.858       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0543     |
+|    n_updates            | 24          |
+|    policy_gradient_loss | -0.00965    |
+|    std                  | 0.996       |
+|    value_loss           | 0.01        |
+-----------------------------------------
+Eval num_timesteps=110000, episode_reward=-8174.29 +/- 829.97
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -8.17e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.477     |
+|    episode_reward       | -3.07     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.06      |
+| time/                   |           |
+|    total_timesteps      | 110000    |
+---------------------------------------
+Eval num_timesteps=120000, episode_reward=-6979.54 +/- 1672.04
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -6.98e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.306     |
+|    episode_reward       | -4.02     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.02      |
+| time/                   |           |
+|    total_timesteps      | 120000    |
+---------------------------------------
+Eval num_timesteps=130000, episode_reward=-7155.42 +/- 1331.62
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -7.16e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.34      |
+|    episode_reward       | -11.8     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.02      |
+| time/                   |           |
+|    total_timesteps      | 130000    |
+---------------------------------------
+---------------------------------------
+| rollout/                |           |
+|    ep_len_mean          | 248       |
+|    ep_rew_mean          | -1.16e+03 |
+|    episode_avg_distance | 0.319     |
+|    episode_reward       | -3.88     |
+|    episode_success      | 0         |
+|    success_rate         | 0.02      |
+|    success_rate_window  | 0.02      |
+| time/                   |           |
+|    fps                  | 1953      |
+|    iterations           | 4         |
+|    time_elapsed         | 67        |
+|    total_timesteps      | 131072    |
+---------------------------------------
+Eval num_timesteps=140000, episode_reward=-7072.19 +/- 1157.40
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -7.07e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.279       |
+|    episode_reward       | -1.88       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.02        |
+| time/                   |             |
+|    total_timesteps      | 140000      |
+| train/                  |             |
+|    approx_kl            | 0.012138329 |
+|    clip_fraction        | 0.164       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.89       |
+|    explained_variance   | 0.739       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0467     |
+|    n_updates            | 32          |
+|    policy_gradient_loss | -0.0117     |
+|    std                  | 0.993       |
+|    value_loss           | 0.00892     |
+-----------------------------------------
+Eval num_timesteps=150000, episode_reward=-7527.50 +/- 1550.11
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -7.53e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.291     |
+|    episode_reward       | -11.5     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.04      |
+| time/                   |           |
+|    total_timesteps      | 150000    |
+---------------------------------------
+Eval num_timesteps=160000, episode_reward=-7016.99 +/- 568.45
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -7.02e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.359     |
+|    episode_reward       | -3.41     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.02      |
+| time/                   |           |
+|    total_timesteps      | 160000    |
+---------------------------------------
+---------------------------------------
+| rollout/                |           |
+|    ep_len_mean          | 334       |
+|    ep_rew_mean          | -1.37e+03 |
+|    episode_avg_distance | 0.386     |
+|    episode_reward       | -3.56     |
+|    episode_success      | 0         |
+|    success_rate         | 0.02      |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    fps                  | 1960      |
+|    iterations           | 5         |
+|    time_elapsed         | 83        |
+|    total_timesteps      | 163840    |
+---------------------------------------
+Eval num_timesteps=170000, episode_reward=-6438.40 +/- 904.98
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -6.44e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.296       |
+|    episode_reward       | -1.92       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0           |
+| time/                   |             |
+|    total_timesteps      | 170000      |
+| train/                  |             |
+|    approx_kl            | 0.011847107 |
+|    clip_fraction        | 0.16        |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.88       |
+|    explained_variance   | 0.738       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0699     |
+|    n_updates            | 40          |
+|    policy_gradient_loss | -0.0117     |
+|    std                  | 0.993       |
+|    value_loss           | 0.0077      |
+-----------------------------------------
+New best mean reward!
+Eval num_timesteps=180000, episode_reward=-5035.26 +/- 844.84
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -5.04e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.408     |
+|    episode_reward       | -2.48     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.02      |
+| time/                   |           |
+|    total_timesteps      | 180000    |
+---------------------------------------
+New best mean reward!
+Eval num_timesteps=190000, episode_reward=-5327.03 +/- 1176.96
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -5.33e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.42      |
+|    episode_reward       | -2.87     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.04      |
+| time/                   |           |
+|    total_timesteps      | 190000    |
+---------------------------------------
+---------------------------------------
+| rollout/                |           |
+|    ep_len_mean          | 353       |
+|    ep_rew_mean          | -1.24e+03 |
+|    episode_avg_distance | 0.426     |
+|    episode_reward       | -2.42     |
+|    episode_success      | 0         |
+|    success_rate         | 0.02      |
+|    success_rate_window  | 0.02      |
+| time/                   |           |
+|    fps                  | 1967      |
+|    iterations           | 6         |
+|    time_elapsed         | 99        |
+|    total_timesteps      | 196608    |
+---------------------------------------
+Eval num_timesteps=200000, episode_reward=-4620.58 +/- 1123.28
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -4.62e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.24        |
+|    episode_reward       | -2.48       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0           |
+| time/                   |             |
+|    total_timesteps      | 200000      |
+| train/                  |             |
+|    approx_kl            | 0.013240343 |
+|    clip_fraction        | 0.181       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.85       |
+|    explained_variance   | 0.768       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0617     |
+|    n_updates            | 48          |
+|    policy_gradient_loss | -0.0137     |
+|    std                  | 0.988       |
+|    value_loss           | 0.00586     |
+-----------------------------------------
+New best mean reward!
+Eval num_timesteps=210000, episode_reward=-6662.16 +/- 1029.58
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -6.66e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.31      |
+|    episode_reward       | -5.73     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0         |
+| time/                   |           |
+|    total_timesteps      | 210000    |
+---------------------------------------
+Eval num_timesteps=220000, episode_reward=-5670.51 +/- 1119.86
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -5.67e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.385     |
+|    episode_reward       | -2.47     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.02      |
+| time/                   |           |
+|    total_timesteps      | 220000    |
+---------------------------------------
+---------------------------------------
+| rollout/                |           |
+|    ep_len_mean          | 347       |
+|    ep_rew_mean          | -1.09e+03 |
+|    episode_avg_distance | 0.305     |
+|    episode_reward       | -14.5     |
+|    episode_success      | 0         |
+|    success_rate         | 0.04      |
+|    success_rate_window  | 0.08      |
+| time/                   |           |
+|    fps                  | 1970      |
+|    iterations           | 7         |
+|    time_elapsed         | 116       |
+|    total_timesteps      | 229376    |
+---------------------------------------
+Eval num_timesteps=230000, episode_reward=-4999.93 +/- 944.07
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+----------------------------------------
+| eval/                   |            |
+|    mean_ep_length       | 1.6e+03    |
+|    mean_reward          | -5e+03     |
+|    success_rate         | 0          |
+| time/                   |            |
+|    total_timesteps      | 230000     |
+| train/                  |            |
+|    approx_kl            | 0.01185178 |
+|    clip_fraction        | 0.163      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -9.83      |
+|    explained_variance   | 0.735      |
+|    learning_rate        | 0.0003     |
+|    loss                 | -0.0527    |
+|    n_updates            | 56         |
+|    policy_gradient_loss | -0.0114    |
+|    std                  | 0.988      |
+|    value_loss           | 0.00711    |
+----------------------------------------
+Eval num_timesteps=240000, episode_reward=-4528.08 +/- 1266.69
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -4.53e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.488     |
+|    episode_reward       | -2.67     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.12      |
+| time/                   |           |
+|    total_timesteps      | 240000    |
+---------------------------------------
+New best mean reward!
+Eval num_timesteps=250000, episode_reward=-4964.72 +/- 1273.77
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -4.96e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.162     |
+|    episode_reward       | -14.9     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.14      |
+| time/                   |           |
+|    total_timesteps      | 250000    |
+---------------------------------------
+Eval num_timesteps=260000, episode_reward=-4739.44 +/- 835.01
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -4.74e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.19      |
+|    episode_reward       | -8.73     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.12      |
+| time/                   |           |
+|    total_timesteps      | 260000    |
+---------------------------------------
+---------------------------------------
+| rollout/                |           |
+|    ep_len_mean          | 447       |
+|    ep_rew_mean          | -1.08e+03 |
+|    episode_avg_distance | 0.195     |
+|    episode_reward       | -0.0166   |
+|    episode_success      | 1         |
+|    success_rate         | 0.15      |
+|    success_rate_window  | 0.16      |
+| time/                   |           |
+|    fps                  | 1865      |
+|    iterations           | 8         |
+|    time_elapsed         | 140       |
+|    total_timesteps      | 262144    |
+---------------------------------------
+Eval num_timesteps=270000, episode_reward=-4148.03 +/- 617.52
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -4.15e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.255       |
+|    episode_reward       | -3.74       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.18        |
+| time/                   |             |
+|    total_timesteps      | 270000      |
+| train/                  |             |
+|    approx_kl            | 0.012313739 |
+|    clip_fraction        | 0.175       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.82       |
+|    explained_variance   | 0.639       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0529     |
+|    n_updates            | 64          |
+|    policy_gradient_loss | -0.00977    |
+|    std                  | 0.984       |
+|    value_loss           | 0.0117      |
+-----------------------------------------
+New best mean reward!
+Eval num_timesteps=280000, episode_reward=-4102.34 +/- 1152.91
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 1.6e+03  |
+|    mean_reward          | -4.1e+03 |
+|    success_rate         | 0        |
+| rollout/                |          |
+|    episode_avg_distance | 0.145    |
+|    episode_reward       | -7.06    |
+|    episode_success      | 0        |
+|    success_rate_window  | 0.16     |
+| time/                   |          |
+|    total_timesteps      | 280000   |
+--------------------------------------
+New best mean reward!
+Eval num_timesteps=290000, episode_reward=-3884.72 +/- 1680.14
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -3.88e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.123     |
+|    episode_reward       | -3.04     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.14      |
+| time/                   |           |
+|    total_timesteps      | 290000    |
+---------------------------------------
+New best mean reward!
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 404      |
+|    ep_rew_mean          | -920     |
+|    episode_avg_distance | 0.188    |
+|    episode_reward       | -17.9    |
+|    episode_success      | 0        |
+|    success_rate         | 0.14     |
+|    success_rate_window  | 0.1      |
+| time/                   |          |
+|    fps                  | 1808     |
+|    iterations           | 9        |
+|    time_elapsed         | 163      |
+|    total_timesteps      | 294912   |
+--------------------------------------
+Eval num_timesteps=300000, episode_reward=-3845.83 +/- 1004.29
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -3.85e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.165       |
+|    episode_reward       | -15.9       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.14        |
+| time/                   |             |
+|    total_timesteps      | 300000      |
+| train/                  |             |
+|    approx_kl            | 0.012575834 |
+|    clip_fraction        | 0.17        |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.8        |
+|    explained_variance   | 0.672       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0685     |
+|    n_updates            | 72          |
+|    policy_gradient_loss | -0.00838    |
+|    std                  | 0.982       |
+|    value_loss           | 0.0109      |
+-----------------------------------------
+New best mean reward!
+Eval num_timesteps=310000, episode_reward=-2838.59 +/- 814.04
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.84e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.195     |
+|    episode_reward       | -5.7      |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.1       |
+| time/                   |           |
+|    total_timesteps      | 310000    |
+---------------------------------------
+New best mean reward!
+Eval num_timesteps=320000, episode_reward=-2880.05 +/- 299.67
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.88e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.195     |
+|    episode_reward       | -5.13     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.1       |
+| time/                   |           |
+|    total_timesteps      | 320000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 360      |
+|    ep_rew_mean          | -776     |
+|    episode_avg_distance | 0.273    |
+|    episode_reward       | 0.461    |
+|    episode_success      | 1        |
+|    success_rate         | 0.12     |
+|    success_rate_window  | 0.14     |
+| time/                   |          |
+|    fps                  | 1796     |
+|    iterations           | 10       |
+|    time_elapsed         | 182      |
+|    total_timesteps      | 327680   |
+--------------------------------------
+Eval num_timesteps=330000, episode_reward=-3370.20 +/- 529.78
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -3.37e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.145       |
+|    episode_reward       | 0.662       |
+|    episode_success      | 1           |
+|    success_rate_window  | 0.18        |
+| time/                   |             |
+|    total_timesteps      | 330000      |
+| train/                  |             |
+|    approx_kl            | 0.012421565 |
+|    clip_fraction        | 0.171       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.78       |
+|    explained_variance   | 0.708       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0594     |
+|    n_updates            | 80          |
+|    policy_gradient_loss | -0.00857    |
+|    std                  | 0.978       |
+|    value_loss           | 0.0134      |
+-----------------------------------------
+Eval num_timesteps=340000, episode_reward=-3000.90 +/- 733.59
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 1.6e+03  |
+|    mean_reward          | -3e+03   |
+|    success_rate         | 0        |
+| rollout/                |          |
+|    episode_avg_distance | 0.132    |
+|    episode_reward       | -1.63    |
+|    episode_success      | 1        |
+|    success_rate_window  | 0.22     |
+| time/                   |          |
+|    total_timesteps      | 340000   |
+--------------------------------------
+Eval num_timesteps=350000, episode_reward=-3021.00 +/- 797.87
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -3.02e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.241     |
+|    episode_reward       | -3.05     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.32      |
+| time/                   |           |
+|    total_timesteps      | 350000    |
+---------------------------------------
+Eval num_timesteps=360000, episode_reward=-3938.39 +/- 272.04
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -3.94e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.418     |
+|    episode_reward       | -2.82     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.28      |
+| time/                   |           |
+|    total_timesteps      | 360000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 413      |
+|    ep_rew_mean          | -758     |
+|    episode_avg_distance | 0.177    |
+|    episode_reward       | -3.54    |
+|    episode_success      | 1        |
+|    success_rate         | 0.25     |
+|    success_rate_window  | 0.3      |
+| time/                   |          |
+|    fps                  | 1770     |
+|    iterations           | 11       |
+|    time_elapsed         | 203      |
+|    total_timesteps      | 360448   |
+--------------------------------------
+Eval num_timesteps=370000, episode_reward=-2943.04 +/- 912.55
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -2.94e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.339       |
+|    episode_reward       | -2.45       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.32        |
+| time/                   |             |
+|    total_timesteps      | 370000      |
+| train/                  |             |
+|    approx_kl            | 0.013668798 |
+|    clip_fraction        | 0.176       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.74       |
+|    explained_variance   | 0.606       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0399     |
+|    n_updates            | 88          |
+|    policy_gradient_loss | -0.00728    |
+|    std                  | 0.973       |
+|    value_loss           | 0.0209      |
+-----------------------------------------
+Eval num_timesteps=380000, episode_reward=-2383.94 +/- 924.77
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.38e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.127     |
+|    episode_reward       | -0.805    |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.28      |
+| time/                   |           |
+|    total_timesteps      | 380000    |
+---------------------------------------
+New best mean reward!
+Eval num_timesteps=390000, episode_reward=-3666.75 +/- 565.99
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -3.67e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.359     |
+|    episode_reward       | -2.94     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.14      |
+| time/                   |           |
+|    total_timesteps      | 390000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 333      |
+|    ep_rew_mean          | -601     |
+|    episode_avg_distance | 0.274    |
+|    episode_reward       | 0.582    |
+|    episode_success      | 1        |
+|    success_rate         | 0.24     |
+|    success_rate_window  | 0.2      |
+| time/                   |          |
+|    fps                  | 1794     |
+|    iterations           | 12       |
+|    time_elapsed         | 219      |
+|    total_timesteps      | 393216   |
+--------------------------------------
+Eval num_timesteps=400000, episode_reward=-2602.19 +/- 523.77
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -2.6e+03    |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.372       |
+|    episode_reward       | -2.74       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.22        |
+| time/                   |             |
+|    total_timesteps      | 400000      |
+| train/                  |             |
+|    approx_kl            | 0.013155928 |
+|    clip_fraction        | 0.181       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.74       |
+|    explained_variance   | 0.694       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0339     |
+|    n_updates            | 96          |
+|    policy_gradient_loss | -0.00766    |
+|    std                  | 0.973       |
+|    value_loss           | 0.0196      |
+-----------------------------------------
+Eval num_timesteps=410000, episode_reward=-2624.62 +/- 453.03
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.62e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.392     |
+|    episode_reward       | -2.94     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.3       |
+| time/                   |           |
+|    total_timesteps      | 410000    |
+---------------------------------------
+Eval num_timesteps=420000, episode_reward=-3243.51 +/- 659.91
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -3.24e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.388     |
+|    episode_reward       | 0.216     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.3       |
+| time/                   |           |
+|    total_timesteps      | 420000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 241      |
+|    ep_rew_mean          | -449     |
+|    episode_avg_distance | 0.264    |
+|    episode_reward       | -2.75    |
+|    episode_success      | 0        |
+|    success_rate         | 0.29     |
+|    success_rate_window  | 0.22     |
+| time/                   |          |
+|    fps                  | 1802     |
+|    iterations           | 13       |
+|    time_elapsed         | 236      |
+|    total_timesteps      | 425984   |
+--------------------------------------
+Eval num_timesteps=430000, episode_reward=-2866.55 +/- 1377.40
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -2.87e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.415       |
+|    episode_reward       | -2.86       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.22        |
+| time/                   |             |
+|    total_timesteps      | 430000      |
+| train/                  |             |
+|    approx_kl            | 0.013756018 |
+|    clip_fraction        | 0.177       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.69       |
+|    explained_variance   | 0.694       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0588     |
+|    n_updates            | 104         |
+|    policy_gradient_loss | -0.00772    |
+|    std                  | 0.966       |
+|    value_loss           | 0.0303      |
+-----------------------------------------
+Eval num_timesteps=440000, episode_reward=-2953.05 +/- 562.34
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.95e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.107     |
+|    episode_reward       | -3.96     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.24      |
+| time/                   |           |
+|    total_timesteps      | 440000    |
+---------------------------------------
+Eval num_timesteps=450000, episode_reward=-2326.22 +/- 442.14
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.33e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.111     |
+|    episode_reward       | -1.77     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.28      |
+| time/                   |           |
+|    total_timesteps      | 450000    |
+---------------------------------------
+New best mean reward!
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 291      |
+|    ep_rew_mean          | -540     |
+|    episode_avg_distance | 0.215    |
+|    episode_reward       | -2.71    |
+|    episode_success      | 0        |
+|    success_rate         | 0.23     |
+|    success_rate_window  | 0.2      |
+| time/                   |          |
+|    fps                  | 1817     |
+|    iterations           | 14       |
+|    time_elapsed         | 252      |
+|    total_timesteps      | 458752   |
+--------------------------------------
+Eval num_timesteps=460000, episode_reward=-1598.81 +/- 302.37
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -1.6e+03    |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.294       |
+|    episode_reward       | -3.09       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.2         |
+| time/                   |             |
+|    total_timesteps      | 460000      |
+| train/                  |             |
+|    approx_kl            | 0.012486784 |
+|    clip_fraction        | 0.171       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.64       |
+|    explained_variance   | 0.706       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.037      |
+|    n_updates            | 112         |
+|    policy_gradient_loss | -0.00681    |
+|    std                  | 0.959       |
+|    value_loss           | 0.0236      |
+-----------------------------------------
+New best mean reward!
+Eval num_timesteps=470000, episode_reward=-2009.55 +/- 355.24
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.01e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.377     |
+|    episode_reward       | -2.86     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.32      |
+| time/                   |           |
+|    total_timesteps      | 470000    |
+---------------------------------------
+Eval num_timesteps=480000, episode_reward=-1784.05 +/- 261.56
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -1.78e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.116     |
+|    episode_reward       | -12.4     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.3       |
+| time/                   |           |
+|    total_timesteps      | 480000    |
+---------------------------------------
+Eval num_timesteps=490000, episode_reward=-2319.31 +/- 1159.07
+Episode length: 1297.00 +/- 606.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.3e+03   |
+|    mean_reward          | -2.32e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.115     |
+|    episode_reward       | -4.46     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.42      |
+| time/                   |           |
+|    total_timesteps      | 490000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 251      |
+|    ep_rew_mean          | -405     |
+|    episode_avg_distance | 0.105    |
+|    episode_reward       | 0.561    |
+|    episode_success      | 1        |
+|    success_rate         | 0.37     |
+|    success_rate_window  | 0.44     |
+| time/                   |          |
+|    fps                  | 1810     |
+|    iterations           | 15       |
+|    time_elapsed         | 271      |
+|    total_timesteps      | 491520   |
+--------------------------------------
+Eval num_timesteps=500000, episode_reward=-1941.58 +/- 769.88
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -1.94e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.338       |
+|    episode_reward       | -2.75       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.46        |
+| time/                   |             |
+|    total_timesteps      | 500000      |
+| train/                  |             |
+|    approx_kl            | 0.013408115 |
+|    clip_fraction        | 0.169       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.59       |
+|    explained_variance   | 0.734       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0214     |
+|    n_updates            | 120         |
+|    policy_gradient_loss | -0.00699    |
+|    std                  | 0.952       |
+|    value_loss           | 0.0325      |
+-----------------------------------------
+Eval num_timesteps=510000, episode_reward=-2456.62 +/- 1119.10
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.46e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.136     |
+|    episode_reward       | -4.94     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.36      |
+| time/                   |           |
+|    total_timesteps      | 510000    |
+---------------------------------------
+Eval num_timesteps=520000, episode_reward=-2514.99 +/- 641.52
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.51e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.0872    |
+|    episode_reward       | -9.49     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.48      |
+| time/                   |           |
+|    total_timesteps      | 520000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 293      |
+|    ep_rew_mean          | -421     |
+|    episode_avg_distance | 0.296    |
+|    episode_reward       | -2.88    |
+|    episode_success      | 0        |
+|    success_rate         | 0.4      |
+|    success_rate_window  | 0.42     |
+| time/                   |          |
+|    fps                  | 1824     |
+|    iterations           | 16       |
+|    time_elapsed         | 287      |
+|    total_timesteps      | 524288   |
+--------------------------------------
+Eval num_timesteps=530000, episode_reward=-2415.67 +/- 934.65
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -2.42e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.32        |
+|    episode_reward       | -2.66       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.38        |
+| time/                   |             |
+|    total_timesteps      | 530000      |
+| train/                  |             |
+|    approx_kl            | 0.013378104 |
+|    clip_fraction        | 0.172       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.56       |
+|    explained_variance   | 0.754       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0465     |
+|    n_updates            | 128         |
+|    policy_gradient_loss | -0.00709    |
+|    std                  | 0.95        |
+|    value_loss           | 0.0295      |
+-----------------------------------------
+Eval num_timesteps=540000, episode_reward=-2018.99 +/- 649.05
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.02e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.218     |
+|    episode_reward       | -3.57     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.42      |
+| time/                   |           |
+|    total_timesteps      | 540000    |
+---------------------------------------
+Eval num_timesteps=550000, episode_reward=-1982.78 +/- 664.27
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -1.98e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.116     |
+|    episode_reward       | -1.89     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.34      |
+| time/                   |           |
+|    total_timesteps      | 550000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 321      |
+|    ep_rew_mean          | -448     |
+|    episode_avg_distance | 0.296    |
+|    episode_reward       | -2.84    |
+|    episode_success      | 0        |
+|    success_rate         | 0.42     |
+|    success_rate_window  | 0.36     |
+| time/                   |          |
+|    fps                  | 1836     |
+|    iterations           | 17       |
+|    time_elapsed         | 303      |
+|    total_timesteps      | 557056   |
+--------------------------------------
+Eval num_timesteps=560000, episode_reward=-1295.66 +/- 817.29
+Episode length: 795.80 +/- 694.93
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 796         |
+|    mean_reward          | -1.3e+03    |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.0717      |
+|    episode_reward       | 0.0358      |
+|    episode_success      | 1           |
+|    success_rate_window  | 0.42        |
+| time/                   |             |
+|    total_timesteps      | 560000      |
+| train/                  |             |
+|    approx_kl            | 0.012761979 |
+|    clip_fraction        | 0.166       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.55       |
+|    explained_variance   | 0.72        |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0483     |
+|    n_updates            | 136         |
+|    policy_gradient_loss | -0.00626    |
+|    std                  | 0.946       |
+|    value_loss           | 0.027       |
+-----------------------------------------
+New best mean reward!
+Eval num_timesteps=570000, episode_reward=-1472.52 +/- 615.56
+Episode length: 1102.00 +/- 638.94
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.1e+03   |
+|    mean_reward          | -1.47e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.0936    |
+|    episode_reward       | -8.81     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.48      |
+| time/                   |           |
+|    total_timesteps      | 570000    |
+---------------------------------------
+Eval num_timesteps=580000, episode_reward=-2307.67 +/- 596.54
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.31e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.294     |
+|    episode_reward       | -2.93     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.36      |
+| time/                   |           |
+|    total_timesteps      | 580000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 389      |
+|    ep_rew_mean          | -479     |
+|    episode_avg_distance | 0.0683   |
+|    episode_reward       | -1.69    |
+|    episode_success      | 1        |
+|    success_rate         | 0.46     |
+|    success_rate_window  | 0.44     |
+| time/                   |          |
+|    fps                  | 1849     |
+|    iterations           | 18       |
+|    time_elapsed         | 318      |
+|    total_timesteps      | 589824   |
+--------------------------------------
+Eval num_timesteps=590000, episode_reward=-1719.31 +/- 1172.79
+Episode length: 1313.40 +/- 573.20
+Success rate: 20.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.31e+03    |
+|    mean_reward          | -1.72e+03   |
+|    success_rate         | 0.2         |
+| time/                   |             |
+|    total_timesteps      | 590000      |
+| train/                  |             |
+|    approx_kl            | 0.013248324 |
+|    clip_fraction        | 0.173       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.51       |
+|    explained_variance   | 0.818       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0535     |
+|    n_updates            | 144         |
+|    policy_gradient_loss | -0.00672    |
+|    std                  | 0.942       |
+|    value_loss           | 0.0218      |
+-----------------------------------------
+Eval num_timesteps=600000, episode_reward=-1913.05 +/- 1026.78
+Episode length: 1289.40 +/- 621.20
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.29e+03  |
+|    mean_reward          | -1.91e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.229     |
+|    episode_reward       | 0.757     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.54      |
+| time/                   |           |
+|    total_timesteps      | 600000    |
+---------------------------------------
+Eval num_timesteps=610000, episode_reward=-2279.36 +/- 769.03
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.28e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.284     |
+|    episode_reward       | -2.95     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.46      |
+| time/                   |           |
+|    total_timesteps      | 610000    |
+---------------------------------------
+Eval num_timesteps=620000, episode_reward=-1853.47 +/- 1206.88
+Episode length: 1294.40 +/- 611.20
+Success rate: 20.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.29e+03  |
+|    mean_reward          | -1.85e+03 |
+|    success_rate         | 0.2       |
+| rollout/                |           |
+|    episode_avg_distance | 0.286     |
+|    episode_reward       | -2.9      |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.56      |
+| time/                   |           |
+|    total_timesteps      | 620000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 294      |
+|    ep_rew_mean          | -365     |
+|    episode_avg_distance | 0.157    |
+|    episode_reward       | 0.321    |
+|    episode_success      | 1        |
+|    success_rate         | 0.53     |
+|    success_rate_window  | 0.58     |
+| time/                   |          |
+|    fps                  | 1824     |
+|    iterations           | 19       |
+|    time_elapsed         | 341      |
+|    total_timesteps      | 622592   |
+--------------------------------------
+Eval num_timesteps=630000, episode_reward=-1875.31 +/- 865.47
+Episode length: 1289.60 +/- 620.80
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.29e+03    |
+|    mean_reward          | -1.88e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.212       |
+|    episode_reward       | -2.58       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.5         |
+| time/                   |             |
+|    total_timesteps      | 630000      |
+| train/                  |             |
+|    approx_kl            | 0.013841569 |
+|    clip_fraction        | 0.181       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.5        |
+|    explained_variance   | 0.792       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0475     |
+|    n_updates            | 152         |
+|    policy_gradient_loss | -0.00719    |
+|    std                  | 0.941       |
+|    value_loss           | 0.032       |
+-----------------------------------------
+Eval num_timesteps=640000, episode_reward=-1517.80 +/- 1008.64
+Episode length: 1315.00 +/- 570.00
+Success rate: 20.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.32e+03  |
+|    mean_reward          | -1.52e+03 |
+|    success_rate         | 0.2       |
+| rollout/                |           |
+|    episode_avg_distance | 0.213     |
+|    episode_reward       | -3.11     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.5       |
+| time/                   |           |
+|    total_timesteps      | 640000    |
+---------------------------------------
+Eval num_timesteps=650000, episode_reward=-2300.84 +/- 885.66
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 1.6e+03  |
+|    mean_reward          | -2.3e+03 |
+|    success_rate         | 0        |
+| rollout/                |          |
+|    episode_avg_distance | 0.128    |
+|    episode_reward       | 0.249    |
+|    episode_success      | 1        |
+|    success_rate_window  | 0.52     |
+| time/                   |          |
+|    total_timesteps      | 650000   |
+--------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 315      |
+|    ep_rew_mean          | -396     |
+|    episode_avg_distance | 0.087    |
+|    episode_reward       | -4.21    |
+|    episode_success      | 0        |
+|    success_rate         | 0.52     |
+|    success_rate_window  | 0.52     |
+| time/                   |          |
+|    fps                  | 1821     |
+|    iterations           | 20       |
+|    time_elapsed         | 359      |
+|    total_timesteps      | 655360   |
+--------------------------------------
+Eval num_timesteps=660000, episode_reward=-2112.67 +/- 1052.79
+Episode length: 1291.20 +/- 617.60
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.29e+03    |
+|    mean_reward          | -2.11e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.206       |
+|    episode_reward       | -2.61       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.52        |
+| time/                   |             |
+|    total_timesteps      | 660000      |
+| train/                  |             |
+|    approx_kl            | 0.013990918 |
+|    clip_fraction        | 0.178       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.48       |
+|    explained_variance   | 0.74        |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0286     |
+|    n_updates            | 160         |
+|    policy_gradient_loss | -0.00725    |
+|    std                  | 0.939       |
+|    value_loss           | 0.0368      |
+-----------------------------------------
+Eval num_timesteps=670000, episode_reward=-2233.30 +/- 909.69
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.23e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.181     |
+|    episode_reward       | 0.717     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.5       |
+| time/                   |           |
+|    total_timesteps      | 670000    |
+---------------------------------------
+Eval num_timesteps=680000, episode_reward=-1816.41 +/- 470.79
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -1.82e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.231     |
+|    episode_reward       | 0.85      |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.6       |
+| time/                   |           |
+|    total_timesteps      | 680000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 329      |
+|    ep_rew_mean          | -354     |
+|    episode_avg_distance | 0.0928   |
+|    episode_reward       | -0.429   |
+|    episode_success      | 1        |
+|    success_rate         | 0.6      |
+|    success_rate_window  | 0.62     |
+| time/                   |          |
+|    fps                  | 1836     |
+|    iterations           | 21       |
+|    time_elapsed         | 374      |
+|    total_timesteps      | 688128   |
+--------------------------------------
+Eval num_timesteps=690000, episode_reward=-2464.83 +/- 948.15
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -2.46e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.559       |
+|    episode_reward       | -3.11       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.68        |
+| time/                   |             |
+|    total_timesteps      | 690000      |
+| train/                  |             |
+|    approx_kl            | 0.014184815 |
+|    clip_fraction        | 0.179       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.45       |
+|    explained_variance   | 0.771       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0549     |
+|    n_updates            | 168         |
+|    policy_gradient_loss | -0.00828    |
+|    std                  | 0.935       |
+|    value_loss           | 0.0358      |
+-----------------------------------------
+Eval num_timesteps=700000, episode_reward=-1349.04 +/- 682.60
+Episode length: 1292.40 +/- 615.20
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.29e+03  |
+|    mean_reward          | -1.35e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.42      |
+|    episode_reward       | -2.93     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.54      |
+| time/                   |           |
+|    total_timesteps      | 700000    |
+---------------------------------------
+Eval num_timesteps=710000, episode_reward=-2196.58 +/- 455.21
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 1.6e+03  |
+|    mean_reward          | -2.2e+03 |
+|    success_rate         | 0        |
+| rollout/                |          |
+|    episode_avg_distance | 0.114    |
+|    episode_reward       | -0.981   |
+|    episode_success      | 1        |
+|    success_rate_window  | 0.5      |
+| time/                   |          |
+|    total_timesteps      | 710000   |
+--------------------------------------
+Eval num_timesteps=720000, episode_reward=-2069.00 +/- 385.83
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.07e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.26      |
+|    episode_reward       | -0.219    |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.7       |
+| time/                   |           |
+|    total_timesteps      | 720000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 287      |
+|    ep_rew_mean          | -307     |
+|    episode_avg_distance | 0.285    |
+|    episode_reward       | 0.63     |
+|    episode_success      | 1        |
+|    success_rate         | 0.61     |
+|    success_rate_window  | 0.72     |
+| time/                   |          |
+|    fps                  | 1838     |
+|    iterations           | 22       |
+|    time_elapsed         | 392      |
+|    total_timesteps      | 720896   |
+--------------------------------------
+Eval num_timesteps=730000, episode_reward=-2405.39 +/- 791.20
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -2.41e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.0917      |
+|    episode_reward       | -3.49       |
+|    episode_success      | 1           |
+|    success_rate_window  | 0.68        |
+| time/                   |             |
+|    total_timesteps      | 730000      |
+| train/                  |             |
+|    approx_kl            | 0.013793346 |
+|    clip_fraction        | 0.176       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.45       |
+|    explained_variance   | 0.784       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0511     |
+|    n_updates            | 176         |
+|    policy_gradient_loss | -0.00794    |
+|    std                  | 0.935       |
+|    value_loss           | 0.0335      |
+-----------------------------------------
+Eval num_timesteps=740000, episode_reward=-1270.01 +/- 705.98
+Episode length: 1332.80 +/- 534.40
+Success rate: 20.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.33e+03  |
+|    mean_reward          | -1.27e+03 |
+|    success_rate         | 0.2       |
+| rollout/                |           |
+|    episode_avg_distance | 0.251     |
+|    episode_reward       | 0.989     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.62      |
+| time/                   |           |
+|    total_timesteps      | 740000    |
+---------------------------------------
+New best mean reward!
+Eval num_timesteps=750000, episode_reward=-1840.88 +/- 1167.79
+Episode length: 1296.00 +/- 608.00
+Success rate: 20.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.3e+03   |
+|    mean_reward          | -1.84e+03 |
+|    success_rate         | 0.2       |
+| rollout/                |           |
+|    episode_avg_distance | 0.112     |
+|    episode_reward       | -0.0299   |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.66      |
+| time/                   |           |
+|    total_timesteps      | 750000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 330      |
+|    ep_rew_mean          | -332     |
+|    episode_avg_distance | 0.101    |
+|    episode_reward       | -12.4    |
+|    episode_success      | 0        |
+|    success_rate         | 0.63     |
+|    success_rate_window  | 0.62     |
+| time/                   |          |
+|    fps                  | 1856     |
+|    iterations           | 23       |
+|    time_elapsed         | 406      |
+|    total_timesteps      | 753664   |
+--------------------------------------
+Eval num_timesteps=760000, episode_reward=-2249.16 +/- 979.52
+Episode length: 1295.80 +/- 608.40
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.3e+03     |
+|    mean_reward          | -2.25e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.249       |
+|    episode_reward       | 0.964       |
+|    episode_success      | 1           |
+|    success_rate_window  | 0.46        |
+| time/                   |             |
+|    total_timesteps      | 760000      |
+| train/                  |             |
+|    approx_kl            | 0.013616223 |
+|    clip_fraction        | 0.175       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.43       |
+|    explained_variance   | 0.797       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0279     |
+|    n_updates            | 184         |
+|    policy_gradient_loss | -0.00651    |
+|    std                  | 0.932       |
+|    value_loss           | 0.0315      |
+-----------------------------------------
+Eval num_timesteps=770000, episode_reward=-2311.04 +/- 841.64
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.31e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.28      |
+|    episode_reward       | 0.787     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.66      |
+| time/                   |           |
+|    total_timesteps      | 770000    |
+---------------------------------------
+Eval num_timesteps=780000, episode_reward=-1218.16 +/- 907.83
+Episode length: 1391.60 +/- 416.80
+Success rate: 20.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.39e+03  |
+|    mean_reward          | -1.22e+03 |
+|    success_rate         | 0.2       |
+| rollout/                |           |
+|    episode_avg_distance | 0.443     |
+|    episode_reward       | -3.17     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.7       |
+| time/                   |           |
+|    total_timesteps      | 780000    |
+---------------------------------------
+New best mean reward!
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 295      |
+|    ep_rew_mean          | -292     |
+|    episode_avg_distance | 0.0901   |
+|    episode_reward       | -2       |
+|    episode_success      | 1        |
+|    success_rate         | 0.67     |
+|    success_rate_window  | 0.62     |
+| time/                   |          |
+|    fps                  | 1871     |
+|    iterations           | 24       |
+|    time_elapsed         | 420      |
+|    total_timesteps      | 786432   |
+--------------------------------------
+Eval num_timesteps=790000, episode_reward=-2503.39 +/- 1155.68
+Episode length: 1407.20 +/- 385.60
+Success rate: 20.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.41e+03    |
+|    mean_reward          | -2.5e+03    |
+|    success_rate         | 0.2         |
+| rollout/                |             |
+|    episode_avg_distance | 0.273       |
+|    episode_reward       | 0.814       |
+|    episode_success      | 1           |
+|    success_rate_window  | 0.6         |
+| time/                   |             |
+|    total_timesteps      | 790000      |
+| train/                  |             |
+|    approx_kl            | 0.014345752 |
+|    clip_fraction        | 0.182       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.4        |
+|    explained_variance   | 0.789       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0073     |
+|    n_updates            | 192         |
+|    policy_gradient_loss | -0.00757    |
+|    std                  | 0.929       |
+|    value_loss           | 0.0393      |
+-----------------------------------------
+Eval num_timesteps=800000, episode_reward=-2437.37 +/- 396.79
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.44e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.0822    |
+|    episode_reward       | -6.35     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.54      |
+| time/                   |           |
+|    total_timesteps      | 800000    |
+---------------------------------------
+Eval num_timesteps=810000, episode_reward=-1660.51 +/- 840.03
+Episode length: 1296.80 +/- 606.40
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.3e+03   |
+|    mean_reward          | -1.66e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.182     |
+|    episode_reward       | 0.283     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.64      |
+| time/                   |           |
+|    total_timesteps      | 810000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 246      |
+|    ep_rew_mean          | -298     |
+|    episode_avg_distance | 0.113    |
+|    episode_reward       | -8.37    |
+|    episode_success      | 0        |
+|    success_rate         | 0.56     |
+|    success_rate_window  | 0.54     |
+| time/                   |          |
+|    fps                  | 1885     |
+|    iterations           | 25       |
+|    time_elapsed         | 434      |
+|    total_timesteps      | 819200   |
+--------------------------------------
+Eval num_timesteps=820000, episode_reward=-711.63 +/- 784.12
+Episode length: 799.00 +/- 669.24
+Success rate: 40.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 799         |
+|    mean_reward          | -712        |
+|    success_rate         | 0.4         |
+| rollout/                |             |
+|    episode_avg_distance | 0.17        |
+|    episode_reward       | 0.0797      |
+|    episode_success      | 1           |
+|    success_rate_window  | 0.54        |
+| time/                   |             |
+|    total_timesteps      | 820000      |
+| train/                  |             |
+|    approx_kl            | 0.014170444 |
+|    clip_fraction        | 0.185       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.4        |
+|    explained_variance   | 0.756       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0506     |
+|    n_updates            | 200         |
+|    policy_gradient_loss | -0.00744    |
+|    std                  | 0.928       |
+|    value_loss           | 0.0406      |
+-----------------------------------------
+New best mean reward!
+Eval num_timesteps=830000, episode_reward=-2083.47 +/- 880.48
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.08e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.0869    |
+|    episode_reward       | -0.327    |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.52      |
+| time/                   |           |
+|    total_timesteps      | 830000    |
+---------------------------------------
+Eval num_timesteps=840000, episode_reward=-1576.37 +/- 908.71
+Episode length: 1301.80 +/- 596.40
+Success rate: 20.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.3e+03   |
+|    mean_reward          | -1.58e+03 |
+|    success_rate         | 0.2       |
+| rollout/                |           |
+|    episode_avg_distance | 0.311     |
+|    episode_reward       | -3.05     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.62      |
+| time/                   |           |
+|    total_timesteps      | 840000    |
+---------------------------------------
+Eval num_timesteps=850000, episode_reward=-1610.12 +/- 871.39
+Episode length: 1323.40 +/- 553.20
+Success rate: 20.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.32e+03  |
+|    mean_reward          | -1.61e+03 |
+|    success_rate         | 0.2       |
+| rollout/                |           |
+|    episode_avg_distance | 0.13      |
+|    episode_reward       | 0.453     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.58      |
+| time/                   |           |
+|    total_timesteps      | 850000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 256      |
+|    ep_rew_mean          | -277     |
+|    episode_avg_distance | 0.299    |
+|    episode_reward       | -3.05    |
+|    episode_success      | 0        |
+|    success_rate         | 0.59     |
+|    success_rate_window  | 0.6      |
+| time/                   |          |
+|    fps                  | 1893     |
+|    iterations           | 26       |
+|    time_elapsed         | 449      |
+|    total_timesteps      | 851968   |
+--------------------------------------
+Eval num_timesteps=860000, episode_reward=-1468.45 +/- 893.08
+Episode length: 1389.40 +/- 421.20
+Success rate: 20.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.39e+03    |
+|    mean_reward          | -1.47e+03   |
+|    success_rate         | 0.2         |
+| rollout/                |             |
+|    episode_avg_distance | 0.0765      |
+|    episode_reward       | 0.66        |
+|    episode_success      | 1           |
+|    success_rate_window  | 0.64        |
+| time/                   |             |
+|    total_timesteps      | 860000      |
+| train/                  |             |
+|    approx_kl            | 0.013967609 |
+|    clip_fraction        | 0.182       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.39       |
+|    explained_variance   | 0.779       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0391     |
+|    n_updates            | 208         |
+|    policy_gradient_loss | -0.00684    |
+|    std                  | 0.927       |
+|    value_loss           | 0.0421      |
+-----------------------------------------
+Eval num_timesteps=870000, episode_reward=-2130.93 +/- 273.37
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.13e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.108     |
+|    episode_reward       | 0.119     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.62      |
+| time/                   |           |
+|    total_timesteps      | 870000    |
+---------------------------------------
+Eval num_timesteps=880000, episode_reward=-1603.85 +/- 1135.39
+Episode length: 1024.80 +/- 705.90
+Success rate: 20.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 1.02e+03 |
+|    mean_reward          | -1.6e+03 |
+|    success_rate         | 0.2      |
+| rollout/                |          |
+|    episode_avg_distance | 0.291    |
+|    episode_reward       | -4.16    |
+|    episode_success      | 0        |
+|    success_rate_window  | 0.6      |
+| time/                   |          |
+|    total_timesteps      | 880000   |
+--------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 298      |
+|    ep_rew_mean          | -305     |
+|    episode_avg_distance | 0.369    |
+|    episode_reward       | -3.4     |
+|    episode_success      | 0        |
+|    success_rate         | 0.62     |
+|    success_rate_window  | 0.62     |
+| time/                   |          |
+|    fps                  | 1892     |
+|    iterations           | 27       |
+|    time_elapsed         | 467      |
+|    total_timesteps      | 884736   |
+--------------------------------------
+Eval num_timesteps=890000, episode_reward=-2228.62 +/- 840.60
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.6e+03     |
+|    mean_reward          | -2.23e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.174       |
+|    episode_reward       | -0.353      |
+|    episode_success      | 1           |
+|    success_rate_window  | 0.64        |
+| time/                   |             |
+|    total_timesteps      | 890000      |
+| train/                  |             |
+|    approx_kl            | 0.014030424 |
+|    clip_fraction        | 0.184       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.36       |
+|    explained_variance   | 0.792       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0467     |
+|    n_updates            | 216         |
+|    policy_gradient_loss | -0.00763    |
+|    std                  | 0.924       |
+|    value_loss           | 0.0328      |
+-----------------------------------------
+Eval num_timesteps=900000, episode_reward=-2417.69 +/- 1225.49
+Episode length: 1296.40 +/- 607.20
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.3e+03   |
+|    mean_reward          | -2.42e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.0971    |
+|    episode_reward       | -1.85     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.7       |
+| time/                   |           |
+|    total_timesteps      | 900000    |
+---------------------------------------
+Eval num_timesteps=910000, episode_reward=-1992.48 +/- 1006.63
+Episode length: 1367.80 +/- 464.40
+Success rate: 20.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.37e+03  |
+|    mean_reward          | -1.99e+03 |
+|    success_rate         | 0.2       |
+| rollout/                |           |
+|    episode_avg_distance | 0.431     |
+|    episode_reward       | -3.17     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.62      |
+| time/                   |           |
+|    total_timesteps      | 910000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 314      |
+|    ep_rew_mean          | -301     |
+|    episode_avg_distance | 0.291    |
+|    episode_reward       | 0.732    |
+|    episode_success      | 1        |
+|    success_rate         | 0.66     |
+|    success_rate_window  | 0.68     |
+| time/                   |          |
+|    fps                  | 1891     |
+|    iterations           | 28       |
+|    time_elapsed         | 485      |
+|    total_timesteps      | 917504   |
+--------------------------------------
+Eval num_timesteps=920000, episode_reward=-1408.90 +/- 634.60
+Episode length: 1287.60 +/- 624.80
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.29e+03    |
+|    mean_reward          | -1.41e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.0994      |
+|    episode_reward       | 0.427       |
+|    episode_success      | 1           |
+|    success_rate_window  | 0.7         |
+| time/                   |             |
+|    total_timesteps      | 920000      |
+| train/                  |             |
+|    approx_kl            | 0.013423236 |
+|    clip_fraction        | 0.173       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.34       |
+|    explained_variance   | 0.817       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0598     |
+|    n_updates            | 224         |
+|    policy_gradient_loss | -0.00666    |
+|    std                  | 0.922       |
+|    value_loss           | 0.0293      |
+-----------------------------------------
+Eval num_timesteps=930000, episode_reward=-1219.94 +/- 664.82
+Episode length: 1290.00 +/- 620.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.29e+03  |
+|    mean_reward          | -1.22e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.327     |
+|    episode_reward       | -4.08     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.68      |
+| time/                   |           |
+|    total_timesteps      | 930000    |
+---------------------------------------
+Eval num_timesteps=940000, episode_reward=-1680.33 +/- 1009.48
+Episode length: 1396.00 +/- 408.00
+Success rate: 20.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.4e+03   |
+|    mean_reward          | -1.68e+03 |
+|    success_rate         | 0.2       |
+| rollout/                |           |
+|    episode_avg_distance | 0.181     |
+|    episode_reward       | 0.0364    |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.62      |
+| time/                   |           |
+|    total_timesteps      | 940000    |
+---------------------------------------
+Eval num_timesteps=950000, episode_reward=-968.85 +/- 914.77
+Episode length: 712.60 +/- 728.52
+Success rate: 20.00%
+--------------------------------------
+| eval/                   |          |
+|    mean_ep_length       | 713      |
+|    mean_reward          | -969     |
+|    success_rate         | 0.2      |
+| rollout/                |          |
+|    episode_avg_distance | 0.129    |
+|    episode_reward       | -0.539   |
+|    episode_success      | 1        |
+|    success_rate_window  | 0.6      |
+| time/                   |          |
+|    total_timesteps      | 950000   |
+--------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 210      |
+|    ep_rew_mean          | -237     |
+|    episode_avg_distance | 0.327    |
+|    episode_reward       | -3.47    |
+|    episode_success      | 0        |
+|    success_rate         | 0.6      |
+|    success_rate_window  | 0.58     |
+| time/                   |          |
+|    fps                  | 1881     |
+|    iterations           | 29       |
+|    time_elapsed         | 504      |
+|    total_timesteps      | 950272   |
+--------------------------------------
+Eval num_timesteps=960000, episode_reward=-1922.49 +/- 287.32
+Episode length: 1429.00 +/- 342.00
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.43e+03    |
+|    mean_reward          | -1.92e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.0811      |
+|    episode_reward       | -7.01       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.68        |
+| time/                   |             |
+|    total_timesteps      | 960000      |
+| train/                  |             |
+|    approx_kl            | 0.014210049 |
+|    clip_fraction        | 0.183       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.34       |
+|    explained_variance   | 0.843       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0541     |
+|    n_updates            | 232         |
+|    policy_gradient_loss | -0.0071     |
+|    std                  | 0.92        |
+|    value_loss           | 0.0356      |
+-----------------------------------------
+Eval num_timesteps=970000, episode_reward=-1313.56 +/- 573.48
+Episode length: 1287.60 +/- 624.80
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.29e+03  |
+|    mean_reward          | -1.31e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.121     |
+|    episode_reward       | -2.8      |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.72      |
+| time/                   |           |
+|    total_timesteps      | 970000    |
+---------------------------------------
+Eval num_timesteps=980000, episode_reward=-2235.33 +/- 841.60
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.24e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.298     |
+|    episode_reward       | -3.47     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.7       |
+| time/                   |           |
+|    total_timesteps      | 980000    |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 279      |
+|    ep_rew_mean          | -231     |
+|    episode_avg_distance | 0.115    |
+|    episode_reward       | -8.45    |
+|    episode_success      | 1        |
+|    success_rate         | 0.73     |
+|    success_rate_window  | 0.74     |
+| time/                   |          |
+|    fps                  | 1890     |
+|    iterations           | 30       |
+|    time_elapsed         | 519      |
+|    total_timesteps      | 983040   |
+--------------------------------------
+Eval num_timesteps=990000, episode_reward=-2027.71 +/- 1052.39
+Episode length: 1163.20 +/- 611.09
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.16e+03    |
+|    mean_reward          | -2.03e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.0908      |
+|    episode_reward       | -12.2       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.74        |
+| time/                   |             |
+|    total_timesteps      | 990000      |
+| train/                  |             |
+|    approx_kl            | 0.015524287 |
+|    clip_fraction        | 0.193       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.31       |
+|    explained_variance   | 0.807       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0586     |
+|    n_updates            | 240         |
+|    policy_gradient_loss | -0.00809    |
+|    std                  | 0.917       |
+|    value_loss           | 0.038       |
+-----------------------------------------
+Eval num_timesteps=1000000, episode_reward=-1552.44 +/- 703.36
+Episode length: 1385.00 +/- 430.00
+Success rate: 20.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.38e+03  |
+|    mean_reward          | -1.55e+03 |
+|    success_rate         | 0.2       |
+| rollout/                |           |
+|    episode_avg_distance | 0.103     |
+|    episode_reward       | 0.0578    |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.76      |
+| time/                   |           |
+|    total_timesteps      | 1000000   |
+---------------------------------------
+Eval num_timesteps=1010000, episode_reward=-2472.89 +/- 355.09
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.47e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.13      |
+|    episode_reward       | -0.675    |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.72      |
+| time/                   |           |
+|    total_timesteps      | 1010000   |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 323      |
+|    ep_rew_mean          | -257     |
+|    episode_avg_distance | 0.193    |
+|    episode_reward       | -4.01    |
+|    episode_success      | 0        |
+|    success_rate         | 0.75     |
+|    success_rate_window  | 0.76     |
+| time/                   |          |
+|    fps                  | 1898     |
+|    iterations           | 31       |
+|    time_elapsed         | 535      |
+|    total_timesteps      | 1015808  |
+--------------------------------------
+Eval num_timesteps=1020000, episode_reward=-1275.58 +/- 682.27
+Episode length: 986.80 +/- 751.17
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 987         |
+|    mean_reward          | -1.28e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.128       |
+|    episode_reward       | -17.4       |
+|    episode_success      | 0           |
+|    success_rate_window  | 0.8         |
+| time/                   |             |
+|    total_timesteps      | 1020000     |
+| train/                  |             |
+|    approx_kl            | 0.015611637 |
+|    clip_fraction        | 0.189       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.32       |
+|    explained_variance   | 0.851       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0377     |
+|    n_updates            | 248         |
+|    policy_gradient_loss | -0.00777    |
+|    std                  | 0.917       |
+|    value_loss           | 0.0286      |
+-----------------------------------------
+Eval num_timesteps=1030000, episode_reward=-2159.42 +/- 700.71
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.16e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.155     |
+|    episode_reward       | 0.492     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.72      |
+| time/                   |           |
+|    total_timesteps      | 1030000   |
+---------------------------------------
+Eval num_timesteps=1040000, episode_reward=-2438.71 +/- 688.35
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.44e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.423     |
+|    episode_reward       | -3.38     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.66      |
+| time/                   |           |
+|    total_timesteps      | 1040000   |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 291      |
+|    ep_rew_mean          | -279     |
+|    episode_avg_distance | 0.129    |
+|    episode_reward       | -0.781   |
+|    episode_success      | 1        |
+|    success_rate         | 0.66     |
+|    success_rate_window  | 0.72     |
+| time/                   |          |
+|    fps                  | 1901     |
+|    iterations           | 32       |
+|    time_elapsed         | 551      |
+|    total_timesteps      | 1048576  |
+--------------------------------------
+Eval num_timesteps=1050000, episode_reward=-1725.80 +/- 705.81
+Episode length: 1292.00 +/- 616.00
+Success rate: 0.00%
+----------------------------------------
+| eval/                   |            |
+|    mean_ep_length       | 1.29e+03   |
+|    mean_reward          | -1.73e+03  |
+|    success_rate         | 0          |
+| rollout/                |            |
+|    episode_avg_distance | 0.0944     |
+|    episode_reward       | -1.22      |
+|    episode_success      | 1          |
+|    success_rate_window  | 0.72       |
+| time/                   |            |
+|    total_timesteps      | 1050000    |
+| train/                  |            |
+|    approx_kl            | 0.01535335 |
+|    clip_fraction        | 0.199      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -9.3       |
+|    explained_variance   | 0.816      |
+|    learning_rate        | 0.0003     |
+|    loss                 | -0.048     |
+|    n_updates            | 256        |
+|    policy_gradient_loss | -0.00835   |
+|    std                  | 0.915      |
+|    value_loss           | 0.0395     |
+----------------------------------------
+Eval num_timesteps=1060000, episode_reward=-1383.73 +/- 717.85
+Episode length: 1006.60 +/- 728.02
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.01e+03  |
+|    mean_reward          | -1.38e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.15      |
+|    episode_reward       | 0.949     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.74      |
+| time/                   |           |
+|    total_timesteps      | 1060000   |
+---------------------------------------
+Eval num_timesteps=1070000, episode_reward=-2394.22 +/- 430.64
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.39e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.129     |
+|    episode_reward       | 0.893     |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.68      |
+| time/                   |           |
+|    total_timesteps      | 1070000   |
+---------------------------------------
+Eval num_timesteps=1080000, episode_reward=-1605.10 +/- 1502.33
+Episode length: 1011.00 +/- 721.48
+Success rate: 40.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.01e+03  |
+|    mean_reward          | -1.61e+03 |
+|    success_rate         | 0.4       |
+| rollout/                |           |
+|    episode_avg_distance | 0.0792    |
+|    episode_reward       | -5.7      |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.6       |
+| time/                   |           |
+|    total_timesteps      | 1080000   |
+---------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 289      |
+|    ep_rew_mean          | -271     |
+|    episode_avg_distance | 0.326    |
+|    episode_reward       | -3.59    |
+|    episode_success      | 0        |
+|    success_rate         | 0.62     |
+|    success_rate_window  | 0.58     |
+| time/                   |          |
+|    fps                  | 1897     |
+|    iterations           | 33       |
+|    time_elapsed         | 569      |
+|    total_timesteps      | 1081344  |
+--------------------------------------
+Eval num_timesteps=1090000, episode_reward=-1640.35 +/- 427.64
+Episode length: 1430.80 +/- 338.40
+Success rate: 0.00%
+-----------------------------------------
+| eval/                   |             |
+|    mean_ep_length       | 1.43e+03    |
+|    mean_reward          | -1.64e+03   |
+|    success_rate         | 0           |
+| rollout/                |             |
+|    episode_avg_distance | 0.119       |
+|    episode_reward       | 0.377       |
+|    episode_success      | 1           |
+|    success_rate_window  | 0.68        |
+| time/                   |             |
+|    total_timesteps      | 1090000     |
+| train/                  |             |
+|    approx_kl            | 0.016117241 |
+|    clip_fraction        | 0.205       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -9.28       |
+|    explained_variance   | 0.785       |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0488     |
+|    n_updates            | 264         |
+|    policy_gradient_loss | -0.00962    |
+|    std                  | 0.914       |
+|    value_loss           | 0.038       |
+-----------------------------------------
+Eval num_timesteps=1100000, episode_reward=-2008.27 +/- 1036.55
+Episode length: 1379.20 +/- 441.60
+Success rate: 20.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.38e+03  |
+|    mean_reward          | -2.01e+03 |
+|    success_rate         | 0.2       |
+| rollout/                |           |
+|    episode_avg_distance | 0.343     |
+|    episode_reward       | -3.45     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.7       |
+| time/                   |           |
+|    total_timesteps      | 1100000   |
+---------------------------------------
+Eval num_timesteps=1110000, episode_reward=-2749.80 +/- 419.63
+Episode length: 1600.00 +/- 0.00
+Success rate: 0.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.6e+03   |
+|    mean_reward          | -2.75e+03 |
+|    success_rate         | 0         |
+| rollout/                |           |
+|    episode_avg_distance | 0.414     |
+|    episode_reward       | -3.33     |
+|    episode_success      | 0         |
+|    success_rate_window  | 0.7       |
+| time/                   |           |
+|    total_timesteps      | 1110000   |
+---------------------------------------
+Traceback (most recent call last):
+  File "/home/nuo/ME5418/train/train.py", line 658, in main
+    model.learn(
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/ppo/ppo.py", line 311, in learn
+    return super().learn(
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 324, in learn
+    continue_training = self.collect_rollouts(self.env, callback, self.rollout_buffer, n_rollout_steps=self.n_steps)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 218, in collect_rollouts
+    new_obs, rewards, dones, infos = env.step(clipped_actions)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/base_vec_env.py", line 222, in step
+    return self.step_wait()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/vec_normalize.py", line 181, in step_wait
+    obs, rewards, dones, infos = self.venv.step_wait()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/vec_monitor.py", line 76, in step_wait
+    obs, rewards, dones, infos = self.venv.step_wait()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/subproc_vec_env.py", line 137, in step_wait
+    results = [remote.recv() for remote in self.remotes]
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/subproc_vec_env.py", line 137, in <listcomp>
+    results = [remote.recv() for remote in self.remotes]
+  File "/home/nuo/miniconda3/lib/python3.10/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+  File "/home/nuo/miniconda3/lib/python3.10/multiprocessing/connection.py", line 414, in _recv_bytes
+    buf = self._recv(4)
+  File "/home/nuo/miniconda3/lib/python3.10/multiprocessing/connection.py", line 379, in _recv
+    chunk = read(handle, remaining)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Error in sys.excepthook:
+Traceback (most recent call last):
+  File "/home/nuo/miniconda3/lib/python3.10/contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/wb_logging.py", line 106, in log_to_all_runs
+    yield
+  File "/home/nuo/miniconda3/lib/python3.10/contextlib.py", line 79, in inner
+    return func(*args, **kwds)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/console_capture.py", line 171, in write_with_callbacks
+    n = orig_write(s)
+KeyboardInterrupt
+
+Original exception was:
+Traceback (most recent call last):
+  File "/home/nuo/ME5418/train/train.py", line 658, in main
+    model.learn(
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/ppo/ppo.py", line 311, in learn
+    return super().learn(
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 324, in learn
+    continue_training = self.collect_rollouts(self.env, callback, self.rollout_buffer, n_rollout_steps=self.n_steps)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 218, in collect_rollouts
+    new_obs, rewards, dones, infos = env.step(clipped_actions)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/base_vec_env.py", line 222, in step
+    return self.step_wait()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/vec_normalize.py", line 181, in step_wait
+    obs, rewards, dones, infos = self.venv.step_wait()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/vec_monitor.py", line 76, in step_wait
+    obs, rewards, dones, infos = self.venv.step_wait()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/subproc_vec_env.py", line 137, in step_wait
+    results = [remote.recv() for remote in self.remotes]
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/subproc_vec_env.py", line 137, in <listcomp>
+    results = [remote.recv() for remote in self.remotes]
+  File "/home/nuo/miniconda3/lib/python3.10/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+  File "/home/nuo/miniconda3/lib/python3.10/multiprocessing/connection.py", line 414, in _recv_bytes
+    buf = self._recv(4)
+  File "/home/nuo/miniconda3/lib/python3.10/multiprocessing/connection.py", line 379, in _recv
+    chunk = read(handle, remaining)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/nuo/ME5418/train/train.py", line 688, in <module>
+    main()
+  File "/home/nuo/ME5418/train/train.py", line 681, in main
+    vec_env.close()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/base_vec_env.py", line 402, in close
+    return self.venv.close()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/vec_monitor.py", line 100, in close
+    return self.venv.close()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/vec_env/subproc_vec_env.py", line 157, in close
+    remote.recv()
+  File "/home/nuo/miniconda3/lib/python3.10/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+  File "/home/nuo/miniconda3/lib/python3.10/multiprocessing/connection.py", line 414, in _recv_bytes
+    buf = self._recv(4)
+  File "/home/nuo/miniconda3/lib/python3.10/multiprocessing/connection.py", line 383, in _recv
+    raise EOFError
+EOFError
