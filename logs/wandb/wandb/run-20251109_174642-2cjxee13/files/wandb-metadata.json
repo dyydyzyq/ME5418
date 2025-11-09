@@ -1,0 +1,43 @@
+{
+  "os":  "Linux-5.15.0-139-generic-x86_64-with-glibc2.31",
+  "python":  "CPython 3.10.18",
+  "startedAt":  "2025-11-09T09:46:42.957571Z",
+  "args":  [
+    "--no-resume"
+  ],
+  "program":  "/home/nuo/ME5418/train/train.py",
+  "codePath":  "train/train.py",
+  "codePathLocal":  "train/train.py",
+  "git":  {
+    "remote":  "git@github.com:dyydyzyq/ME5418.git",
+    "commit":  "2711258ec031b16847c4db58e22f4302c9b30cd7"
+  },
+  "email":  "461091818@qq.com",
+  "root":  "logs/wandb",
+  "host":  "nuo",
+  "executable":  "/home/nuo/miniconda3/bin/python",
+  "cpu_count":  8,
+  "cpu_count_logical":  16,
+  "gpu":  "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "gpu_count":  1,
+  "disk":  {
+    "/":  {
+      "total":  "633862127616",
+      "used":  "181084012544"
+    }
+  },
+  "memory":  {
+    "total":  "16004370432"
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "NVIDIA GeForce RTX 4050 Laptop GPU",
+      "memoryTotal":  "6439305216",
+      "cudaCores":  2560,
+      "architecture":  "Ada",
+      "uuid":  "GPU-02b80c1f-4151-b5a8-9854-40b594006ef3"
+    }
+  ],
+  "cudaVersion":  "12.2",
+  "writerId":  "l47ddo3owppwq84887q6p74tk0dieo3p"
+}

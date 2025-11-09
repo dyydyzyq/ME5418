@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+import warnings
 
 import gymnasium as gym
 import mujoco
@@ -22,7 +23,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         max_episode_steps: int = 1600,
         seed: Optional[int] = None,
         render_width: int = 1280,    
-        render_height: int = 960,
+        render_height: int = 640,
         goal_bounds: Optional[Tuple[np.ndarray, np.ndarray]] = None,
         goal_reach_threshold: float = 0.02,
         safety_distance: float = 0.2,
@@ -42,6 +43,7 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self.goal_reach_threshold = goal_reach_threshold
         self.safety_distance = safety_distance
         self.dt = self.model.opt.timestep * self.frame_skip
+        self._ensure_offscreen_buffer_capacity()
 
         if goal_bounds is None:
             low  = np.array([0.3, -0.4, 0.3], dtype=np.float64)
@@ -197,6 +199,39 @@ class PandaObstacleEnv(gym.Env[np.ndarray, np.ndarray]):
         self.sphere_actuator_id = mujoco.mj_name2id(
             self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, "move_sphere_y"
         )
+
+    def _ensure_offscreen_buffer_capacity(self) -> None:
+        """Resize MuJoCo's offscreen framebuffer if higher-resolution renders are requested."""
+        vis_global = getattr(self.model.vis, "global_", None)
+        if vis_global is None:
+            return
+
+        desired_width = int(self.render_width)
+        desired_height = int(self.render_height)
+        current_width = int(getattr(vis_global, "offwidth", 0) or 0)
+        current_height = int(getattr(vis_global, "offheight", 0) or 0)
+
+        new_width = max(current_width, desired_width)
+        new_height = max(current_height, desired_height)
+
+        updated = False
+        if new_width != current_width:
+            vis_global.offwidth = new_width
+            updated = True
+        if new_height != current_height:
+            vis_global.offheight = new_height
+            updated = True
+
+        if updated:
+            warnings.warn(
+                "Increased MuJoCo offscreen framebuffer from "
+                f"{current_width or 'default'}x{current_height or 'default'} to "
+                f"{new_width}x{new_height} for PandaObstacleEnv renders "
+                f"({desired_width}x{desired_height}). "
+                "Consider setting <visual><global offwidth=\"...\" offheight=\"...\"/></visual> "
+                "inside scene_withobstacles.xml for permanent support.",
+                RuntimeWarning,
+            )
 
 
     def _init_spaces(self) -> None:

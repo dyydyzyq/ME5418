@@ -1,0 +1,6 @@
+{"time":"2025-11-09T18:29:08.885514685+08:00","level":"INFO","msg":"stream: starting","core version":"0.22.3"}
+{"time":"2025-11-09T18:29:11.025141496+08:00","level":"INFO","msg":"stream: created new stream","id":"osf2a4sy"}
+{"time":"2025-11-09T18:29:11.025313066+08:00","level":"INFO","msg":"handler: started","stream_id":"osf2a4sy"}
+{"time":"2025-11-09T18:29:11.025564035+08:00","level":"INFO","msg":"stream: started","id":"osf2a4sy"}
+{"time":"2025-11-09T18:29:11.025644795+08:00","level":"INFO","msg":"writer: started","stream_id":"osf2a4sy"}
+{"time":"2025-11-09T18:29:11.025694879+08:00","level":"INFO","msg":"sender: started","stream_id":"osf2a4sy"}

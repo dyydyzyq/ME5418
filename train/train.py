@@ -5,6 +5,16 @@ import sys
 from pathlib import Path
 from typing import Any, Callable, Dict, List
 
+try:
+    import gym_notices.notices as gym_notices
+except Exception:
+    gym_notices = None
+else:
+    # Gymnasium is already used, but SB3 still imports the legacy gym package,
+    # which prints a migration notice on every import (once per subprocess).
+    # Clearing the notice registry before gym is imported silences that noise.
+    gym_notices.notices.clear()
+
 from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import BaseCallback, CheckpointCallback, EvalCallback
 from stable_baselines3.common.logger import KVWriter, configure
@@ -370,50 +380,6 @@ class TrainingVisualizationCallback(BaseCallback):
         plt.close(fig)
 
 
-class PeriodicVideoCallback(BaseCallback):
-    """Record policy rollouts periodically during training."""
-
-    def __init__(
-        self,
-        video_interval: int,
-        env_factory: Callable[[], PandaObstacleEnv],
-        video_dir: Path,
-        *,
-        wandb_run: wandb.sdk.wandb_run.Run | None = None,
-        normalization_path: Path | None = None,
-        episodes: int = 1,
-    ) -> None:
-        super().__init__(verbose=0)
-        self.video_interval = max(1, video_interval)
-        self.env_factory = env_factory
-        self.video_dir = video_dir
-        self.wandb_run = wandb_run
-        self.normalization_path = normalization_path
-        self.episodes = episodes
-
-    def _on_step(self) -> bool:
-        num_timesteps = self.num_timesteps
-        last_record_step = getattr(self, "_last_record_step", -self.video_interval)
-        if num_timesteps - last_record_step < self.video_interval:
-            return True
-
-        self._last_record_step = num_timesteps
-        suffix = f"{num_timesteps:010d}"
-        video_path = self.video_dir / f"policy_rollout_{suffix}.mp4"
-        video_path.parent.mkdir(parents=True, exist_ok=True)
-
-        record_policy_rollout(
-            self.model,
-            self.env_factory,
-            video_path,
-            episodes=self.episodes,
-            normalization_path=self.normalization_path,
-            wandb_run=self.wandb_run,
-            wandb_key=f"policy_rollout/step_{num_timesteps}",
-        )
-        return True
-
-
 def build_policy_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
     """Construct policy kwargs so users can easily customise the MLP architecture."""
 
@@ -623,20 +589,9 @@ def main() -> None:
             deterministic=True,
         )
 
-    video_callback = None
-    if args.video_interval > 0:
-        video_callback = PeriodicVideoCallback(
-            video_interval=args.video_interval,
-            env_factory=make_env(args.seed + 30_000),
-            video_dir=visualization_dir / "intermediate_videos",
-            wandb_run=wandb_run,
-            normalization_path=normalization_path,
-            episodes=args.rollout_episodes,
-        )
-
     callbacks = [
         cb
-        for cb in (checkpoint_callback, eval_callback, visualization_callback, sync_callback, video_callback)
+        for cb in (checkpoint_callback, eval_callback, visualization_callback, sync_callback)
         if cb is not None
     ]
 
