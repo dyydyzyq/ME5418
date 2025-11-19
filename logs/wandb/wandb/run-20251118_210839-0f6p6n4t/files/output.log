@@ -1,0 +1,138 @@
+Logging to logs/sb3
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 122      |
+|    ep_rew_mean          | 62.4     |
+|    episode_avg_distance | 0.272    |
+|    episode_reward       | -2.47    |
+|    episode_success      | 0        |
+|    success_rate         | 0.92     |
+|    success_rate_window  | 0        |
+| time/                   |          |
+|    episodes             | 15272    |
+|    fps                  | 1071     |
+|    time_elapsed         | 0        |
+|    total_timesteps      | 8008336  |
+| train/                  |          |
+|    actor_loss           | -0.209   |
+|    critic_loss          | 0.000368 |
+|    ent_coef             | 0.000335 |
+|    ent_coef_loss        | 23.4     |
+|    learning_rate        | 0.0003   |
+|    n_updates            | 500852   |
+--------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 123      |
+|    ep_rew_mean          | 61.6     |
+|    episode_avg_distance | 0.0822   |
+|    episode_reward       | 0.989    |
+|    episode_success      | 1        |
+|    success_rate         | 0.92     |
+|    success_rate_window  | 0.8      |
+| time/                   |          |
+|    episodes             | 15276    |
+|    fps                  | 1182     |
+|    time_elapsed         | 0        |
+|    total_timesteps      | 8009040  |
+| train/                  |          |
+|    actor_loss           | -0.358   |
+|    critic_loss          | 0.00474  |
+|    ent_coef             | 0.000358 |
+|    ent_coef_loss        | 61.8     |
+|    learning_rate        | 0.0003   |
+|    n_updates            | 500940   |
+--------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 131      |
+|    ep_rew_mean          | 49.2     |
+|    episode_avg_distance | 0.147    |
+|    episode_reward       | -2.35    |
+|    episode_success      | 1        |
+|    success_rate         | 0.91     |
+|    success_rate_window  | 0.778    |
+| time/                   |          |
+|    episodes             | 15280    |
+|    fps                  | 1240     |
+|    time_elapsed         | 2        |
+|    total_timesteps      | 8011200  |
+| train/                  |          |
+|    actor_loss           | -0.0633  |
+|    critic_loss          | 0.00244  |
+|    ent_coef             | 0.000417 |
+|    ent_coef_loss        | 20.8     |
+|    learning_rate        | 0.0003   |
+|    n_updates            | 501210   |
+--------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 126      |
+|    ep_rew_mean          | 50.1     |
+|    episode_avg_distance | 0.229    |
+|    episode_reward       | 1.18     |
+|    episode_success      | 1        |
+|    success_rate         | 0.91     |
+|    success_rate_window  | 0.846    |
+| time/                   |          |
+|    episodes             | 15284    |
+|    fps                  | 1253     |
+|    time_elapsed         | 3        |
+|    total_timesteps      | 8012048  |
+| train/                  |          |
+|    actor_loss           | -0.158   |
+|    critic_loss          | 0.0087   |
+|    ent_coef             | 0.00043  |
+|    ent_coef_loss        | 20.1     |
+|    learning_rate        | 0.0003   |
+|    n_updates            | 501316   |
+--------------------------------------
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 126      |
+|    ep_rew_mean          | 45.5     |
+|    episode_avg_distance | 0.167    |
+|    episode_reward       | 0.373    |
+|    episode_success      | 1        |
+|    success_rate         | 0.91     |
+|    success_rate_window  | 0.824    |
+| time/                   |          |
+|    episodes             | 15288    |
+|    fps                  | 1266     |
+|    time_elapsed         | 3        |
+|    total_timesteps      | 8013024  |
+| train/                  |          |
+|    actor_loss           | -0.192   |
+|    critic_loss          | 0.00243  |
+|    ent_coef             | 0.000445 |
+|    ent_coef_loss        | 27.6     |
+|    learning_rate        | 0.0003   |
+|    n_updates            | 501438   |
+--------------------------------------
+Eval num_timesteps=8018024, episode_reward=-1173.81 +/- 676.01
+Episode length: 1151.80 +/- 550.22
+Success rate: 20.00%
+---------------------------------------
+| eval/                   |           |
+|    mean_ep_length       | 1.15e+03  |
+|    mean_reward          | -1.17e+03 |
+|    success_rate         | 0.2       |
+| rollout/                |           |
+|    episode_avg_distance | 0.0659    |
+|    episode_reward       | -0.374    |
+|    episode_success      | 1         |
+|    success_rate_window  | 0.842     |
+| time/                   |           |
+|    total_timesteps      | 8018024   |
+| train/                  |           |
+|    actor_loss           | -0.247    |
+|    critic_loss          | 0.000479  |
+|    ent_coef             | 0.000525  |
+|    ent_coef_loss        | 16.1      |
+|    learning_rate        | 0.0003    |
+|    n_updates            | 502063    |
+---------------------------------------
+New best mean reward!
+Saved policy rollout video to logs/visuals/final_policy_rollout.mp4 (total 412.68s, 3 episodes, avg 137.41s/episode).
+[34m[1mwandb[0m: [33mWARNING[0m `fps` argument does not affect the frame rate of the video when providing a file path or raw bytes.
+Uploaded policy rollout video to W&B under key 'final_policy'.

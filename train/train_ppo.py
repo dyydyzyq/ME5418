@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+import time
 from pathlib import Path
 from typing import Any, Callable, Dict, List
 
@@ -141,7 +142,7 @@ def parse_args() -> argparse.Namespace:   # set the parameters for training
     parser.add_argument(
         "--rollout-episodes",
         type=int,   
-        default=10,
+        default=5,
         help="Number of episodes to record for the post-training policy rollout video",
     )
     parser.add_argument(
@@ -435,8 +436,12 @@ def record_policy_rollout(           #record the video of the robot performing t
     fps = base_env.metadata.get("render_fps", 30) if hasattr(base_env, "metadata") else 30
     frames: List[np.ndarray] = []
 
+    rollout_start = time.perf_counter()
+    episode_durations: List[float] = []
+
     try:
         for _ in range(episodes):
+            episode_start = time.perf_counter()
             terminated = False
             truncated = False
             step_count = 0
@@ -461,6 +466,8 @@ def record_policy_rollout(           #record the video of the robot performing t
                     obs, _, terminated, truncated, _ = base_env.step(action)
                 step_count += 1
 
+            episode_durations.append(time.perf_counter() - episode_start)
+
             if terminated or truncated:
                 frame = base_env.render()
                 frames.append(frame)
@@ -470,6 +477,8 @@ def record_policy_rollout(           #record the video of the robot performing t
             vec_env.close()
         else:
             base_env.close()
+
+    total_duration = time.perf_counter() - rollout_start
 
     if not frames:
         print("No frames captured for policy rollout video.")
@@ -483,7 +492,15 @@ def record_policy_rollout(           #record the video of the robot performing t
         with imageio.get_writer(video_path, fps=fps) as writer:
             for frame in frames:
                 writer.append_data(frame)
-    print(f"Saved policy rollout video to {video_path}")
+    if episode_durations:
+        avg_duration = float(np.mean(episode_durations))
+        print(
+            f"Saved policy rollout video to {video_path} "
+            f"(total {total_duration:.2f}s, {len(episode_durations)} episodes, "
+            f"avg {avg_duration:.2f}s/episode)."
+        )
+    else:
+        print(f"Saved policy rollout video to {video_path} (total {total_duration:.2f}s).")
 
     if wandb_run is not None:
         try:

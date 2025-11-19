@@ -1,0 +1,23 @@
+Logging to logs/sb3
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 123      |
+|    ep_rew_mean          | 69.9     |
+|    episode_avg_distance | 0.152    |
+|    episode_reward       | 1.21     |
+|    episode_success      | 1        |
+|    success_rate         | 0.93     |
+|    success_rate_window  | 1        |
+| time/                   |          |
+|    episodes             | 15264    |
+|    fps                  | 1775     |
+|    time_elapsed         | 0        |
+|    total_timesteps      | 8005792  |
+| train/                  |          |
+|    actor_loss           | -0.275   |
+|    critic_loss          | 0.000635 |
+|    ent_coef             | 0.000392 |
+|    ent_coef_loss        | 5.45     |
+|    learning_rate        | 0.0003   |
+|    n_updates            | 499736   |
+--------------------------------------

@@ -1,0 +1,26 @@
+Logging to logs/sb3
+--------------------------------------
+| rollout/                |          |
+|    ep_len_mean          | 140      |
+|    ep_rew_mean          | 52.5     |
+|    episode_avg_distance | 0.155    |
+|    episode_reward       | 1.29     |
+|    episode_success      | 1        |
+|    success_rate         | 0.92     |
+|    success_rate_window  | 0.5      |
+| time/                   |          |
+|    episodes             | 15260    |
+|    fps                  | 1738     |
+|    time_elapsed         | 0        |
+|    total_timesteps      | 8004640  |
+| train/                  |          |
+|    actor_loss           | -0.209   |
+|    critic_loss          | 0.00065  |
+|    ent_coef             | 0.000379 |
+|    ent_coef_loss        | 21.2     |
+|    learning_rate        | 0.0003   |
+|    n_updates            | 499664   |
+--------------------------------------
+Saved policy rollout video to /tmp/test.mp4 (total 208.73s, 1 episodes, avg 208.57s/episode).
+[34m[1mwandb[0m: [33mWARNING[0m `fps` argument does not affect the frame rate of the video when providing a file path or raw bytes.
+Uploaded policy rollout video to W&B under key 'final_policy'.

@@ -1,0 +1,26 @@
+2025-11-18 20:04:10,729 INFO    MainThread:24076 [wandb_setup.py:_flush():81] Current SDK version is 0.22.3
+2025-11-18 20:04:10,729 INFO    MainThread:24076 [wandb_setup.py:_flush():81] Configure stats pid to 24076
+2025-11-18 20:04:10,729 INFO    MainThread:24076 [wandb_setup.py:_flush():81] Loading settings from /home/nuo/.config/wandb/settings
+2025-11-18 20:04:10,729 INFO    MainThread:24076 [wandb_setup.py:_flush():81] Loading settings from /home/nuo/ME5418/wandb/settings
+2025-11-18 20:04:10,729 INFO    MainThread:24076 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2025-11-18 20:04:10,729 INFO    MainThread:24076 [wandb_init.py:setup_run_log_directory():706] Logging user logs to logs/wandb/wandb/run-20251118_200410-z53mmud6/logs/debug.log
+2025-11-18 20:04:10,729 INFO    MainThread:24076 [wandb_init.py:setup_run_log_directory():707] Logging internal logs to logs/wandb/wandb/run-20251118_200410-z53mmud6/logs/debug-internal.log
+2025-11-18 20:04:10,729 INFO    MainThread:24076 [wandb_init.py:init():833] calling init triggers
+2025-11-18 20:04:10,729 INFO    MainThread:24076 [wandb_init.py:init():838] wandb.init called with sweep_config: {}
+config: {'algorithm': 'sac', 'device': 'cpu', 'buffer_size': 1000000, 'learning_starts': 10000, 'batch_size': 256, 'gamma': 0.99, 'tau': 0.005, 'learning_rate': 0.0003, 'train_freq': 1, 'train_freq_unit': 'step', 'gradient_steps': 1, 'target_update_interval': 1, 'ent_coef': 'auto', 'target_entropy': 'auto', 'total_timesteps': 1000, 'num_envs': 16, 'log_dir': 'logs', 'model_dir': 'models', 'seed': 42, 'checkpoint_freq': 50000, 'eval_freq': 10000, 'eval_episodes': 5, 'policy': 'MlpPolicy', 'policy_hidden_sizes': (128, 128), 'policy_qf_hidden_sizes': None, 'policy_activation': 'tanh', 'rollout_episodes': 1, 'rollout_video': '/tmp/test.mp4', 'resume': True, 'video_interval': 2000000, 'wandb_project': 'panda-obstacle-sac', 'wandb_entity': None, 'wandb_run_name': None, 'wandb_mode': 'online', '_wandb': {}}
+2025-11-18 20:04:10,729 INFO    MainThread:24076 [wandb_init.py:init():881] starting backend
+2025-11-18 20:04:10,937 INFO    MainThread:24076 [wandb_init.py:init():884] sending inform_init request
+2025-11-18 20:04:10,945 INFO    MainThread:24076 [wandb_init.py:init():892] backend started and connected
+2025-11-18 20:04:10,946 INFO    MainThread:24076 [wandb_init.py:init():962] updated telemetry
+2025-11-18 20:04:10,950 INFO    MainThread:24076 [wandb_init.py:init():986] communicating run to backend with 90.0 second timeout
+2025-11-18 20:04:13,585 INFO    MainThread:24076 [wandb_init.py:init():1033] starting run threads in backend
+2025-11-18 20:04:13,651 INFO    MainThread:24076 [wandb_run.py:_console_start():2506] atexit reg
+2025-11-18 20:04:13,652 INFO    MainThread:24076 [wandb_run.py:_redirect():2354] redirect: wrap_raw
+2025-11-18 20:04:13,652 INFO    MainThread:24076 [wandb_run.py:_redirect():2423] Wrapping output streams.
+2025-11-18 20:04:13,652 INFO    MainThread:24076 [wandb_run.py:_redirect():2446] Redirects installed.
+2025-11-18 20:04:13,653 INFO    MainThread:24076 [wandb_init.py:init():1073] run started, returning control to user process
+2025-11-18 20:08:03,168 INFO    MainThread:24076 [wandb_run.py:_finish():2272] finishing run ME5418/panda-obstacle-sac/z53mmud6
+2025-11-18 20:08:03,169 INFO    MainThread:24076 [wandb_run.py:_atexit_cleanup():2471] got exitcode: 0
+2025-11-18 20:08:03,169 INFO    MainThread:24076 [wandb_run.py:_restore():2453] restore
+2025-11-18 20:08:03,169 INFO    MainThread:24076 [wandb_run.py:_restore():2459] restore done
+2025-11-18 20:08:05,240 INFO    MainThread:24076 [wandb_run.py:_footer_sync_info():3835] logging synced files

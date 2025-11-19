@@ -1,0 +1,16 @@
+/home/nuo/ME5418/env/env.py:245: RuntimeWarning: Increased MuJoCo offscreen framebuffer from 640x480 to 1280x640 for PandaObstacleEnv renders (1280x640). Consider setting <visual><global offwidth="..." offheight="..."/></visual> inside scene_withobstacles.xml for permanent support.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/home/nuo/ME5418/train/train_sac.py", line 751, in <module>
+    main()
+  File "/home/nuo/ME5418/train/train_sac.py", line 682, in main
+    model = algo_cls.load(str(resume_path), env=vec_env, device=args.device)
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/common/base_class.py", line 740, in load
+    model._setup_model()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/sac/sac.py", line 164, in _setup_model
+    self._create_aliases()
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/stable_baselines3/sac/sac.py", line 198, in _create_aliases
+    self.actor = self.policy.actor
+  File "/home/nuo/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1962, in __getattr__
+    raise AttributeError(
+AttributeError: 'ActorCriticPolicy' object has no attribute 'actor'
